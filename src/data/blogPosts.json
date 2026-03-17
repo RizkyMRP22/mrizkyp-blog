@@ -1,0 +1,92 @@
+{
+    "posts": [
+        {
+            "id": 1,
+            "title": "Why Shift-Left Testing is Essential in Modern Development",
+            "excerpt": "Exploring how integrating testing early in the SDLC reduces costs and improves software quality significantly.",
+            "content": "Shift-left testing is a methodology that emphasizes testing early and often in the software development lifecycle...",
+            "category": "Testing Strategy",
+            "date": "2026-03-10",
+            "readTime": "5 min",
+            "tags": [
+                "Testing",
+                "Strategy",
+                "SDLC",
+                "Best Practices"
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Building a Cypress Test Framework from Scratch",
+            "excerpt": "A step-by-step guide to setting up a production-ready Cypress test automation framework with CI/CD integration.",
+            "content": "Cypress has become one of the most popular choices for frontend testing. In this guide, we'll build a complete framework...",
+            "category": "Automation",
+            "date": "2026-02-28",
+            "readTime": "8 min",
+            "tags": [
+                "Cypress",
+                "Automation",
+                "JavaScript",
+                "Tutorial"
+            ]
+        },
+        {
+            "id": 3,
+            "title": "API Testing Best Practices with Postman",
+            "excerpt": "Learn how to structure your Postman collections, write effective assertions, and automate API testing workflows.",
+            "content": "API testing is crucial for ensuring the reliability of your backend services...",
+            "category": "API Testing",
+            "date": "2026-02-15",
+            "readTime": "6 min",
+            "tags": [
+                "API",
+                "Postman",
+                "REST",
+                "Best Practices"
+            ]
+        },
+        {
+            "id": 4,
+            "title": "Performance Testing with k6: A Practical Guide",
+            "excerpt": "How to write effective load tests, set thresholds, and integrate performance testing into your CI pipeline.",
+            "content": "Performance testing is often an afterthought, but it shouldn't be. With k6, you can write load tests in JavaScript...",
+            "category": "Performance",
+            "date": "2026-02-01",
+            "readTime": "7 min",
+            "tags": [
+                "k6",
+                "Performance",
+                "Load Testing",
+                "JavaScript"
+            ]
+        },
+        {
+            "id": 5,
+            "title": "The Art of Writing Great Bug Reports",
+            "excerpt": "A comprehensive guide to writing bug reports that developers love and that get fixed faster.",
+            "content": "A good bug report is half the fix. Here's how to write bug reports that are clear, actionable, and effective...",
+            "category": "Best Practices",
+            "date": "2026-01-20",
+            "readTime": "4 min",
+            "tags": [
+                "Bug Reports",
+                "Communication",
+                "Best Practices"
+            ]
+        },
+        {
+            "id": 6,
+            "title": "Exploratory Testing: Techniques and Mindset",
+            "excerpt": "Unlock the power of exploratory testing with structured session-based approaches and creative thinking.",
+            "content": "Exploratory testing is simultaneous learning, test design, and test execution...",
+            "category": "Manual Testing",
+            "date": "2026-01-10",
+            "readTime": "6 min",
+            "tags": [
+                "Exploratory",
+                "Manual Testing",
+                "Techniques"
+            ]
+        }
+    ]
+}

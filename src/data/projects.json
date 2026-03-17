@@ -1,0 +1,124 @@
+{
+    "projects": [
+        {
+            "id": 1,
+            "title": "E-Commerce Platform QA",
+            "description": "End-to-end testing for a large-scale e-commerce platform handling 10K+ daily transactions. Built comprehensive test suites covering payment flows, inventory management, and user journeys.",
+            "tags": [
+                "Selenium",
+                "Java",
+                "Jenkins",
+                "TestRail"
+            ],
+            "category": "Automation",
+            "image": "/projects/ecommerce.png",
+            "demoUrl": "#",
+            "githubUrl": "https://github.com/mrizkyp22/ecommerce-qa",
+            "highlights": [
+                "200+ automated test cases",
+                "95% regression coverage",
+                "50% reduction in release bugs"
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Mobile Banking App Testing",
+            "description": "Comprehensive QA strategy for a mobile banking application. Implemented automated UI testing with Appium and API testing with REST Assured across iOS and Android platforms.",
+            "tags": [
+                "Appium",
+                "REST Assured",
+                "Python",
+                "JIRA"
+            ],
+            "category": "Mobile",
+            "image": "/projects/banking.png",
+            "demoUrl": "#",
+            "githubUrl": "https://github.com/mrizkyp22/mobile-banking-qa",
+            "highlights": [
+                "Cross-platform testing",
+                "Security testing included",
+                "CI/CD integration"
+            ]
+        },
+        {
+            "id": 3,
+            "title": "Healthcare SaaS QA Framework",
+            "description": "Designed and built a custom test automation framework for a healthcare SaaS product. Ensured HIPAA compliance through rigorous security testing protocols.",
+            "tags": [
+                "Cypress",
+                "TypeScript",
+                "GitHub Actions",
+                "Docker"
+            ],
+            "category": "Automation",
+            "image": "/projects/healthcare.png",
+            "demoUrl": "#",
+            "githubUrl": "https://github.com/mrizkyp22/healthcare-qa",
+            "highlights": [
+                "Custom framework design",
+                "HIPAA compliance testing",
+                "80% faster test execution"
+            ]
+        },
+        {
+            "id": 4,
+            "title": "API Testing Suite",
+            "description": "Built a comprehensive API testing suite using Postman and Newman for a microservices architecture. Automated contract testing and performance benchmarking.",
+            "tags": [
+                "Postman",
+                "Newman",
+                "k6",
+                "JavaScript"
+            ],
+            "category": "API",
+            "image": "/projects/api.png",
+            "demoUrl": "#",
+            "githubUrl": "https://github.com/mrizkyp22/api-test-suite",
+            "highlights": [
+                "150+ API test cases",
+                "Contract testing",
+                "Performance baselines"
+            ]
+        },
+        {
+            "id": 5,
+            "title": "Performance Testing Dashboard",
+            "description": "Created a real-time performance testing dashboard that aggregates results from JMeter and k6 runs. Provides historical trends and threshold alerts.",
+            "tags": [
+                "JMeter",
+                "k6",
+                "Grafana",
+                "Docker"
+            ],
+            "category": "Performance",
+            "image": "/projects/performance.png",
+            "demoUrl": "#",
+            "githubUrl": "https://github.com/mrizkyp22/perf-dashboard",
+            "highlights": [
+                "Real-time metrics",
+                "Historical trending",
+                "Custom alerting"
+            ]
+        },
+        {
+            "id": 6,
+            "title": "BDD Test Framework",
+            "description": "Implemented a Behavior-Driven Development testing framework using Cucumber and Playwright. Enabled non-technical stakeholders to write and understand test scenarios.",
+            "tags": [
+                "Playwright",
+                "Cucumber",
+                "TypeScript",
+                "BDD"
+            ],
+            "category": "Automation",
+            "image": "/projects/bdd.png",
+            "demoUrl": "#",
+            "githubUrl": "https://github.com/mrizkyp22/bdd-framework",
+            "highlights": [
+                "Living documentation",
+                "Stakeholder collaboration",
+                "90% acceptance test coverage"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "defaultBugReport": {
+        "title": "Login button unresponsive on mobile Safari",
+        "severity": "High",
+        "priority": "P1",
+        "environment": "iOS 17.2, Safari 17, iPhone 15 Pro",
+        "stepsToReproduce": "1. Open the app on mobile Safari\n2. Navigate to /login\n3. Enter valid credentials\n4. Tap the 'Sign In' button",
+        "expectedResult": "User should be authenticated and redirected to the dashboard page.",
+        "actualResult": "The 'Sign In' button does not respond to tap events. No network request is triggered. The button hover state activates but the click/tap handler does not fire.",
+        "additionalNotes": "Issue only occurs on Safari mobile. Chrome and Firefox mobile work correctly. Potentially related to the CSS touch-action property or event listener binding.",
+        "status": "Open",
+        "assignee": "Frontend Team",
+        "reportedBy": "M. Rizky Pratama",
+        "dateReported": "2026-03-15"
+    }
+}

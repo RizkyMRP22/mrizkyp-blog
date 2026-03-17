@@ -1,0 +1,134 @@
+{
+    "categories": [
+        {
+            "name": "Manual Testing",
+            "icon": "🔍",
+            "skills": [
+                {
+                    "name": "Test Case Design",
+                    "level": 95
+                },
+                {
+                    "name": "Exploratory Testing",
+                    "level": 90
+                },
+                {
+                    "name": "Regression Testing",
+                    "level": 92
+                },
+                {
+                    "name": "UAT Coordination",
+                    "level": 85
+                },
+                {
+                    "name": "API Testing (Postman)",
+                    "level": 90
+                }
+            ]
+        },
+        {
+            "name": "Automation",
+            "icon": "🤖",
+            "skills": [
+                {
+                    "name": "Selenium WebDriver",
+                    "level": 88
+                },
+                {
+                    "name": "Cypress",
+                    "level": 85
+                },
+                {
+                    "name": "Playwright",
+                    "level": 82
+                },
+                {
+                    "name": "Appium (Mobile)",
+                    "level": 75
+                },
+                {
+                    "name": "REST Assured",
+                    "level": 80
+                }
+            ]
+        },
+        {
+            "name": "Programming",
+            "icon": "💻",
+            "skills": [
+                {
+                    "name": "JavaScript/TypeScript",
+                    "level": 85
+                },
+                {
+                    "name": "Python",
+                    "level": 80
+                },
+                {
+                    "name": "Java",
+                    "level": 75
+                },
+                {
+                    "name": "SQL",
+                    "level": 85
+                },
+                {
+                    "name": "Bash/Shell",
+                    "level": 70
+                }
+            ]
+        },
+        {
+            "name": "Tools & Platforms",
+            "icon": "🛠️",
+            "skills": [
+                {
+                    "name": "JIRA / Trello",
+                    "level": 95
+                },
+                {
+                    "name": "Jenkins / GitHub Actions",
+                    "level": 82
+                },
+                {
+                    "name": "Docker",
+                    "level": 75
+                },
+                {
+                    "name": "Git / GitHub",
+                    "level": 90
+                },
+                {
+                    "name": "TestRail / Zephyr",
+                    "level": 88
+                }
+            ]
+        },
+        {
+            "name": "Performance & Security",
+            "icon": "⚡",
+            "skills": [
+                {
+                    "name": "JMeter",
+                    "level": 78
+                },
+                {
+                    "name": "k6",
+                    "level": 72
+                },
+                {
+                    "name": "OWASP ZAP",
+                    "level": 65
+                },
+                {
+                    "name": "Lighthouse Audits",
+                    "level": 80
+                },
+                {
+                    "name": "Load Testing",
+                    "level": 76
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,64 @@
+{
+    "caseStudies": [
+        {
+            "id": 1,
+            "title": "Reducing Payment Gateway Failures by 70%",
+            "summary": "Identified critical race conditions in the payment processing flow through systematic exploratory testing and implemented automated regression tests to prevent recurrence.",
+            "challenge": "The e-commerce platform was experiencing a 15% failure rate in payment transactions during peak hours, leading to significant revenue loss and customer complaints.",
+            "approach": "Conducted structured exploratory testing sessions focusing on concurrent transactions. Used JMeter for load simulation and Selenium for end-to-end flow validation under stress.",
+            "solution": "Discovered race conditions in the order locking mechanism. Worked with developers to implement optimistic locking. Created 45 automated regression tests covering all payment edge cases.",
+            "results": [
+                "Payment failures reduced from 15% to 4.5%",
+                "Zero critical payment bugs in 6 subsequent releases",
+                "Automated test suite runs in under 10 minutes"
+            ],
+            "tags": [
+                "E-Commerce",
+                "Payment",
+                "Performance",
+                "Automation"
+            ],
+            "duration": "3 months"
+        },
+        {
+            "id": 2,
+            "title": "Mobile App Launch: Zero Critical Bugs",
+            "summary": "Led QA efforts for a mobile banking app launch across iOS and Android, achieving zero critical bugs at launch through comprehensive testing strategy.",
+            "challenge": "The mobile banking app needed to launch in 8 weeks with full feature parity across iOS and Android, including biometric authentication and real-time transaction notifications.",
+            "approach": "Implemented a risk-based testing approach prioritizing security and financial transaction flows. Set up Appium for cross-platform automated testing with device farm integration.",
+            "solution": "Created a comprehensive test matrix covering 200+ scenarios across both platforms. Implemented automated smoke tests that ran on every build. Conducted 3 rounds of UAT with real users.",
+            "results": [
+                "Zero critical bugs at launch",
+                "98% test coverage on critical paths",
+                "App Store rating: 4.7/5 in first month"
+            ],
+            "tags": [
+                "Mobile",
+                "Banking",
+                "Security",
+                "Cross-platform"
+            ],
+            "duration": "2 months"
+        },
+        {
+            "id": 3,
+            "title": "CI/CD Pipeline Quality Gates Implementation",
+            "summary": "Designed and implemented quality gates in the CI/CD pipeline that reduced production incidents by 60% while maintaining deployment velocity.",
+            "challenge": "The team was deploying 5+ times per week but experiencing frequent production incidents due to insufficient pre-deployment testing and quality checks.",
+            "approach": "Analyzed production incident patterns to identify common failure modes. Designed a multi-stage quality gate system including unit tests, integration tests, security scans, and performance benchmarks.",
+            "solution": "Implemented automated quality gates in GitHub Actions: code coverage threshold (80%+), zero critical security vulnerabilities, API contract validation, and performance regression detection.",
+            "results": [
+                "Production incidents reduced by 60%",
+                "Deployment frequency maintained at 5+/week",
+                "Average build-to-deploy time: 15 minutes"
+            ],
+            "tags": [
+                "CI/CD",
+                "DevOps",
+                "Quality Gates",
+                "Automation"
+            ],
+            "duration": "6 weeks"
+        }
+    ]
+}

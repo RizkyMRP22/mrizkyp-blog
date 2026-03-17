@@ -1,0 +1,67 @@
+{
+    "experience": [
+        {
+            "id": 1,
+            "company": "TechCorp Indonesia",
+            "role": "Senior QA Engineer",
+            "period": "2024 - Present",
+            "location": "Jakarta, Indonesia",
+            "description": "Leading QA efforts for multiple product squads, designing test strategies, and building automation frameworks.",
+            "achievements": [
+                "Built end-to-end test automation framework using Playwright + TypeScript",
+                "Reduced regression testing time from 3 days to 4 hours",
+                "Mentored 3 junior QA engineers",
+                "Implemented quality gates in CI/CD pipeline"
+            ],
+            "technologies": [
+                "Playwright",
+                "TypeScript",
+                "Jenkins",
+                "Docker",
+                "JIRA"
+            ]
+        },
+        {
+            "id": 2,
+            "company": "Digital Solutions Ltd",
+            "role": "QA Engineer",
+            "period": "2022 - 2024",
+            "location": "Jakarta, Indonesia",
+            "description": "Responsible for testing web and mobile applications, API testing, and performance testing.",
+            "achievements": [
+                "Created 500+ automated test cases using Selenium and Cypress",
+                "Established API testing practices with Postman and Newman",
+                "Led performance testing initiatives using JMeter",
+                "Achieved 95% test coverage on critical business flows"
+            ],
+            "technologies": [
+                "Selenium",
+                "Cypress",
+                "Postman",
+                "JMeter",
+                "Python"
+            ]
+        },
+        {
+            "id": 3,
+            "company": "StartupHub",
+            "role": "Junior QA Engineer",
+            "period": "2021 - 2022",
+            "location": "Bandung, Indonesia",
+            "description": "Started career in QA, focusing on manual testing and learning automation fundamentals.",
+            "achievements": [
+                "Designed and executed 300+ manual test cases",
+                "Identified 200+ bugs including 15 critical security issues",
+                "Introduced structured bug reporting process",
+                "Started automation journey with Selenium WebDriver"
+            ],
+            "technologies": [
+                "Manual Testing",
+                "Selenium",
+                "JIRA",
+                "SQL",
+                "Postman"
+            ]
+        }
+    ]
+}

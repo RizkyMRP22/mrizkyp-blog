@@ -1,0 +1,64 @@
+{
+    "testSuite": {
+        "name": "User Login Flow - Test Suite",
+        "description": "Interactive test case demonstration for user authentication flow",
+        "testCases": [
+            {
+                "id": "TC-001",
+                "step": "Navigate to login page",
+                "action": "Open browser and go to /login",
+                "expectedResult": "Login page loads with email and password fields",
+                "status": "idle"
+            },
+            {
+                "id": "TC-002",
+                "step": "Enter valid email",
+                "action": "Type 'user@example.com' in email field",
+                "expectedResult": "Email field accepts input without error",
+                "status": "idle"
+            },
+            {
+                "id": "TC-003",
+                "step": "Enter valid password",
+                "action": "Type 'P@ssw0rd123' in password field",
+                "expectedResult": "Password is masked and field shows no error",
+                "status": "idle"
+            },
+            {
+                "id": "TC-004",
+                "step": "Click login button",
+                "action": "Click the 'Sign In' button",
+                "expectedResult": "Loading spinner appears, request sent to API",
+                "status": "idle"
+            },
+            {
+                "id": "TC-005",
+                "step": "Verify successful login",
+                "action": "Wait for redirect to dashboard",
+                "expectedResult": "User is redirected to /dashboard with welcome message",
+                "status": "idle"
+            },
+            {
+                "id": "TC-006",
+                "step": "Enter invalid email format",
+                "action": "Type 'invalid-email' in email field",
+                "expectedResult": "Validation error: 'Please enter a valid email address'",
+                "status": "idle"
+            },
+            {
+                "id": "TC-007",
+                "step": "Submit with empty password",
+                "action": "Leave password field empty and click Sign In",
+                "expectedResult": "Validation error: 'Password is required'",
+                "status": "idle"
+            },
+            {
+                "id": "TC-008",
+                "step": "Test incorrect credentials",
+                "action": "Enter valid email but wrong password, click Sign In",
+                "expectedResult": "Error message: 'Invalid email or password'",
+                "status": "idle"
+            }
+        ]
+    }
+}
