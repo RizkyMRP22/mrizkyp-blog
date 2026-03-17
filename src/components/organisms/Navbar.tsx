@@ -49,29 +49,38 @@ export default function Navbar() {
                     {/* Mobile burger */}
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="lg:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+                        className="lg:hidden relative z-50 p-2 -mr-2 rounded-xl text-slate-300 hover:bg-white/5 transition-colors focus:outline-none"
+                        aria-expanded={isOpen}
+                        aria-label="Toggle Navigation"
                     >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            {isOpen ? (
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            ) : (
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                            )}
-                        </svg>
+                        <div className="w-6 h-6 flex flex-col justify-center items-center gap-[5px]">
+                            <span className={`h-0.5 w-5 bg-current rounded-full transform transition-all duration-300 ease-in-out ${isOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+                            <span className={`h-0.5 w-5 bg-current rounded-full transform transition-all duration-300 ease-in-out ${isOpen ? 'opacity-0 translate-x-3' : ''}`} />
+                            <span className={`h-0.5 w-5 bg-current rounded-full transform transition-all duration-300 ease-in-out ${isOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+                        </div>
                     </button>
                 </div>
             </div>
 
             {/* Mobile menu */}
-            {isOpen && (
-                <div className="lg:hidden glass animate-fade-in border-t border-card-border">
-                    <div className="px-4 py-4 space-y-1">
-                        {navItems.map((item) => (
-                            <NavLink key={item.href} href={item.href} label={item.label} onClick={() => setIsOpen(false)} />
+            <div className={`
+                lg:hidden absolute inset-x-0 top-full origin-top transition-all duration-300 ease-in-out border-b border-white/5 
+                ${isOpen ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-0 pointer-events-none'}
+            `}>
+                <div className="bg-nav-bg/95 backdrop-blur-xl shadow-2xl max-h-[80vh] overflow-y-auto w-full border-t border-card-border">
+                    <div className="px-6 py-6 flex flex-col gap-3">
+                        {navItems.map((item, index) => (
+                            <div 
+                                key={item.href} 
+                                className={`transform transition-all duration-300 flex flex-col ${isOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'}`}
+                                style={{ transitionDelay: `${index * 40}ms` }}
+                            >
+                                <NavLink href={item.href} label={item.label} onClick={() => setIsOpen(false)} />
+                            </div>
                         ))}
                     </div>
                 </div>
-            )}
+            </div>
         </nav>
     );
 }

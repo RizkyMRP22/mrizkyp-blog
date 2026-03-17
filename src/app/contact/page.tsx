@@ -23,7 +23,7 @@ export default function ContactPage() {
             <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <SectionTitle title="Get In Touch" subtitle="Have a project or opportunity? I'd love to hear from you" />
 
-                <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                     {/* Contact Info */}
                     <div className="lg:col-span-2 space-y-4">
                         <Card hover={false}>
@@ -46,21 +46,10 @@ export default function ContactPage() {
                                 ))}
                             </div>
                         </Card>
-
-                        {/* <Card hover={false}>
-                            <h3 className="text-lg font-semibold text-white mb-3">Open For</h3>
-                            <ul className="space-y-2">
-                                {['Full-time QA positions', 'Contract/Freelance work', 'QA Consulting', 'Test automation setup', 'Speaking & Mentoring'].map((item) => (
-                                    <li key={item} className="flex items-center gap-2 text-sm text-slate-300">
-                                        <span className="text-success">✓</span> {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        </Card> */}
                     </div>
 
                     {/* Contact Form */}
-                    <div className="lg:col-span-3">
+                    <div className="lg:col-span-2 space-y-4">
                         {/* <ContactForm /> */}
                         <Card hover={false}>
                             <h3 className="text-lg font-semibold text-white mb-3">Open For</h3>

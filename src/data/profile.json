@@ -20,9 +20,9 @@
     "avatar": "/avatar.png",
     "resumeUrl": "https://rizkymrp22.github.io/mrizkyp-cv/",
     "stats": {
-        "yearsExperience": 7,
-        "projectsCompleted": 15,
-        "bugsFound": 2500,
-        "testCasesWritten": 5000
+        "yearsExperience": 5,
+        "projectsCompleted": 10,
+        "bugsFound": 1000,
+        "testCasesWritten": 2500
     }
 }
