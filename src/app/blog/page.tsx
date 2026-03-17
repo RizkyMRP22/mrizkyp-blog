@@ -5,14 +5,14 @@ import SectionTitle from '@/components/atoms/SectionTitle';
 import BlogCard from '@/components/molecules/BlogCard';
 import blogData from '@/data/blogPosts.json';
 
-const categories = ['All', ...new Set(blogData.posts.map(p => p.category))];
+const categories = ['All', ...new Set(blogData.posts.flatMap(p => Array.isArray(p.category) ? p.category : [p.category]))];
 
 export default function BlogPage() {
     const [activeCategory, setActiveCategory] = useState('All');
 
     const filtered = activeCategory === 'All'
         ? blogData.posts
-        : blogData.posts.filter(p => p.category === activeCategory);
+        : blogData.posts.filter(p => Array.isArray(p.category) ? p.category.includes(activeCategory) : p.category === activeCategory);
 
     return (
         <PageLayout>
@@ -35,14 +35,15 @@ export default function BlogPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filtered.map((post) => (
                         <div key={post.id} className="animate-scale-in">
-                            <BlogCard
-                                title={post.title}
-                                excerpt={post.excerpt}
-                                category={post.category}
-                                date={post.date}
-                                readTime={post.readTime}
-                                tags={post.tags}
-                            />
+                                <BlogCard
+                                    title={post.title}
+                                    excerpt={post.excerpt}
+                                    category={post.category}
+                                    date={post.date}
+                                    readTime={post.readTime}
+                                    tags={post.tags}
+                                    link={post.link}
+                                />
                         </div>
                     ))}
                 </div>

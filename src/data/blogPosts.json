@@ -5,9 +5,13 @@
             "title": "Why Shift-Left Testing is Essential in Modern Development",
             "excerpt": "Exploring how integrating testing early in the SDLC reduces costs and improves software quality significantly.",
             "content": "Shift-left testing is a methodology that emphasizes testing early and often in the software development lifecycle...",
-            "category": "Testing Strategy",
+            "category": [
+                "Testing Strategy",
+                "Automation"
+            ],
             "date": "2026-03-10",
             "readTime": "5 min",
+            "link": "https://docs.google.com/presentation/d/1V-cCshPCPsoPr4ICd-xS1IJcQkYB6T4nsLFulyAtanw/edit?usp=sharing",
             "tags": [
                 "Testing",
                 "Strategy",
@@ -23,7 +27,9 @@
             "category": "Automation",
             "date": "2026-02-28",
             "readTime": "8 min",
+            "link": "",
             "tags": [
+                "Testing",
                 "Cypress",
                 "Automation",
                 "JavaScript",
@@ -53,6 +59,7 @@
             "category": "Performance",
             "date": "2026-02-01",
             "readTime": "7 min",
+            "link": "",
             "tags": [
                 "k6",
                 "Performance",
@@ -68,6 +75,7 @@
             "category": "Best Practices",
             "date": "2026-01-20",
             "readTime": "4 min",
+            "link": "",
             "tags": [
                 "Bug Reports",
                 "Communication",

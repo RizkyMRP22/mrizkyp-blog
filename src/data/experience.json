@@ -3,50 +3,18 @@
         {
             "id": 1,
             "company": "Telkom Indonesia",
-            "role": "Technical Lead B2B Regional Support",
-            "period": "Jul 2024 - Present",
-            "location": "Jakarta, Indonesia",
-            "description": "Leading technical execution for regional B2B support services.",
-            "achievements": [
-                "Translated business requirements into technical implementation plans.",
-                "Led sprint planning and managed technical execution for development teams.",
-                "Refined backlog and troubleshot production issues based on incident data.",
-                "Collaborated with cross-functional teams including product owners and stakeholders."
-            ],
-            "technologies": [
-                "JIRA",
-                "Confluence",
-                "Scrum/Agile"
-            ]
-        },
-        {
-            "id": 2,
-            "company": "Telkom University",
-            "role": "Industrial Lecturer",
-            "period": "Mar 2022 - Dec 2023",
-            "location": "Bandung, Indonesia",
-            "description": "Conducted lectures on Software Quality Assurance and Testing methodologies.",
-            "achievements": [
-                "Mentored students in practical QA projects using modern tools.",
-                "Shared industry best practices for automation and manual testing."
-            ],
-            "technologies": [
-                "Mentoring",
-                "QA Methodologies"
-            ]
-        },
-        {
-            "id": 3,
-            "company": "Telkom Indonesia",
             "role": "Software Quality Assurance Engineer",
             "period": "Dec 2018 - Present",
             "location": "Jakarta, Indonesia",
             "description": "Handling QA processes across multiple platforms including Android, iOS, Web, and APIs.",
             "achievements": [
-                "Automated functional testing using Katalon Studio and Playwright.",
-                "Established structured bug reporting and tracking processes with JIRA.",
-                "Implemented API testing automation with Postman and Newman.",
-                "Performed performance testing using Apache JMeter and integrated CI/CD with Jenkins."
+                "Directed QA practices across multiple cross-functional squads, ensuring high-quality product delivery.",
+                "Mentored junior engineers, facilitated onboarding, and conducted technical interviews for talent acquisition.",
+                "Established a robust test case management system using Xray and structured defect tracking in JIRA.",
+                "Engineered automated functional tests for Web, APIs, Android, and iOS platforms using Katalon Studio.",
+                "Developed comprehensive API automation suites with Postman and executed performance tests via JMeter.",
+                "Streamlined release cycles by integrating automated testing pipelines into Jenkins CI/CD.",
+                "Spearheaded R&D for modern testing tools and managed infrastructure for scalable test automation."
             ],
             "technologies": [
                 "Playwright",
@@ -57,6 +25,45 @@
             ]
         },
         {
+            "id": 2,
+            "company": "Telkom Indonesia",
+            "role": "Technical Lead B2B Regional Support",
+            "period": "Jul 2024 - Apr 2025",
+            "location": "Jakarta, Indonesia",
+            "description": "Leading technical execution for regional B2B support services.",
+            "achievements": [
+                "Translated complex business needs into detailed technical requirements and specifications aligned with customer objectives.",
+                "Orchestrated team resource allocation and collaborated with UI/UX designers to deliver intuitive, workflow-based interfaces.",
+                "Spearheaded agile implementation timelines, leading sprint planning to ensure timely delivery and goal alignment.",
+                "Analyzed operational incident tickets to identify root causes, improving monitoring mechanisms for enhanced visibility.",
+                "Leveraged incident data to refine product backlogs, significantly reducing recurring issues and streamlining development.",
+                "Partnered with Product Owners to drive strategic decision-making, prioritize tasks, and swiftly resolve technical obstacles."
+            ],
+            "technologies": [
+                "JIRA",
+                "Confluence",
+                "Scrum/Agile"
+            ]
+        },
+        {
+            "id": 3,
+            "company": "Telkom University",
+            "role": "Industrial Lecturer",
+            "period": "Mar 2022 - Dec 2023",
+            "location": "Bandung, Indonesia",
+            "description": "Conducted lectures on Software Quality Assurance and Testing methodologies.",
+            "achievements": [
+                "Coordinated the QA Industrial Class program in partnership with Telkom Indonesia.",
+                "Delivered comprehensive mentoring sessions, guiding students through practical QA internships.",
+                "Designed and developed industry-aligned learning modules and evaluation materials.",
+                "Evaluated student performance through examinations, interactive activities, and real-world projects."
+            ],
+            "technologies": [
+                "Mentoring",
+                "QA Methodologies"
+            ]
+        },
+        {
             "id": 4,
             "company": "Telkom Indonesia",
             "role": "Software Quality Assurance Engineer (Internship)",
@@ -64,8 +71,8 @@
             "location": "Bandung, Indonesia",
             "description": "Assisted in test execution and documentation during major software releases.",
             "achievements": [
-                "Participated in QA meetings and contributed to defect reporting.",
-                "Supported manual testing efforts for various projects."
+                "Executed manual testing across various projects to assist in major software releases.",
+                "Contributed to QA defect reporting and collaborated effectively in team triage meetings."
             ],
             "technologies": [
                 "Manual Testing",

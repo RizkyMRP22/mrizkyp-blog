@@ -58,7 +58,7 @@ export default function HeroSection() {
                 </div>
 
                 <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in delay-300">
-                    <Link href="/projects">
+                    <Link href="/testing-strategy">
                         <Button variant="primary" size="lg">View My Work</Button>
                     </Link>
                     <Link href="/contact">
