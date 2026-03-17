@@ -7,15 +7,24 @@
             "period": "Dec 2018 - Present",
             "location": "Jakarta, Indonesia",
             "description": "Handling QA processes across multiple platforms including Android, iOS, Web, and APIs.",
-            "achievements": [
-                "Directed QA practices across multiple cross-functional squads, ensuring high-quality product delivery.",
-                "Mentored junior engineers, facilitated onboarding, and conducted technical interviews for talent acquisition.",
-                "Established a robust test case management system using Xray and structured defect tracking in JIRA.",
-                "Engineered automated functional tests for Web, APIs, Android, and iOS platforms using Katalon Studio.",
-                "Developed comprehensive API automation suites with Postman and executed performance tests via JMeter.",
-                "Streamlined release cycles by integrating automated testing pipelines into Jenkins CI/CD.",
-                "Spearheaded R&D for modern testing tools and managed infrastructure for scalable test automation."
-            ],
+            "achievements": {
+                "contribution": [
+                    "Led QA practices across multiple squads, collaborating with Product Owners, Designers, and Developers.",
+                    "Engineered automated functional tests for Web, APIs, Android, and iOS using Katalon Studio.",
+                    "Developed comprehensive API testing automation suites with Postman and executed performance strategies via JMeter.",
+                    "Integrated CI/CD testing pipelines using Jenkins to streamline release cycles.",
+                    "Established test case management frameworks using Xray and robust bug tracking via JIRA.",
+                    "Managed infrastructure for scalable test automation and spearheaded R&D for modern testing tools.",
+                    "Mentored junior engineers and conducted technical recruitment for QA talent acquisition."
+                ],
+                "impact": [
+                    "Reduced manual testing time by 40% through end-to-end test automation.",
+                    "Accelerated deployment cycles by seamlessly integrating QA into CI/CD workflows.",
+                    "Reduced defect leakage in production by improving bug traceability protocols.",
+                    "Delivered a reusable and scalable testing framework utilized across multiple project teams.",
+                    "Fostered a sustainable QA talent pipeline through dedicated mentoring and structured onboarding."
+                ]
+            },
             "technologies": [
                 "Playwright",
                 "Katalon Studio",
@@ -31,14 +40,22 @@
             "period": "Jul 2024 - Apr 2025",
             "location": "Jakarta, Indonesia",
             "description": "Leading technical execution for regional B2B support services.",
-            "achievements": [
-                "Translated complex business needs into detailed technical requirements and specifications aligned with customer objectives.",
-                "Orchestrated team resource allocation and collaborated with UI/UX designers to deliver intuitive, workflow-based interfaces.",
-                "Spearheaded agile implementation timelines, leading sprint planning to ensure timely delivery and goal alignment.",
-                "Analyzed operational incident tickets to identify root causes, improving monitoring mechanisms for enhanced visibility.",
-                "Leveraged incident data to refine product backlogs, significantly reducing recurring issues and streamlining development.",
-                "Partnered with Product Owners to drive strategic decision-making, prioritize tasks, and swiftly resolve technical obstacles."
-            ],
+            "achievements": {
+                "contribution": [
+                    "Translated complex business objectives into comprehensive technical requirements and specifications.",
+                    "Orchestrated team resource allocation and partnered with UI/UX designers to deliver intuitive interfaces.",
+                    "Spearheaded agile implementation timelines, aggressively managing sprint planning for timely deliveries.",
+                    "Analyzed operational incidents to identify root causes and strengthen tracking mechanisms.",
+                    "Refined product backlogs using data-driven incident insights to systematically mitigate recurring issues.",
+                    "Collaborated with stakeholders to drive technical decision-making and rapidly unblock development hurdles."
+                ],
+                "impact": [
+                    "Accelerated product delivery timelines via rigorous, structured sprint execution.",
+                    "Substantially reduced incident recurrence rates through preemptive backlog adjustments.",
+                    "Elevated system reliability and transparency via advanced root-cause analysis reporting.",
+                    "Achieved seamless alignment between technical execution and scalable business growth objectives."
+                ]
+            },
             "technologies": [
                 "JIRA",
                 "Confluence",
@@ -52,12 +69,19 @@
             "period": "Mar 2022 - Dec 2023",
             "location": "Bandung, Indonesia",
             "description": "Conducted lectures on Software Quality Assurance and Testing methodologies.",
-            "achievements": [
-                "Coordinated the QA Industrial Class program in partnership with Telkom Indonesia.",
-                "Delivered comprehensive mentoring sessions, guiding students through practical QA internships.",
-                "Designed and developed industry-aligned learning modules and evaluation materials.",
-                "Evaluated student performance through examinations, interactive activities, and real-world projects."
-            ],
+            "achievements": {
+                "contribution": [
+                    "Coordinated the QA Industrial Class program in partnership with Telkom Indonesia.",
+                    "Facilitated comprehensive synchronous and asynchronous QA mentoring and internship guidance.",
+                    "Architected industry-aligned learning modules and comprehensive final exam materials.",
+                    "Evaluated student performance through hands-on examinations and real-world internship projects."
+                ],
+                "impact": [
+                    "Successfully equipped over 100 students with practical, job-ready QA engineering skills.",
+                    "Solidified academic-industry collaboration by integrating practical enterprise requirements into the curriculum.",
+                    "Boosted student engagement and graduation outcomes using real-world applied QA scenarios."
+                ]
+            },
             "technologies": [
                 "Mentoring",
                 "QA Methodologies"
@@ -70,10 +94,16 @@
             "period": "Jul 2018 - Dec 2018",
             "location": "Bandung, Indonesia",
             "description": "Assisted in test execution and documentation during major software releases.",
-            "achievements": [
-                "Executed manual testing across various projects to assist in major software releases.",
-                "Contributed to QA defect reporting and collaborated effectively in team triage meetings."
-            ],
+            "achievements": {
+                "contribution": [
+                    "Assisted in rigorous test execution and documentation for major enterprise software releases.",
+                    "Contributed to cross-functional QA triage meetings and detailed defect reporting pipelines."
+                ],
+                "impact": [
+                    "Established a robust foundational command of core QA methodologies and testing processes.",
+                    "Gained hands-on workflow exposure to enterprise-level QA tools and collaborative agile ecosystems."
+                ]
+            },
             "technologies": [
                 "Manual Testing",
                 "JIRA"
