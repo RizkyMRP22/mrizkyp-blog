@@ -31,7 +31,12 @@ export default function ExperienceCard({ company, role, period, location, descri
             <div className="glass rounded-xl p-6 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
                     <h3 className="text-lg font-bold text-white">{role}</h3>
-                    <span className="text-sm text-primary-light font-medium">{period}</span>
+                    <span className="text-[10px] uppercase tracking-wider font-bold text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-full border border-emerald-400/20 flex items-center gap-1.5 w-fit">
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        {period}
+                    </span>
                 </div>
 
                 <div className="flex items-center gap-2 mb-3">
@@ -54,7 +59,7 @@ export default function ExperienceCard({ company, role, period, location, descri
                             <ul className="space-y-2">
                                 {achievements.contribution.map((a, i) => (
                                     <li key={i} className="text-sm text-slate-300 flex items-start gap-2 leading-relaxed">
-                                        <span className="text-emerald-400 mt-1 min-w-[12px]">▸</span> 
+                                        <span className="text-emerald-400 mt-1 min-w-[12px]">▸</span>
                                         <span>{a}</span>
                                     </li>
                                 ))}
@@ -74,7 +79,7 @@ export default function ExperienceCard({ company, role, period, location, descri
                             <ul className="space-y-2">
                                 {achievements.impact.map((a, i) => (
                                     <li key={i} className="text-sm text-slate-300 flex items-start gap-2 leading-relaxed">
-                                        <span className="text-primary-light mt-1 min-w-[12px]">▸</span> 
+                                        <span className="text-primary-light mt-1 min-w-[12px]">▸</span>
                                         <span>{a}</span>
                                     </li>
                                 ))}
@@ -83,10 +88,23 @@ export default function ExperienceCard({ company, role, period, location, descri
                     )}
                 </div>
 
-                <div className="flex flex-wrap gap-1.5 pt-4 border-t border-card-border">
-                    {technologies.map((tech) => (
-                        <Badge key={tech} label={tech} variant="default" size="sm" />
-                    ))}
+                <div className="pt-5 mt-auto border-t border-white/5">
+                    <div className="flex items-center gap-2 mb-3">
+                        <svg className="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                        <span className="text-[11px] font-bold text-slate-300 uppercase tracking-widest">Tech Stack</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                        {technologies.map((tech) => (
+                            <span 
+                                key={tech} 
+                                className="px-2.5 py-1 text-[11px] font-medium bg-secondary/10 text-cyan-200 border border-secondary/20 rounded-md hover:bg-secondary/20 transition-colors"
+                            >
+                                {tech}
+                            </span>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
