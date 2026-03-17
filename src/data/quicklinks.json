@@ -1,0 +1,40 @@
+{
+    "quickLink": [
+        {
+            "href": "/projects",
+            "label": "Projects",
+            "icon": "🚀",
+            "desc": "View my QA projects and frameworks"
+        },
+        {
+            "href": "/experience",
+            "label": "Experience",
+            "icon": "💼",
+            "desc": "Professional journey"
+        },
+        {
+            "href": "/testing-strategy",
+            "label": "Testing Strategy",
+            "icon": "📋",
+            "desc": "How I approach QA testing strategy"
+        },
+        {
+            "href": "/skills",
+            "label": "Skills",
+            "icon": "💡",
+            "desc": "Technical skills & tools"
+        },
+        {
+            "href": "/test-artifacts",
+            "label": "Test Artifacts",
+            "icon": "🧪",
+            "desc": "Interactive demos & dashboards"
+        },
+        {
+            "href": "/case-studies",
+            "label": "Case Studies",
+            "icon": "📊",
+            "desc": "Real-world QA success stories"
+        }
+    ]
+}

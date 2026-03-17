@@ -1,31 +1,22 @@
 import PageLayout from '@/components/templates/PageLayout';
 import HeroSection from '@/components/organisms/HeroSection';
 import Link from 'next/link';
-
-const quickLinks = [
-  { href: '/projects', label: 'Projects', icon: '🚀', desc: 'View my QA projects and frameworks' },
-  { href: '/test-artifacts', label: 'Test Artifacts', icon: '🧪', desc: 'Interactive demos & dashboards' },
-  { href: '/case-studies', label: 'Case Studies', icon: '📊', desc: 'Real-world QA success stories' },
-  { href: '/skills', label: 'Skills', icon: '💡', desc: 'Technical skills & tools' },
-  { href: '/blog', label: 'Blog', icon: '✍️', desc: 'QA insights & tutorials' },
-  { href: '/experience', label: 'Experience', icon: '💼', desc: 'Professional journey' },
-];
+import quickLinks from '@/data/quicklinks.json';
 
 export default function HomePage() {
   return (
     <PageLayout>
       <HeroSection />
-
       {/* Quick Links Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">Explore My Work</h2>
-          <p className="text-muted text-lg">Discover My QA expertise through projects, case studies, and interactive demos</p>
+          <p className="text-muted text-lg">Discover My QA expertise through strategy, projects, case studies, and interactive demos</p>
           <div className="mt-4 mx-auto w-24 h-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-full" />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {quickLinks.map((link) => (
+          {quickLinks.quickLink.map((link) => (
             <Link key={link.href} href={link.href}>
               <div className="glass rounded-2xl p-6 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10 hover:border-primary/30 transition-all duration-300 h-full cursor-pointer">
                 <div className="text-4xl mb-4">{link.icon}</div>

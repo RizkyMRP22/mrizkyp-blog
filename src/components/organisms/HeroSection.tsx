@@ -51,7 +51,9 @@ export default function HeroSection() {
                         <span className="ml-0.5 w-[2px] h-8 md:h-10 bg-primary-light animate-pulse" />
                     </div>
                     <p className="text-lg text-muted max-w-2xl mx-auto mb-8 leading-relaxed">
-                        {profileData.tagline}. {profileData.bio}
+                        {/* {profileData.tagline}. {profileData.bio} */}
+                        {profileData.tagline}
+
                     </p>
                 </div>
 
