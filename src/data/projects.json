@@ -12,7 +12,8 @@
             ],
             "category": "Automation",
             "image": "/projects/api.png",
-            "demoUrl": "#",
+            "webUrl": "",
+            "mobileUrl": "",
             "githubUrl": "https://github.com/mrizkyp22/Playwright-RestAPI",
             "highlights": [
                 "Automated API contract testing",
@@ -29,9 +30,10 @@
                 "Data Profiling",
                 "QA Automation"
             ],
-            "category": "Web",
+            "category": "Mobile",
             "image": "/projects/ecommerce.png",
-            "demoUrl": "#",
+            "webUrl": "",
+            "mobileUrl": "https://play.google.com/store/search?q=myindibiz+assistant&c=apps&hl=id",
             "githubUrl": "#",
             "highlights": [
                 "Ensured high data accuracy",
@@ -48,9 +50,13 @@
                 "CRM Integration",
                 "End-to-end Testing"
             ],
-            "category": "Enterprise",
+            "category": [
+                "Web",
+                "Mobile"
+            ],
             "image": "/projects/banking.png",
-            "demoUrl": "#",
+            "webUrl": "https://newgobeyond.mytens.co.id/",
+            "mobileUrl": "https://play.google.com/store/apps/details?id=com.telkom.tdsam",
             "githubUrl": "#",
             "highlights": [
                 "Verified end-to-end sales lifecycle",
@@ -67,9 +73,13 @@
                 "Customer Support",
                 "Testing Strategy"
             ],
-            "category": "Enterprise",
+            "category": [
+                "Web",
+                "Mobile"
+            ],
             "image": "/projects/healthcare.png",
-            "demoUrl": "#",
+            "webUrl": "https://care.mytens.co.id/",
+            "mobileUrl": "https://play.google.com/store/apps/details?id=id.co.telkom.mytenscare&hl=id",
             "githubUrl": "#",
             "highlights": [
                 "Improved issue tracking validation",
@@ -86,9 +96,10 @@
                 "Enterprise Architecture",
                 "Quality Assurance"
             ],
-            "category": "Enterprise",
+            "category": "Web",
             "image": "/projects/bdd.png",
-            "demoUrl": "#",
+            "webUrl": "https://cms.mytens.co.id/",
+            "mobileUrl": "",
             "githubUrl": "#",
             "highlights": [
                 "Ensured strict role-based access",

@@ -5,14 +5,21 @@ import SectionTitle from '@/components/atoms/SectionTitle';
 import ProjectCard from '@/components/molecules/ProjectCard';
 import projectsData from '@/data/projects.json';
 
-const categories = ['All', ...new Set(projectsData.projects.map(p => p.category))];
+const allCategories = projectsData.projects.flatMap(p =>
+    Array.isArray(p.category) ? p.category : [p.category]
+);
+const categories = ['All', ...new Set(allCategories)];
 
 export default function ProjectsPage() {
     const [activeCategory, setActiveCategory] = useState('All');
 
     const filtered = activeCategory === 'All'
         ? projectsData.projects
-        : projectsData.projects.filter(p => p.category === activeCategory);
+        : projectsData.projects.filter(p =>
+            Array.isArray(p.category)
+                ? p.category.includes(activeCategory)
+                : p.category === activeCategory
+        );
 
     return (
         <PageLayout>
@@ -41,7 +48,8 @@ export default function ProjectsPage() {
                                 tags={project.tags}
                                 highlights={project.highlights}
                                 githubUrl={project.githubUrl}
-                                demoUrl={project.demoUrl}
+                                webUrl={project.webUrl}
+                                mobileUrl={project.mobileUrl}
                             />
                         </div>
                     ))}
