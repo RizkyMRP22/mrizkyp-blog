@@ -2,6 +2,7 @@ import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import ContactForm from '@/components/organisms/ContactForm';
 import Card from '@/components/atoms/Card';
+import profileData from '@/data/profile.json';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -10,10 +11,10 @@ export const metadata: Metadata = {
 };
 
 const contactInfo = [
-    { icon: '✉️', label: 'Email', value: 'rizky.qa@email.com', href: 'mailto:rizky.qa@email.com' },
-    { icon: '🐙', label: 'GitHub', value: 'github.com/mrizkyp22', href: 'https://github.com/mrizkyp22' },
-    { icon: '💼', label: 'LinkedIn', value: 'linkedin.com/in/mrizkyp22', href: 'https://linkedin.com/in/mrizkyp22' },
-    { icon: '📍', label: 'Location', value: 'Jakarta, Indonesia', href: null },
+    { icon: '✉️', label: 'Email', value: profileData.email, href: `mailto:${profileData.email}` },
+    { icon: '🐙', label: 'GitHub', value: profileData.github, href: profileData.github },
+    { icon: '💼', label: 'LinkedIn', value: profileData.linkedin, href: profileData.linkedin },
+    { icon: '📍', label: 'Location', value: profileData.location, href: null },
 ];
 
 export default function ContactPage() {
@@ -64,7 +65,7 @@ export default function ContactPage() {
                         <Card hover={false}>
                             <h3 className="text-lg font-semibold text-white mb-3">Open For</h3>
                             <ul className="space-y-2">
-                                {['Full-time QA positions', 'Contract/Freelance work', 'QA Consulting', 'Test automation setup', 'Speaking & Mentoring'].map((item) => (
+                                {['Full-time QA positions', 'Contract/Freelance work', 'QA Consulting', 'Test Automation Setup', 'Speaking & Mentoring'].map((item) => (
                                     <li key={item} className="flex items-center gap-2 text-sm text-slate-300">
                                         <span className="text-success">✓</span> {item}
                                     </li>

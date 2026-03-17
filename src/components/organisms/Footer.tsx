@@ -20,9 +20,9 @@ export default function Footer() {
     return (
         <footer className="border-t border-card-border mt-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* Brand */}
-                    <div>
+                {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-8"> */}
+                {/* Brand */}
+                {/* <div>
                         <div className="flex items-center gap-2 mb-4">
                             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-sm">
                                 MRP
@@ -32,10 +32,10 @@ export default function Footer() {
                         <p className="text-sm text-muted leading-relaxed">
                             Building quality into every line of code. Passionate about test automation, quality assurance, and continuous improvement.
                         </p>
-                    </div>
+                    </div> */}
 
-                    {/* Quick Links */}
-                    <div>
+                {/* Quick Links */}
+                {/* <div>
                         <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Quick Links</h4>
                         <ul className="space-y-2">
                             {quickLinks.map((link) => (
@@ -46,10 +46,10 @@ export default function Footer() {
                                 </li>
                             ))}
                         </ul>
-                    </div>
+                    </div> */}
 
-                    {/* Social */}
-                    <div>
+                {/* Social */}
+                {/* <div>
                         <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Connect</h4>
                         <div className="space-y-2">
                             {socialLinks.map((link) => (
@@ -64,10 +64,10 @@ export default function Footer() {
                                 </a>
                             ))}
                         </div>
-                    </div>
-                </div>
+                    </div> */}
+                {/* </div> */}
 
-                <div className="mt-10 pt-6 border-t border-card-border text-center text-xs text-muted">
+                <div className="border-card-border text-center text-xs text-muted">
                     © {new Date().getFullYear()} — Made with ❤️ by MRizkyP
                 </div>
             </div>
