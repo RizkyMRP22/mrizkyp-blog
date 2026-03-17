@@ -1,0 +1,119 @@
+{
+  "phases": [
+    {
+      "id": "grooming-sprint-planning",
+      "title": "Grooming & Sprint Planning",
+      "tasks": [
+        "Check if every backlog requirement is available.",
+        "Check the design in Figma, ensuring the design covers the defined requirements.",
+        "Provide feedback on potentially missing requirements or designs.",
+        "Ensure positive and negative cases are handled.",
+        "Create test cases in Squash for backlogs/requirements that have been included in the sprint.",
+        "Identify the impact of enhancements/improvements (both existing and resulting conditions).",
+        "Production Planning: Create Test Plan and Release Document."
+      ],
+      "tools": [
+        "JIRA/Taiga",
+        "Squash",
+        "Figma",
+        "DB Tools"
+      ]
+    },
+    {
+      "id": "api-contract",
+      "title": "API Contract",
+      "tasks": [
+        "Ensure the API covers the requirements/backlogs.",
+        "Ensure positive and negative API responses are covered (codes: 2xx, 4xx, 5xx).",
+        "Ensure the API has schemas and examples.",
+        "Ensure data-testid (FE) is implemented (nice to have)."
+      ],
+      "tools": [
+        "Postman/hoppman",
+        "JIRA",
+        "Figma"
+      ]
+    },
+    {
+      "id": "development",
+      "title": "Development",
+      "tasks": [
+        "Create QA Subtasks, minimally for Test Case creation. Example: [QA] Create Login feature Test Case.",
+        "Create test cases in Squash based on designs and requirements/backlogs.",
+        "Ensure development flow aligns with the planning.",
+        "Analyze the flow to find possible edge cases not covered by requirements or design.",
+        "Create API automation in Postman based on the API contract (nice to have).",
+        "Ensure test data is ready."
+      ],
+      "tools": [
+        "JIRA/Taiga",
+        "Squash",
+        "Figma",
+        "Postman/hoppman",
+        "charles proxy",
+        "gitlab",
+        "DB Tools"
+      ]
+    },
+    {
+      "id": "in-qa",
+      "title": "In QA",
+      "tasks": [
+        "Ensure features have been built and deployed to the Dev server.",
+        "Validate developer tasks against requirements/backlogs: Check UI, API, and Integration.",
+        "Execute the test cases created in Squash.",
+        "Reject subtasks if they don't meet the requirements, providing test documentation.",
+        "Create a bug task if out-of-sprint feature bugs are found, providing test documentation.",
+        "Performance testing for service and frontend (nice to have)."
+      ],
+      "tools": [
+        "JIRA/Taiga",
+        "Confluence",
+        "Postman/Hoppman",
+        "Squash",
+        "Figma"
+      ]
+    },
+    {
+      "id": "prod-preparation",
+      "title": "Prod Preparation",
+      "tasks": [
+        "Ensure features have been built and deployed to the Staging server.",
+        "Perform Regression Testing and update test cases in Squash on Staging ENV.",
+        "Record all changelogs/version updates in the release notes.",
+        "Run Postman API test folder based on release/all features (if test scripts are defined).",
+        "Prepare UAT/SIT documentation and include signed approvals (if conditional requirements apply).",
+        "3rd party performance testing (if needed)."
+      ],
+      "tools": [
+        "JIRA/Taiga",
+        "Confluence",
+        "Postman/Hoppman",
+        "Squash",
+        "jenkins",
+        "discord",
+        "gsheet"
+      ]
+    },
+    {
+      "id": "after-prod",
+      "title": "After Prod",
+      "tasks": [
+        "Ensure features have been built and deployed to the Production server.",
+        "Perform smoke testing when features are released.",
+        "Reproduce bugs upon receiving issue reports.",
+        "Report hotfixes when finding or receiving issue reports.",
+        "Update versions if hotfixes are deployed.",
+        "Conduct post-production evaluation.",
+        "Monitor services."
+      ],
+      "tools": [
+        "JIRA/Taiga",
+        "Confluence",
+        "Squash",
+        "jenkins",
+        "discord"
+      ]
+    }
+  ]
+}

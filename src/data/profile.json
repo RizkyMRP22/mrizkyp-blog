@@ -7,20 +7,21 @@
         "Quality Assurance Engineer",
         "Test Automation Expert",
         "Quality Advocate",
-        "Bug Hunter"
+        "Bug Hunter",
+        "Technical Lead"
     ],
     "tagline": "Building quality into every development cycle",
-    "bio": "Passionate QA Engineer with 7+ years of experience in manual testing, test automation, and quality assurance processes. I specialize in building robust test frameworks, identifying critical bugs, and ensuring software products meet the highest quality standards. My approach combines technical expertise with a keen eye for user experience.",
+    "bio": "Experienced Technical Lead focused on translating business needs into technical plans, leading sprint planning, and managing cross-functional team execution. I have a strong background in Software Quality Assurance, spanning automation, performance, and API testing, helping deliver high-impact products on time while maintaining strong alignment with business goals and user needs.",
     "philosophy": "Quality is not an act, it is a habit. I believe in shifting-left testing, continuous improvement, and collaborative development. Every bug found in development saves ten in production.",
     "location": "Jakarta, Indonesia",
     "email": "rizky.qa@email.com",
     "github": "https://github.com/mrizkyp22",
     "linkedin": "https://linkedin.com/in/mrizkyp22",
     "avatar": "/avatar.png",
-    "resumeUrl": "/resume.pdf",
+    "resumeUrl": "https://rizkymrp22.github.io/mrizkyp-cv/",
     "stats": {
         "yearsExperience": 7,
-        "projectsCompleted": 30,
+        "projectsCompleted": 15,
         "bugsFound": 2500,
         "testCasesWritten": 5000
     }

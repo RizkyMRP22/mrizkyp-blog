@@ -6,12 +6,13 @@ import NavLink from '@/components/molecules/NavLink';
 const navItems = [
     { href: '/', label: 'Home' },
     { href: '/about', label: 'About' },
-    { href: '/skills', label: 'Skills' },
+    { href: '/experience', label: 'Experience' },
+    { href: '/testing-strategy', label: 'Testing Strategy' },
     { href: '/projects', label: 'Projects' },
+    { href: '/skills', label: 'Skills' },
     { href: '/case-studies', label: 'Case Studies' },
     { href: '/blog', label: 'Blog' },
     { href: '/test-artifacts', label: 'Test Artifacts' },
-    { href: '/experience', label: 'Experience' },
     { href: '/contact', label: 'Contact' },
 ];
 

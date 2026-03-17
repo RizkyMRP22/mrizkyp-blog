@@ -2,6 +2,8 @@ import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import Card from '@/components/atoms/Card';
 import profileData from '@/data/profile.json';
+import educationData from '@/data/education.json';
+import certificationsData from '@/data/certifications.json';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
@@ -41,8 +43,54 @@ export default function AboutPage() {
                         </blockquote>
                     </Card>
 
+                    {/* Education */}
+                    <Card hover={false}>
+                        <h4 className="text-lg font-semibold text-white mb-4">🎓 Education</h4>
+                        <div className="space-y-4">
+                            {educationData.education.map((edu, idx) => (
+                                <div key={idx} className="border-l-2 border-slate-700 pl-4">
+                                    <h5 className="font-bold text-white">{edu.degree}</h5>
+                                    <p className="text-slate-400">{edu.institution}</p>
+                                    <p className="text-sm text-primary-light">{edu.period}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </Card>
+
+                    {/* Certifications & Courses */}
+                    <Card hover={false}>
+                        <h4 className="text-lg font-semibold text-white mb-4">🏆 Certifications & Courses</h4>
+                        <ul className="space-y-3">
+                            {certificationsData.certifications.map((cert, idx) => (
+                                <li key={idx} className="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
+                                    <span className="text-primary mt-1">✓</span>
+                                    <div className="flex-grow">
+                                        <p className="text-slate-200 font-medium">{cert.name}</p>
+                                        <p className="text-sm text-slate-400 mb-1">
+                                            {cert.issuer} {cert.year && `• ${cert.year}`}
+                                        </p>
+                                        <div className="text-sm mt-1">
+                                            {cert.link ? (
+                                                <a
+                                                    href={cert.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-primary hover:text-primary-light flex items-center gap-1 transition-colors w-fit"
+                                                >
+                                                    View Certificate <span className="text-xs opacity-70">↗</span>
+                                                </a>
+                                            ) : (
+                                                <span className="text-slate-500 italic text-xs">Link Not Available</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </Card>
+
                     {/* Stats */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {[
                             { label: 'Years Experience', value: `${profileData.stats.yearsExperience}+`, icon: '📅' },
                             { label: 'Projects', value: `${profileData.stats.projectsCompleted}+`, icon: '🚀' },
@@ -55,7 +103,7 @@ export default function AboutPage() {
                                 <div className="text-xs text-muted mt-1">{stat.label}</div>
                             </Card>
                         ))}
-                    </div>
+                    </div> */}
 
                     {/* Links */}
                     <Card hover={false}>

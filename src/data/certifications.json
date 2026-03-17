@@ -1,0 +1,46 @@
+{
+  "certifications": [
+    {
+      "name": "Certified ISTQB® - Test Analyst Advanced Level (CTAL-TA)",
+      "year": "2024",
+      "issuer": "ISTQB",
+      "link": "https://drive.google.com/file/d/1DbtSIKT6TLM9HojugNy49mgqlFg-g5fV/view"
+    },
+    {
+      "name": "Google Data Analytics",
+      "year": "2023",
+      "issuer": "Coursera",
+      "link": "https://www.coursera.org/account/accomplishments/specialization/certificate/D3A8DKD9QQSC"
+    },
+    {
+      "name": "Certified ISTQB® - Tester Foundation Level (CTFL)",
+      "year": "2021",
+      "issuer": "ISTQB",
+      "link": "https://scr.istqb.org/?name=Mohammad+Rizky+Pratama&number=21-CTFL-187617-12&orderBy=relevancy&orderDirection=&dateStart=&dateEnd=&expiryStart=&expiryEnd=&certificationBody=&examProvider=&certificationLevel=&country=&resultsPerPage=10"
+    },
+    {
+      "name": "Certified Indonesia Scrum Master (ISM) 2",
+      "year": "2021",
+      "issuer": "EKIPA",
+      "link": "https://drive.google.com/file/d/1pGWhDOxxhIgFrxwGoNhMVbu78fTOEgws/view"
+    },
+    {
+      "name": "Continuous Delivery and Devops",
+      "year": "2021",
+      "issuer": "Coursera",
+      "link": "https://drive.google.com/file/d/1LmOwaayaG0-JS0I_1xlxeqnr2LJaW1M6/view"
+    },
+    {
+      "name": "Certified Indonesia Scrum Master (ISM) 1",
+      "year": "2020",
+      "issuer": "EKIPA",
+      "link": "https://drive.google.com/file/d/1OXEBQ3lSmikFh9BFl1Y5A1xT6bG4Cokd/view"
+    },
+    {
+      "name": "Katalon Studio - Step by Step for Beginners",
+      "year": "2019",
+      "issuer": "Udemy",
+      "link": ""
+    }
+  ]
+}

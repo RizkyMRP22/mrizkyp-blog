@@ -2,122 +2,98 @@
     "projects": [
         {
             "id": 1,
-            "title": "E-Commerce Platform QA",
-            "description": "End-to-end testing for a large-scale e-commerce platform handling 10K+ daily transactions. Built comprehensive test suites covering payment flows, inventory management, and user journeys.",
+            "title": "Playwright API Testing",
+            "description": "Tools Reporting for API Testing With Playwright.",
             "tags": [
-                "Selenium",
-                "Java",
-                "Jenkins",
-                "TestRail"
+                "Playwright",
+                "API Testing",
+                "TypeScript",
+                "Reporting"
             ],
             "category": "Automation",
-            "image": "/projects/ecommerce.png",
+            "image": "/projects/api.png",
             "demoUrl": "#",
-            "githubUrl": "https://github.com/mrizkyp22/ecommerce-qa",
+            "githubUrl": "https://github.com/mrizkyp22/Playwright-RestAPI",
             "highlights": [
-                "200+ automated test cases",
-                "95% regression coverage",
-                "50% reduction in release bugs"
+                "Automated API contract testing",
+                "Built custom reporting metrics",
+                "Integrated into CI/CD"
             ]
         },
         {
             "id": 2,
-            "title": "Mobile Banking App Testing",
-            "description": "Comprehensive QA strategy for a mobile banking application. Implemented automated UI testing with Appium and API testing with REST Assured across iOS and Android platforms.",
+            "title": "MyIndiBiz Assistant",
+            "description": "Assistant for B2B market profiling and sizing.",
             "tags": [
-                "Appium",
-                "REST Assured",
-                "Python",
-                "JIRA"
+                "B2B",
+                "Data Profiling",
+                "QA Automation"
             ],
-            "category": "Mobile",
-            "image": "/projects/banking.png",
+            "category": "Web",
+            "image": "/projects/ecommerce.png",
             "demoUrl": "#",
-            "githubUrl": "https://github.com/mrizkyp22/mobile-banking-qa",
+            "githubUrl": "#",
             "highlights": [
-                "Cross-platform testing",
-                "Security testing included",
-                "CI/CD integration"
+                "Ensured high data accuracy",
+                "Automated critical regression flows",
+                "Streamlined market data retrieval"
             ]
         },
         {
             "id": 3,
-            "title": "Healthcare SaaS QA Framework",
-            "description": "Designed and built a custom test automation framework for a healthcare SaaS product. Ensured HIPAA compliance through rigorous security testing protocols.",
+            "title": "MyTens GoBeyond",
+            "description": "Presales and Sales Funneling project in Telkom.",
             "tags": [
-                "Cypress",
-                "TypeScript",
-                "GitHub Actions",
-                "Docker"
+                "Sales Funnel",
+                "CRM Integration",
+                "End-to-end Testing"
             ],
-            "category": "Automation",
-            "image": "/projects/healthcare.png",
+            "category": "Enterprise",
+            "image": "/projects/banking.png",
             "demoUrl": "#",
-            "githubUrl": "https://github.com/mrizkyp22/healthcare-qa",
+            "githubUrl": "#",
             "highlights": [
-                "Custom framework design",
-                "HIPAA compliance testing",
-                "80% faster test execution"
+                "Verified end-to-end sales lifecycle",
+                "Handled complex integrations",
+                "Secured zero high-priority leaks"
             ]
         },
         {
             "id": 4,
-            "title": "API Testing Suite",
-            "description": "Built a comprehensive API testing suite using Postman and Newman for a microservices architecture. Automated contract testing and performance benchmarking.",
+            "title": "MyTens Care",
+            "description": "After sales project in Telkom.",
             "tags": [
-                "Postman",
-                "Newman",
-                "k6",
-                "JavaScript"
+                "After Sales",
+                "Customer Support",
+                "Testing Strategy"
             ],
-            "category": "API",
-            "image": "/projects/api.png",
+            "category": "Enterprise",
+            "image": "/projects/healthcare.png",
             "demoUrl": "#",
-            "githubUrl": "https://github.com/mrizkyp22/api-test-suite",
+            "githubUrl": "#",
             "highlights": [
-                "150+ API test cases",
-                "Contract testing",
-                "Performance baselines"
+                "Improved issue tracking validation",
+                "Automated core support workflows",
+                "Reduced regression cycle time"
             ]
         },
         {
             "id": 5,
-            "title": "Performance Testing Dashboard",
-            "description": "Created a real-time performance testing dashboard that aggregates results from JMeter and k6 runs. Provides historical trends and threshold alerts.",
+            "title": "MyTens AMP",
+            "description": "Approval management project.",
             "tags": [
-                "JMeter",
-                "k6",
-                "Grafana",
-                "Docker"
+                "Approval Workflows",
+                "Enterprise Architecture",
+                "Quality Assurance"
             ],
-            "category": "Performance",
-            "image": "/projects/performance.png",
-            "demoUrl": "#",
-            "githubUrl": "https://github.com/mrizkyp22/perf-dashboard",
-            "highlights": [
-                "Real-time metrics",
-                "Historical trending",
-                "Custom alerting"
-            ]
-        },
-        {
-            "id": 6,
-            "title": "BDD Test Framework",
-            "description": "Implemented a Behavior-Driven Development testing framework using Cucumber and Playwright. Enabled non-technical stakeholders to write and understand test scenarios.",
-            "tags": [
-                "Playwright",
-                "Cucumber",
-                "TypeScript",
-                "BDD"
-            ],
-            "category": "Automation",
+            "category": "Enterprise",
             "image": "/projects/bdd.png",
             "demoUrl": "#",
-            "githubUrl": "https://github.com/mrizkyp22/bdd-framework",
+            "githubUrl": "#",
             "highlights": [
-                "Living documentation",
-                "Stakeholder collaboration",
-                "90% acceptance test coverage"
+                "Ensured strict role-based access",
+                "Validated complex multilevel approvals",
+                "Enhanced system stability"
             ]
         }
     ]

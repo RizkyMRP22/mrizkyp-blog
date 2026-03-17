@@ -68,7 +68,7 @@ export default function Footer() {
                 </div>
 
                 <div className="mt-10 pt-6 border-t border-card-border text-center text-xs text-muted">
-                    © {new Date().getFullYear()} MRizkyP. Built with Next.js & Tailwind CSS.
+                    © {new Date().getFullYear()} — Made with ❤️ by MRizkyP
                 </div>
             </div>
         </footer>
