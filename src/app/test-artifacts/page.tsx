@@ -1,8 +1,6 @@
 import PageLayout from '@/components/templates/PageLayout';
-import BugReportDemo from '@/components/organisms/BugReportDemo';
-import TestCaseRunner from '@/components/organisms/TestCaseRunner';
-import AutomationDashboard from '@/components/organisms/AutomationDashboard';
-import automationData from '@/data/automationResults.json';
+import SectionTitle from '@/components/atoms/SectionTitle';
+import ComingSoon from '@/components/molecules/ComingSoon';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -13,11 +11,15 @@ export const metadata: Metadata = {
 export default function TestArtifactsPage() {
     return (
         <PageLayout>
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 space-y-20">
-                <BugReportDemo />
-                <TestCaseRunner />
-                <AutomationDashboard data={automationData} />
-            </div>
+            <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-white/5">
+                <SectionTitle title="Test Artifacts" subtitle="Interactive QA demonstrations and testing tools built for real-world scenarios" />
+                <div className="mt-8">
+                    <ComingSoon 
+                        title="Workshop Under Construction"
+                        description="I am currently building interactive test demonstrations including a bug reporter and automation dashboard. Please visit again soon!"
+                    />
+                </div>
+            </section>
         </PageLayout>
     );
 }

@@ -4,17 +4,20 @@ import Link from 'next/link';
 import NavLink from '@/components/molecules/NavLink';
 
 const navItems = [
-    { href: '/', label: 'Home' },
-    { href: '/about', label: 'About' },
-    { href: '/experience', label: 'Experience' },
-    { href: '/testing-strategy', label: 'Testing Strategy' },
-    { href: '/projects', label: 'Projects' },
-    { href: '/skills', label: 'Skills' },
-    { href: '/case-studies', label: 'Case Studies' },
-    { href: '/blog', label: 'Blog' },
-    { href: '/test-artifacts', label: 'Test Artifacts' },
-    { href: '/contact', label: 'Contact' },
-];
+    { href: '/', label: 'Home', comingSoon: false },
+    { href: '/about', label: 'About', comingSoon: false },
+    { href: '/experience', label: 'Experience', comingSoon: false },
+    { href: '/testing-strategy', label: 'Testing Strategy', comingSoon: false },
+    { href: '/projects', label: 'Projects', comingSoon: false },
+    { href: '/skills', label: 'Skills', comingSoon: true },
+    { href: '/case-studies', label: 'Case Studies', comingSoon: true },
+    { href: '/blog', label: 'Blog', comingSoon: true },
+    { href: '/test-artifacts', label: 'Test Artifacts', comingSoon: true },
+    { href: '/contact', label: 'Contact', comingSoon: false },
+].map(item => ({
+    ...item,
+    href: item.comingSoon ? `/coming-soon?page=${encodeURIComponent(item.label)}` : item.href,
+}));
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -70,8 +73,8 @@ export default function Navbar() {
                 <div className="bg-nav-bg/95 backdrop-blur-xl shadow-2xl max-h-[80vh] overflow-y-auto w-full border-t border-card-border">
                     <div className="px-6 py-6 flex flex-col gap-3">
                         {navItems.map((item, index) => (
-                            <div 
-                                key={item.href} 
+                            <div
+                                key={item.href}
                                 className={`transform transition-all duration-300 flex flex-col ${isOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'}`}
                                 style={{ transitionDelay: `${index * 40}ms` }}
                             >
