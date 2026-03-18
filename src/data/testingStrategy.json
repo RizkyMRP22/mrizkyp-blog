@@ -4,13 +4,13 @@
       "id": "grooming-sprint-planning",
       "title": "Grooming & Sprint Planning",
       "tasks": [
-        "Check if every backlog requirement is available.",
-        "Check the design in Figma, ensuring the design covers the defined requirements.",
-        "Provide feedback on potentially missing requirements or designs.",
-        "Ensure positive and negative cases are handled.",
-        "Create test cases in Squash for backlogs/requirements that have been included in the sprint.",
-        "Identify the impact of enhancements/improvements (both existing and resulting conditions).",
-        "Production Planning: Create Test Plan and Release Document."
+        "Verify that all backlog requirements are clearly defined and complete.",
+        "Review UI/UX designs to ensure all defined requirements are visually covered.",
+        "Provide constructive feedback on missing requirements, edge cases, or design inconsistencies.",
+        "Identify and document both positive (happy path) and negative (error handling) test scenarios.",
+        "Draft comprehensive test cases in Squash for all features included in the upcoming sprint.",
+        "Analyze the impact of proposed enhancements on existing features and system behavior.",
+        "Draft the initial Test Plan and Release Document for production deployment."
       ],
       "tools": [
         "JIRA/Taiga",
@@ -21,15 +21,15 @@
     },
     {
       "id": "api-contract",
-      "title": "API Contract",
+      "title": "API Contract Definition",
       "tasks": [
-        "Ensure the API covers the requirements/backlogs.",
-        "Ensure positive and negative API responses are covered (codes: 2xx, 4xx, 5xx).",
-        "Ensure the API has schemas and examples.",
-        "Ensure data-testid (FE) is implemented (nice to have)."
+        "Verify that proposed API endpoints fulfill all related backlog requirements.",
+        "Ensure API contracts clearly define both successful (2xx) and error (4xx, 5xx) responses.",
+        "Confirm that API documentation includes accurate request schemas, response schemas, and payload examples.",
+        "Collaborate with developers to ensure 'data-testid' attributes are documented for frontend testability."
       ],
       "tools": [
-        "Postman/hoppman",
+        "Postman/Hoppman",
         "JIRA",
         "Figma"
       ]
@@ -38,33 +38,33 @@
       "id": "development",
       "title": "Development",
       "tasks": [
-        "Create QA Subtasks, minimally for Test Case creation. Example: [QA] Create Login feature Test Case.",
-        "Create test cases in Squash based on designs and requirements/backlogs.",
-        "Ensure development flow aligns with the planning.",
-        "Analyze the flow to find possible edge cases not covered by requirements or design.",
-        "Create API automation in Postman based on the API contract (nice to have).",
-        "Ensure test data is ready."
+        "Create QA subtasks in the project tracker (e.g., Jira) for test case creation and execution.",
+        "Finalize step-by-step test cases in Squash based on detailed designs and API contracts.",
+        "Monitor development progress to ensure it aligns with the sprint plan and testing schedule.",
+        "Continuously analyze user flows to uncover potential edge cases missed during initial planning.",
+        "Develop automated API test scripts in Postman based on the finalized API contracts.",
+        "Prepare and configure necessary test data for the upcoming QA execution phase."
       ],
       "tools": [
         "JIRA/Taiga",
         "Squash",
         "Figma",
-        "Postman/hoppman",
-        "charles proxy",
-        "gitlab",
+        "Postman/Hoppman",
+        "Charles Proxy",
+        "GitLab",
         "DB Tools"
       ]
     },
     {
       "id": "in-qa",
-      "title": "In QA",
+      "title": "In QA (Testing Phase)",
       "tasks": [
-        "Ensure features have been built and deployed to the Dev server.",
-        "Validate developer tasks against requirements/backlogs: Check UI, API, and Integration.",
-        "Execute the test cases created in Squash.",
-        "Reject subtasks if they don't meet the requirements, providing test documentation.",
-        "Create a bug task if out-of-sprint feature bugs are found, providing test documentation.",
-        "Performance testing for service and frontend (nice to have)."
+        "Confirm that all features are successfully built and deployed to the Development/QA environment.",
+        "Validate implemented features against requirements by performing UI, API, and Integration testing.",
+        "Execute predefined test cases in Squash and record the results rigorously.",
+        "Reject tickets that fail to meet acceptance criteria, providing clear reproduction steps and test evidence.",
+        "Log detailed bug reports for any defects discovered outside the current sprint scope.",
+        "Conduct preliminary performance testing for backend services and frontend rendering."
       ],
       "tools": [
         "JIRA/Taiga",
@@ -76,43 +76,43 @@
     },
     {
       "id": "prod-preparation",
-      "title": "Prod Preparation",
+      "title": "Production Preparation",
       "tasks": [
-        "Ensure features have been built and deployed to the Staging server.",
-        "Perform Regression Testing and update test cases in Squash on Staging ENV.",
-        "Record all changelogs/version updates in the release notes.",
-        "Run Postman API test folder based on release/all features (if test scripts are defined).",
-        "Prepare UAT/SIT documentation and include signed approvals (if conditional requirements apply).",
-        "3rd party performance testing (if needed)."
+        "Verify that release candidates are successfully deployed to the Staging or UAT environment.",
+        "Execute comprehensive Regression Testing in Staging and update test cases accordingly.",
+        "Compile version updates and document all changes cleanly in the Release Notes.",
+        "Execute automated Postman API test suites for all features included in the release.",
+        "Prepare System Integration Testing (SIT) or User Acceptance Testing (UAT) documentation and secure necessary approvals.",
+        "Coordinate with third-party tools or services for in-depth performance and security testing if required."
       ],
       "tools": [
         "JIRA/Taiga",
         "Confluence",
         "Postman/Hoppman",
         "Squash",
-        "jenkins",
-        "discord",
-        "gsheet"
+        "Jenkins",
+        "Discord",
+        "Google Sheets"
       ]
     },
     {
       "id": "after-prod",
-      "title": "After Prod",
+      "title": "Post-Production (After Release)",
       "tasks": [
-        "Ensure features have been built and deployed to the Production server.",
-        "Perform smoke testing when features are released.",
-        "Reproduce bugs upon receiving issue reports.",
-        "Report hotfixes when finding or receiving issue reports.",
-        "Update versions if hotfixes are deployed.",
-        "Conduct post-production evaluation.",
-        "Monitor services."
+        "Verify the successful deployment of all features to the Live Production environment.",
+        "Conduct post-deployment Smoke Testing to ensure core functionalities are working correctly.",
+        "Investigate and attempt to reproduce any user-reported issues or bugs in Production.",
+        "Immediately report and track hotfix requests for critical production defects.",
+        "Maintain accurate version histories and release notes whenever hotfixes are applied.",
+        "Participate in retrospects to evaluate the production release process and identify areas for improvement.",
+        "Continuously monitor system error logs and service health metrics."
       ],
       "tools": [
         "JIRA/Taiga",
         "Confluence",
         "Squash",
-        "jenkins",
-        "discord"
+        "Jenkins",
+        "Discord"
       ]
     }
   ]
