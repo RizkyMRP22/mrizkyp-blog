@@ -53,6 +53,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build with Next.js
+        env:
+          NEXT_PUBLIC_ENABLE_HOME: ${{ vars.NEXT_PUBLIC_ENABLE_HOME }}
+          NEXT_PUBLIC_ENABLE_ABOUT: ${{ vars.NEXT_PUBLIC_ENABLE_ABOUT }}
+          NEXT_PUBLIC_ENABLE_EXPERIENCE: ${{ vars.NEXT_PUBLIC_ENABLE_EXPERIENCE }}
+          NEXT_PUBLIC_ENABLE_TESTING_STRATEGY: ${{ vars.NEXT_PUBLIC_ENABLE_TESTING_STRATEGY }}
+          NEXT_PUBLIC_ENABLE_PROJECTS: ${{ vars.NEXT_PUBLIC_ENABLE_PROJECTS }}
+          NEXT_PUBLIC_ENABLE_SKILLS: ${{ vars.NEXT_PUBLIC_ENABLE_SKILLS }}
+          NEXT_PUBLIC_ENABLE_CASE_STUDIES: ${{ vars.NEXT_PUBLIC_ENABLE_CASE_STUDIES }}
+          NEXT_PUBLIC_ENABLE_BLOG: ${{ vars.NEXT_PUBLIC_ENABLE_BLOG }}
+          NEXT_PUBLIC_ENABLE_TEST_ARTIFACTS: ${{ vars.NEXT_PUBLIC_ENABLE_TEST_ARTIFACTS }}
+          NEXT_PUBLIC_ENABLE_CONTACT: ${{ vars.NEXT_PUBLIC_ENABLE_CONTACT }}
         run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
