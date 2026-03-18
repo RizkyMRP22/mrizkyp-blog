@@ -4,16 +4,16 @@ import Link from 'next/link';
 import NavLink from '@/components/molecules/NavLink';
 
 const navItems = [
-    { href: '/', label: 'Home', comingSoon: false },
-    { href: '/about', label: 'About', comingSoon: false },
-    { href: '/experience', label: 'Experience', comingSoon: false },
-    { href: '/testing-strategy', label: 'Testing Strategy', comingSoon: false },
-    { href: '/projects', label: 'Projects', comingSoon: false },
-    { href: '/skills', label: 'Skills', comingSoon: true },
-    { href: '/case-studies', label: 'Case Studies', comingSoon: true },
-    { href: '/blog', label: 'Blog', comingSoon: true },
-    { href: '/test-artifacts', label: 'Test Artifacts', comingSoon: true },
-    { href: '/contact', label: 'Contact', comingSoon: false },
+    { href: '/', label: 'Home', comingSoon: process.env.NEXT_PUBLIC_ENABLE_HOME !== 'true' },
+    { href: '/about', label: 'About', comingSoon: process.env.NEXT_PUBLIC_ENABLE_ABOUT !== 'true' },
+    { href: '/experience', label: 'Experience', comingSoon: process.env.NEXT_PUBLIC_ENABLE_EXPERIENCE !== 'true' },
+    { href: '/testing-strategy', label: 'Testing Strategy', comingSoon: process.env.NEXT_PUBLIC_ENABLE_TESTING_STRATEGY !== 'true' },
+    { href: '/projects', label: 'Projects', comingSoon: process.env.NEXT_PUBLIC_ENABLE_PROJECTS !== 'true' },
+    { href: '/skills', label: 'Skills', comingSoon: process.env.NEXT_PUBLIC_ENABLE_SKILLS !== 'true' },
+    { href: '/case-studies', label: 'Case Studies', comingSoon: process.env.NEXT_PUBLIC_ENABLE_CASE_STUDIES !== 'true' },
+    { href: '/blog', label: 'Blog', comingSoon: process.env.NEXT_PUBLIC_ENABLE_BLOG !== 'true' },
+    { href: '/test-artifacts', label: 'Test Artifacts', comingSoon: process.env.NEXT_PUBLIC_ENABLE_TEST_ARTIFACTS !== 'true' },
+    { href: '/contact', label: 'Contact', comingSoon: process.env.NEXT_PUBLIC_ENABLE_CONTACT !== 'true' },
 ].map(item => ({
     ...item,
     href: item.comingSoon ? `/coming-soon?page=${encodeURIComponent(item.label)}` : item.href,
