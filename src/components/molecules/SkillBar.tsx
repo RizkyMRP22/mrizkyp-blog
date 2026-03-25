@@ -22,8 +22,8 @@ export default function SkillBar({ name, level }: SkillBarProps) {
     return (
         <div ref={ref} className="mb-4">
             <div className="flex justify-between mb-1.5">
-                <span className="text-sm font-medium text-slate-200">{name}</span>
-                <span className="text-sm font-semibold text-primary-light">{level}%</span>
+                <span className="text-sm font-medium text-gray-700 dark:text-slate-200 transition-colors duration-300">{name}</span>
+                <span className="text-sm font-semibold text-blue-600 dark:text-primary-light transition-colors duration-300">{level}%</span>
             </div>
             <div className="w-full h-2.5 bg-surface-light/50 rounded-full overflow-hidden">
                 <div
