@@ -23,14 +23,15 @@ const initialTestCases: TestCase[] = [
     { id: 'TC-008', step: 'Test incorrect credentials', action: 'Enter valid email but wrong password, click Sign In', expectedResult: "Error message: 'Invalid email or password'", status: 'idle' },
 ];
 
-export default function TestCaseRunner() {
-    const [testCases, setTestCases] = useState<TestCase[]>(initialTestCases);
+export default function TestCaseRunner({ initialData }: { initialData?: TestCase[] }) {
+    const defaultData = initialData && initialData.length > 0 ? initialData : initialTestCases;
+    const [testCases, setTestCases] = useState<TestCase[]>(defaultData);
 
     const handleStatusChange = (id: string, status: 'pass' | 'fail' | 'skip') => {
         setTestCases(prev => prev.map(tc => tc.id === id ? { ...tc, status: tc.status === status ? 'idle' : status } : tc));
     };
 
-    const resetAll = () => setTestCases(initialTestCases);
+    const resetAll = () => setTestCases(prev => prev.map(tc => ({ ...tc, status: 'idle' })));
 
     const total = testCases.length;
     const executed = testCases.filter(tc => tc.status !== 'idle').length;

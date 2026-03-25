@@ -67,6 +67,8 @@ jobs:
           NEXT_PUBLIC_ENABLE_BLOG: ${{ vars.NEXT_PUBLIC_ENABLE_BLOG }}
           NEXT_PUBLIC_ENABLE_TEST_ARTIFACTS: ${{ vars.NEXT_PUBLIC_ENABLE_TEST_ARTIFACTS }}
           NEXT_PUBLIC_ENABLE_CONTACT: ${{ vars.NEXT_PUBLIC_ENABLE_CONTACT }}
+          API_BASEURL: ${{ vars.API_BASEURL }}
+          API_KEY: ${{ secrets.API_KEY }}
         run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

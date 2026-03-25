@@ -2,11 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@/components/atoms/Button';
 import Link from 'next/link';
-import profileData from '@/data/profile.json';
+// import profileData from '@/data/profile.json';
+import { ProfileItem } from '@/app/api/profile/route';
 
-const titles = profileData.titles;
+export default function HeroSection({ profileData }: { profileData: ProfileItem }) {
+    const titles = profileData.titles;
 
-export default function HeroSection() {
     const [titleIndex, setTitleIndex] = useState(0);
     const [charIndex, setCharIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);

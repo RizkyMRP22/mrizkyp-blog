@@ -35,8 +35,9 @@ const defaultBug: BugReport = {
     dateReported: '2026-03-15',
 };
 
-export default function BugReportDemo() {
-    const [bug, setBug] = useState<BugReport>(defaultBug);
+export default function BugReportDemo({ initialData }: { initialData?: BugReport[] }) {
+    const defaultData = initialData && initialData.length > 0 ? initialData[0] : defaultBug;
+    const [bug, setBug] = useState<BugReport>(defaultData);
     const [showPreview, setShowPreview] = useState(true);
 
     const handleExport = () => {

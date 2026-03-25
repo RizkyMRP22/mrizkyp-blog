@@ -1,15 +1,19 @@
 import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import CaseStudyCard from '@/components/molecules/CaseStudyCard';
-import caseStudiesData from '@/data/caseStudies.json';
+// import caseStudiesData from '@/data/caseStudies.json';
 import type { Metadata } from 'next';
+import { getCaseStudies } from '@/app/api/case-studies/route';
 
 export const metadata: Metadata = {
     title: 'QA Case Studies | QA Portfolio',
     description: 'Real-world QA success stories showcasing problem-solving and quality improvements.',
 };
 
-export default function CaseStudiesPage() {
+export default async function CaseStudiesPage() {
+
+    const caseStudiesData = await getCaseStudies();
+
     return (
         <PageLayout>
             <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">

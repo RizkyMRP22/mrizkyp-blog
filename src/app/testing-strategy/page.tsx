@@ -1,6 +1,7 @@
 import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import TestingStrategyDiagram from '@/components/organisms/TestingStrategyDiagram';
+import { getTestingPhases } from '@/app/api/testing-strategies/route';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -8,7 +9,9 @@ export const metadata: Metadata = {
     description: 'Interactive overview of my end-to-end testing strategy, from grooming to post-production.',
 };
 
-export default function TestingStrategyPage() {
+export default async function TestingStrategyPage() {
+    const data = await getTestingPhases();
+
     return (
         <PageLayout>
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 min-h-screen">
@@ -22,7 +25,7 @@ export default function TestingStrategyPage() {
                         Click on each phase below to explore the detailed activities.
                     </p>
 
-                    <TestingStrategyDiagram />
+                    <TestingStrategyDiagram data={data} />
                 </div>
             </section>
         </PageLayout>

@@ -2,7 +2,8 @@ import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import ContactForm from '@/components/organisms/ContactForm';
 import Card from '@/components/atoms/Card';
-import profileData from '@/data/profile.json';
+// import profileData from '@/data/profile.json';
+import { getProfiles } from '@/app/api/profile/route';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -10,14 +11,18 @@ export const metadata: Metadata = {
     description: 'Get in touch with M. Rizky Pratama - QA Engineer available for collaboration and opportunities.',
 };
 
-const contactInfo = [
-    { icon: '✉️', label: 'Email', value: profileData.email, href: `mailto:${profileData.email}` },
-    { icon: '🐙', label: 'GitHub', value: profileData.github, href: profileData.github },
-    { icon: '💼', label: 'LinkedIn', value: profileData.linkedin, href: profileData.linkedin },
-    { icon: '📍', label: 'Location', value: profileData.location, href: null },
-];
 
-export default function ContactPage() {
+export default async function ContactPage() {
+
+    const profileData = await getProfiles();
+
+    const contactInfo = [
+        { icon: '✉️', label: 'Email', value: profileData.email, href: `mailto:${profileData.email}` },
+        { icon: '🐙', label: 'GitHub', value: profileData.github, href: profileData.github },
+        { icon: '💼', label: 'LinkedIn', value: profileData.linkedin, href: profileData.linkedin },
+        { icon: '📍', label: 'Location', value: profileData.location, href: null },
+    ];
+
     return (
         <PageLayout>
             <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -54,7 +59,7 @@ export default function ContactPage() {
                         <Card hover={false}>
                             <h3 className="text-lg font-semibold text-white mb-3">Open For</h3>
                             <ul className="space-y-2">
-                                {['Full-time QA positions', 'Contract/Freelance work', 'QA Consulting', 'Test Automation Setup', 'Speaking & Mentoring'].map((item) => (
+                                {profileData.openFor.map((item: string) => (
                                     <li key={item} className="flex items-center gap-2 text-sm text-slate-300">
                                         <span className="text-success">✓</span> {item}
                                     </li>

@@ -1,18 +1,27 @@
 import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import Card from '@/components/atoms/Card';
-import profileData from '@/data/profile.json';
-import educationData from '@/data/education.json';
-import certificationsData from '@/data/certifications.json';
+// import profileData from '@/data/profile.json';
+// import educationData from '@/data/education.json';
+// import certificationsData from '@/data/certifications.json';
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { getProfiles } from '@/app/api/profile/route';
+import { getCertifications } from '../api/certifications/route';
+// import { getEducation } from '@/app/api/education/route';
+
 
 export const metadata: Metadata = {
     title: 'About Me | QA Portfolio',
     description: 'Learn about M. Rizky Pratama - QA Engineer with 5+ years of experience in test automation and quality assurance.',
 };
 
-export default function AboutPage() {
+
+export default async function AboutPage() {
+    // const educationData = await getEducation();
+    const profileData = await getProfiles();
+    const certificationsData = await getCertifications();
+
     return (
         <PageLayout>
             <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -47,7 +56,7 @@ export default function AboutPage() {
                     <Card hover={false}>
                         <h4 className="text-lg font-semibold text-white mb-4">🎓 Education</h4>
                         <div className="space-y-4">
-                            {educationData.education.map((edu, idx) => (
+                            {profileData.education.map((edu, idx) => (
                                 <div key={idx} className="border-l-2 border-slate-700 pl-4">
                                     <h5 className="font-bold text-white">{edu.degree}</h5>
                                     <p className="text-slate-400">{edu.institution}</p>

@@ -3,9 +3,14 @@
 import React, { useState } from 'react';
 import Card from '@/components/atoms/Card';
 import Badge from '@/components/atoms/Badge';
-import data from '@/data/testingStrategy.json';
+// import data from '@/data/testingStrategy.json';
+import { TestingStrategiesData } from '@/app/api/testing-strategies/route';
 
-export default function TestingStrategyDiagram() {
+interface TestingStrategyDiagramProps {
+    data: TestingStrategiesData;
+}
+
+export default function TestingStrategyDiagram({ data }: TestingStrategyDiagramProps) {
     const [activePhaseIndex, setActivePhaseIndex] = useState(0);
     const activePhase = data.phases[activePhaseIndex];
 
@@ -24,7 +29,7 @@ export default function TestingStrategyDiagram() {
                         if (isFirst) {
                             clipPathClass = '[clip-path:polygon(90%_0,100%_50%,90%_100%,0%_100%,0%_50%,0%_0)]';
                         }
-                        
+
                         return (
                             <button
                                 key={phase.id}
@@ -34,8 +39,8 @@ export default function TestingStrategyDiagram() {
                                     flex items-center justify-center text-center font-bold text-sm sm:text-base
                                     transition-all duration-300 ease-in-out hover:scale-105 active:scale-95
                                     ${clipPathClass}
-                                    ${isActive 
-                                        ? 'bg-gradient-to-r from-primary to-secondary text-white z-20 shadow-xl shadow-primary/20 scale-105' 
+                                    ${isActive
+                                        ? 'bg-gradient-to-r from-primary to-secondary text-white z-20 shadow-xl shadow-primary/20 scale-105'
                                         : 'bg-card border-none text-slate-300 hover:bg-white/10 hover:text-white z-10'}
                                     md:min-h-[100px]
                                 `}
@@ -61,7 +66,7 @@ export default function TestingStrategyDiagram() {
                             </div>
                             <h3 className="text-2xl font-bold text-white">{activePhase.title} Details</h3>
                         </div>
-                        
+
                         <ul className="space-y-4">
                             {activePhase.tasks.map((task, idx) => {
                                 // Highlight specific keywords nicely

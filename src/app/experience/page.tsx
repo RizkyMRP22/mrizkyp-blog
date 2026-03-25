@@ -1,15 +1,18 @@
 import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import ExperienceCard from '@/components/molecules/ExperienceCard';
-import experienceData from '@/data/experience.json';
+// import experienceData from '@/data/experience.json';
 import type { Metadata } from 'next';
+import { getExperiences } from '../api/experience/route';
 
 export const metadata: Metadata = {
     title: 'Experience | QA Portfolio',
     description: 'Professional journey as a QA Engineer - work experience and achievements.',
 };
 
-export default function ExperiencePage() {
+export default async function ExperiencePage() {
+    const experienceData = await getExperiences();
+
     return (
         <PageLayout>
             <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">

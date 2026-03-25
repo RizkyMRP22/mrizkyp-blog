@@ -1,12 +1,17 @@
 import PageLayout from '@/components/templates/PageLayout';
 import HeroSection from '@/components/organisms/HeroSection';
 import Link from 'next/link';
-import quickLinks from '@/data/quicklinks.json';
+// import quickLinks from '@/data/quicklinks.json';
+import { getProfiles } from '@/app/api/profile/route';
+import { getQuickLinks } from '@/app/api/quicklinks/route';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const profileData = await getProfiles();
+  const quickLinksData = await getQuickLinks();
+
   return (
     <PageLayout>
-      <HeroSection />
+      <HeroSection profileData={profileData} />
       {/* Quick Links Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-12">
@@ -16,7 +21,7 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {quickLinks.quickLink.map((link) => (
+          {quickLinksData.quickLink.map((link) => (
             <Link key={link.href} href={link.href}>
               <div className="glass rounded-2xl p-6 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10 hover:border-primary/30 transition-all duration-300 h-full cursor-pointer">
                 <div className="text-4xl mb-4">{link.icon}</div>
