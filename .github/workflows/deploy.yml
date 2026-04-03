@@ -69,6 +69,7 @@ jobs:
           NEXT_PUBLIC_ENABLE_CONTACT: ${{ vars.NEXT_PUBLIC_ENABLE_CONTACT }}
           API_BASEURL: ${{ vars.API_BASEURL }}
           API_KEY: ${{ secrets.API_KEY }}
+          NEXT_PUBLIC_GA_ID: ${{ vars.NEXT_PUBLIC_GA_ID }}
         run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
