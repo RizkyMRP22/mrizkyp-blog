@@ -14,14 +14,14 @@ export default async function TestingStrategyPage() {
 
     return (
         <PageLayout>
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 min-h-screen">
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-20 min-h-screen">
                 <SectionTitle
                     title="My Testing Strategy"
                     subtitle="An end-to-end interactive journey of how I ensure quality from requirements to release."
                 />
 
-                <div className="mt-12">
-                    <p className="text-slate-400 text-center max-w-2xl mx-auto mb-12 italic">
+                <div className="mt-8 md:mt-12">
+                    <p className="text-slate-400 text-center max-w-2xl mx-auto mb-8 md:mb-12 italic text-sm md:text-base px-2">
                         Click on each phase below to explore the detailed activities.
                     </p>
 
