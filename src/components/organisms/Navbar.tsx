@@ -35,11 +35,24 @@ export default function Navbar() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2 group">
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-sm group-hover:scale-110 transition-transform">
-                            MRP
+                    <Link href="/" className="flex items-center gap-3 group relative transition-all duration-300 outline-none">
+                        <div className="relative w-10 h-10 flex items-center justify-center">
+                            {/* Ambient Glow */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary rounded-xl blur-md opacity-40 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500"></div>
+                            {/* Core Logo Block */}
+                            <div className="relative w-full h-full bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 border border-white/20 group-hover:border-white/50 group-hover:-rotate-6 group-hover:scale-110 transition-all duration-500 overflow-hidden">
+                                {/* Inner subtle highlight */}
+                                <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent opacity-50"></div>
+                                <svg className="w-6 h-6 text-white relative z-10 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                </svg>
+                            </div>
                         </div>
-                        <span className="text-lg font-bold text-white hidden sm:block">Blog</span>
+                        <div className="hidden sm:flex flex-col justify-center">
+                            <span className="text-xl font-bold tracking-tight text-white/90 group-hover:text-white transition-colors duration-300">
+                                MRizkyP<span className="text-primary-light group-hover:text-primary transition-colors duration-300">.</span>QA
+                            </span>
+                        </div>
                     </Link>
 
                     {/* Desktop nav */}

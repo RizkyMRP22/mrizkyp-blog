@@ -47,6 +47,15 @@ export default function HeroSection({ profileData }: { profileData: ProfileItem 
                     <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
                         {profileData.name}
                     </h1>
+                    <div className="flex justify-center mb-6 w-full px-2 sm:px-0">
+                        <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 border border-primary/20 text-primary-light text-xs sm:text-sm font-medium tracking-wide shadow-[0_0_15px_rgba(var(--primary-rgb),0.1)] hover:bg-primary/20 hover:shadow-[0_0_20px_rgba(var(--primary-rgb),0.2)] transition-all duration-300 max-w-full">
+                            <svg className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                            </svg>
+                            <span className="hidden sm:inline">ISTQB® Certified Tester Foundation Level (CTFL)</span>
+                            <span className="sm:hidden truncate">ISTQB® CTFL</span>
+                        </div>
+                    </div>
                     <div className="text-2xl md:text-4xl font-bold mb-6 h-12 md:h-14 flex items-center justify-center">
                         <span className="gradient-text">{titles[titleIndex].substring(0, charIndex)}</span>
                         <span className="ml-0.5 w-[2px] h-8 md:h-10 bg-primary-light animate-pulse" />
