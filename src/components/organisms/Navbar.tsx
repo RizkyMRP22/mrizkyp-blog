@@ -65,14 +65,18 @@ export default function Navbar() {
                     {/* Mobile burger */}
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="lg:hidden relative z-50 p-2 -mr-2 rounded-xl text-slate-300 hover:bg-white/5 transition-colors focus:outline-none"
+                        className={`lg:hidden relative z-50 p-2.5 -mr-2 rounded-xl border transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 active:scale-95 ${
+                            isOpen 
+                                ? 'bg-primary/10 text-primary border-primary/20 shadow-lg shadow-primary/10' 
+                                : 'bg-transparent text-slate-300 border-transparent hover:bg-white/5 hover:text-white hover:border-white/10'
+                        }`}
                         aria-expanded={isOpen}
                         aria-label="Toggle Navigation"
                     >
                         <div className="w-6 h-6 flex flex-col justify-center items-center gap-[5px]">
-                            <span className={`h-0.5 w-5 bg-current rounded-full transform transition-all duration-300 ease-in-out ${isOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
-                            <span className={`h-0.5 w-5 bg-current rounded-full transform transition-all duration-300 ease-in-out ${isOpen ? 'opacity-0 translate-x-3' : ''}`} />
-                            <span className={`h-0.5 w-5 bg-current rounded-full transform transition-all duration-300 ease-in-out ${isOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+                            <span className={`h-0.5 bg-current rounded-full transform transition-all duration-300 ease-in-out ${isOpen ? 'w-6 rotate-45 translate-y-[7px]' : 'w-5'}`} />
+                            <span className={`h-0.5 bg-current rounded-full transform transition-all duration-300 ease-in-out ${isOpen ? 'w-0 opacity-0 translate-x-2' : 'w-5'}`} />
+                            <span className={`h-0.5 bg-current rounded-full transform transition-all duration-300 ease-in-out ${isOpen ? 'w-6 -rotate-45 -translate-y-[7px]' : 'w-5'}`} />
                         </div>
                     </button>
                 </div>
