@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Input, Textarea } from '@/components/atoms/Input';
 import Button from '@/components/atoms/Button';
+import { sendGAEvent } from '@next/third-parties/google';
 
 export default function ContactForm() {
     const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
@@ -19,6 +20,7 @@ export default function ContactForm() {
             if (res.ok) {
                 setStatus('success');
                 setForm({ name: '', email: '', subject: '', message: '' });
+                sendGAEvent('event', 'generate_lead', { value: 'contact_form_submission' });
             } else {
                 setStatus('error');
             }

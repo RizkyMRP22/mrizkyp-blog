@@ -4,6 +4,7 @@ import Link from 'next/link';
 // import quickLinks from '@/data/quicklinks.json';
 import { getProfiles } from '@/app/api/profile/route';
 import { getQuickLinks } from '@/app/api/quicklinks/route';
+import TrackingLink from '@/components/atoms/TrackingLink';
 
 export default async function HomePage() {
   const profileData = await getProfiles();
@@ -22,13 +23,13 @@ export default async function HomePage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {quickLinksData.quickLink.map((link) => (
-            <Link key={link.href} href={link.href}>
+            <TrackingLink key={link.href} href={link.href} eventName="select_content" eventParams={{ value: `quicklink_${link.label}` }}>
               <div className="glass rounded-2xl p-6 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10 hover:border-primary/30 transition-all duration-300 h-full cursor-pointer">
                 <div className="text-4xl mb-4">{link.icon}</div>
                 <h3 className="text-lg font-bold text-white mb-2">{link.label}</h3>
                 <p className="text-sm text-muted">{link.desc}</p>
               </div>
-            </Link>
+            </TrackingLink>
           ))}
         </div>
       </section>

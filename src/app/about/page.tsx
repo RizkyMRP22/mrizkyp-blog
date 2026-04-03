@@ -8,6 +8,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { getProfiles } from '@/app/api/profile/route';
 import { getCertifications } from '../api/certifications/route';
+import TrackingLink from '@/components/atoms/TrackingLink';
 // import { getEducation } from '@/app/api/education/route';
 
 
@@ -80,14 +81,16 @@ export default async function AboutPage() {
                                         </p>
                                         <div className="text-sm mt-1">
                                             {cert.link ? (
-                                                <a
+                                                <TrackingLink
                                                     href={cert.link}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="text-primary hover:text-primary-light flex items-center gap-1 transition-colors w-fit"
+                                                    eventName="click_outbound"
+                                                    eventParams={{ link_url: cert.link, link_type: 'certificate', item_name: cert.name }}
                                                 >
                                                     View Certificate <span className="text-xs opacity-70">↗</span>
-                                                </a>
+                                                </TrackingLink>
                                             ) : (
                                                 <span className="text-slate-500 italic text-xs">Link Not Available</span>
                                             )}
@@ -118,15 +121,15 @@ export default async function AboutPage() {
                     <Card hover={false}>
                         <h4 className="text-lg font-semibold text-white mb-4">🔗 Connect</h4>
                         <div className="flex flex-wrap gap-4">
-                            <a href={profileData.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary-light hover:text-white transition-colors">
+                            <TrackingLink href={profileData.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary-light hover:text-white transition-colors" eventName="click_outbound" eventParams={{ link_url: profileData.github, link_type: 'github' }}>
                                 <span>🐙</span> GitHub
-                            </a>
-                            <a href={profileData.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary-light hover:text-white transition-colors">
+                            </TrackingLink>
+                            <TrackingLink href={profileData.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary-light hover:text-white transition-colors" eventName="click_outbound" eventParams={{ link_url: profileData.linkedin, link_type: 'linkedin' }}>
                                 <span>💼</span> LinkedIn
-                            </a>
-                            <a href={`mailto:${profileData.email}`} className="flex items-center gap-2 text-primary-light hover:text-white transition-colors">
+                            </TrackingLink>
+                            <TrackingLink href={`mailto:${profileData.email}`} className="flex items-center gap-2 text-primary-light hover:text-white transition-colors" eventName="generate_lead" eventParams={{ value: 'email_click' }}>
                                 <span>✉️</span> {profileData.email}
-                            </a>
+                            </TrackingLink>
                         </div>
                     </Card>
                 </div>

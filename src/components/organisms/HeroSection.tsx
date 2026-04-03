@@ -4,6 +4,7 @@ import Button from '@/components/atoms/Button';
 import Link from 'next/link';
 // import profileData from '@/data/profile.json';
 import { ProfileItem } from '@/app/api/profile/route';
+import { sendGAEvent } from '@next/third-parties/google';
 
 export default function HeroSection({ profileData }: { profileData: ProfileItem }) {
     const titles = profileData.titles;
@@ -68,10 +69,10 @@ export default function HeroSection({ profileData }: { profileData: ProfileItem 
                 </div>
 
                 <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in delay-300">
-                    <Link href="/testing-strategy">
+                    <Link href="/testing-strategy" onClick={() => sendGAEvent('event', 'select_content', { value: 'hero_testing_strategy' })}>
                         <Button variant="primary" size="lg">View My Work</Button>
                     </Link>
-                    <Link href="/contact">
+                    <Link href="/contact" onClick={() => sendGAEvent('event', 'generate_lead', { value: 'hero_contact_button' })}>
                         <Button variant="ghost" size="lg">Get In Touch</Button>
                     </Link>
                 </div>
