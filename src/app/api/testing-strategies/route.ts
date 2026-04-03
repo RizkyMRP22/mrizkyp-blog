@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-static';
 import { NextResponse } from 'next/server';
 
 
@@ -20,7 +20,7 @@ export async function getTestingPhases(): Promise<TestingStrategiesData> {
             headers: {
                 'x-api-key': process.env.API_KEY as string
             },
-            cache: 'no-store'
+            next: { revalidate: 3600 }
         });
 
         if (!response.ok) {
