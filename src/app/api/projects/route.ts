@@ -25,7 +25,7 @@ export async function getProjects(): Promise<ProjectsData> {
             headers: {
                 'x-api-key': process.env.API_KEY as string
             },
-            next: { revalidate: 3600 }
+            next: { revalidate: Number(process.env.NEXT_PUBLIC_REVALIDATE_TIME) || 3600 }
         });
 
         if (!response.ok) {
