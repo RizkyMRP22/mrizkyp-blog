@@ -3,21 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import NavLink from '@/components/molecules/NavLink';
 
-const navItems = [
-    { href: '/', label: 'Home', comingSoon: process.env.NEXT_PUBLIC_ENABLE_HOME !== 'true' },
-    { href: '/about', label: 'About', comingSoon: process.env.NEXT_PUBLIC_ENABLE_ABOUT !== 'true' },
-    { href: '/experience', label: 'Experience', comingSoon: process.env.NEXT_PUBLIC_ENABLE_EXPERIENCE !== 'true' },
-    { href: '/testing-strategy', label: 'Testing Strategy', comingSoon: process.env.NEXT_PUBLIC_ENABLE_TESTING_STRATEGY !== 'true' },
-    { href: '/projects', label: 'Projects', comingSoon: process.env.NEXT_PUBLIC_ENABLE_PROJECTS !== 'true' },
-    { href: '/skills', label: 'Skills', comingSoon: process.env.NEXT_PUBLIC_ENABLE_SKILLS !== 'true' },
-    { href: '/case-studies', label: 'Case Studies', comingSoon: process.env.NEXT_PUBLIC_ENABLE_CASE_STUDIES !== 'true' },
-    { href: '/blog', label: 'Blog', comingSoon: process.env.NEXT_PUBLIC_ENABLE_BLOG !== 'true' },
-    { href: '/test-artifacts', label: 'Test Artifacts', comingSoon: process.env.NEXT_PUBLIC_ENABLE_TEST_ARTIFACTS !== 'true' },
-    { href: '/contact', label: 'Contact', comingSoon: process.env.NEXT_PUBLIC_ENABLE_CONTACT !== 'true' },
-].map(item => ({
-    ...item,
-    href: item.comingSoon ? `/coming-soon?page=${encodeURIComponent(item.label)}` : item.href,
-}));
+import { navItems } from '@/config/navigation';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +21,7 @@ export default function Navbar() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-3 group relative transition-all duration-300 outline-none">
+                    <Link href="/" className="flex items-center gap-3 group relative transition-all duration-300 outline-none" data-testid="navbar-logo-link">
                         <div className="relative w-10 h-10 flex items-center justify-center">
                             {/* Ambient Glow */}
                             <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary rounded-xl blur-md opacity-40 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500"></div>
@@ -58,7 +44,7 @@ export default function Navbar() {
                     {/* Desktop nav */}
                     <div className="hidden lg:flex items-center gap-1">
                         {navItems.map((item) => (
-                            <NavLink key={item.href} href={item.href} label={item.label} />
+                            <NavLink key={item.href} href={item.href} label={item.label} data-testid={`nav-desktop-${item.label.toLowerCase().replace(/\s+/g, '-')}`} />
                         ))}
                     </div>
 
@@ -72,6 +58,7 @@ export default function Navbar() {
                         }`}
                         aria-expanded={isOpen}
                         aria-label="Toggle Navigation"
+                        data-testid="navbar-burger-button"
                     >
                         <div className="w-6 h-6 flex flex-col justify-center items-center gap-[5px]">
                             <span className={`h-0.5 bg-current rounded-full transform transition-all duration-300 ease-in-out ${isOpen ? 'w-6 rotate-45 translate-y-[7px]' : 'w-5'}`} />
@@ -95,7 +82,7 @@ export default function Navbar() {
                                 className={`transform transition-all duration-300 flex flex-col ${isOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'}`}
                                 style={{ transitionDelay: `${index * 40}ms` }}
                             >
-                                <NavLink href={item.href} label={item.label} onClick={() => setIsOpen(false)} />
+                                <NavLink href={item.href} label={item.label} onClick={() => setIsOpen(false)} data-testid={`nav-mobile-${item.label.toLowerCase().replace(/\s+/g, '-')}`} />
                             </div>
                         ))}
                     </div>
