@@ -37,18 +37,19 @@ const securityHeaders = [
     // - script-src 'self' 'unsafe-inline' 'unsafe-eval' → Next.js requires these for hydration
     // - style-src 'self' 'unsafe-inline' https://fonts.googleapis.com
     // - font-src 'self' https://fonts.gstatic.com
-    // - img-src 'self' data: blob:   → allow base64/blob images alongside same-origin
-    // - connect-src 'self'           → fetch / XHR / WebSocket
-    // - frame-ancestors 'none'       → mirrors X-Frame-Options DENY for modern browsers
+    // - img-src 'self' data: blob: https:  → allow CDN/external images (Unsplash, etc.)
+    // - connect-src 'self'                 → fetch / XHR / WebSocket
+    // - frame-src ...                      → allow embedding from approved media hosts
+    // - frame-ancestors 'none'             → mirrors X-Frame-Options DENY for modern browsers
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "img-src 'self' data: blob:",
+      "img-src 'self' data: blob: https:",
       "connect-src 'self'",
-      "frame-src 'none'",
+      "frame-src https://drive.google.com https://www.youtube.com https://www.loom.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
