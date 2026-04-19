@@ -1,7 +1,6 @@
 import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import CaseStudyCard from '@/components/molecules/CaseStudyCard';
-// import caseStudiesData from '@/data/caseStudies.json';
 import type { Metadata } from 'next';
 import { getCaseStudies } from '@/app/api/case-studies/route';
 

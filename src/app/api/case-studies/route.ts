@@ -1,6 +1,5 @@
 export const dynamic = 'force-static';
 import { NextResponse } from 'next/server';
-import caseStudiesData from '@/data/caseStudies.json';
 
 export interface CaseStudyItem {
     id: string;
