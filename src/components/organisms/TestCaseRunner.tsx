@@ -45,12 +45,12 @@ export default function TestCaseRunner({ initialData }: { initialData?: TestCase
             <SectionTitle title="Interactive Test Case Runner" subtitle="Execute test cases and track results in real-time" />
 
             {/* Progress Bar */}
-            <div className="glass rounded-xl p-4 mb-6">
+            <div className="glass rounded-xl p-3 md:p-4 mb-5 md:mb-6">
                 <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-slate-300">Test Progress</span>
-                    <span className="text-sm font-semibold text-primary-light">{executed}/{total} executed ({Math.round(progress)}%)</span>
+                    <span className="text-xs md:text-sm font-medium text-slate-300">Test Progress</span>
+                    <span className="text-xs md:text-sm font-semibold text-primary-light">{executed}/{total} executed ({Math.round(progress)}%)</span>
                 </div>
-                <div className="w-full h-3 bg-surface-light/50 rounded-full overflow-hidden">
+                <div className="w-full h-2.5 md:h-3 bg-surface-light/50 rounded-full overflow-hidden">
                     <div
                         className="h-full rounded-full bg-gradient-to-r from-primary via-secondary to-success transition-all duration-500"
                         style={{ width: `${progress}%` }}
@@ -76,26 +76,26 @@ export default function TestCaseRunner({ initialData }: { initialData?: TestCase
             </div>
 
             {/* Summary */}
-            <div className="glass rounded-xl p-6">
-                <div className="flex items-center justify-between mb-4">
-                    <h4 className="text-base font-semibold text-white">Test Summary</h4>
+            <div className="glass rounded-xl p-4 md:p-6">
+                <div className="flex items-center justify-between mb-3 md:mb-4">
+                    <h4 className="text-sm md:text-base font-semibold text-white">Test Summary</h4>
                     <Button variant="ghost" size="sm" onClick={resetAll}>Reset All</Button>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                    <div className="p-3 rounded-lg bg-surface/40">
-                        <div className="text-2xl font-bold text-white">{total}</div>
+                <div className="grid grid-cols-4 gap-2 md:gap-4 text-center">
+                    <div className="p-2 md:p-3 rounded-lg bg-surface/40">
+                        <div className="text-xl md:text-2xl font-bold text-white">{total}</div>
                         <div className="text-xs text-muted">Total</div>
                     </div>
-                    <div className="p-3 rounded-lg bg-success/10">
-                        <div className="text-2xl font-bold text-emerald-300">{passed}</div>
+                    <div className="p-2 md:p-3 rounded-lg bg-success/10">
+                        <div className="text-xl md:text-2xl font-bold text-emerald-300">{passed}</div>
                         <div className="text-xs text-muted">Passed</div>
                     </div>
-                    <div className="p-3 rounded-lg bg-danger/10">
-                        <div className="text-2xl font-bold text-red-300">{failed}</div>
+                    <div className="p-2 md:p-3 rounded-lg bg-danger/10">
+                        <div className="text-xl md:text-2xl font-bold text-red-300">{failed}</div>
                         <div className="text-xs text-muted">Failed</div>
                     </div>
-                    <div className="p-3 rounded-lg bg-warning/10">
-                        <div className="text-2xl font-bold text-amber-300">{skipped}</div>
+                    <div className="p-2 md:p-3 rounded-lg bg-warning/10">
+                        <div className="text-xl md:text-2xl font-bold text-amber-300">{skipped}</div>
                         <div className="text-xs text-muted">Skipped</div>
                     </div>
                 </div>
