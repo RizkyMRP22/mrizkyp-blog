@@ -13,7 +13,7 @@ export default async function BlogPage() {
 
     return (
         <PageLayout>
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <section data-testid="section-blog" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <SectionTitle title="Blog" subtitle="Sharing insights, tutorials, and best practices in QA" />
                 <BlogClient posts={blogData?.posts || []} />
             </section>

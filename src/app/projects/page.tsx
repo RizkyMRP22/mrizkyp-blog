@@ -8,7 +8,7 @@ export default async function ProjectsPage() {
 
     return (
         <PageLayout>
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <section data-testid="section-projects" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <SectionTitle title="Projects" subtitle="QA projects and test automation frameworks I've built" />
                 <ProjectClient projects={projectsData?.projects || []} />
             </section>

@@ -1,7 +1,6 @@
 import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import Card from '@/components/atoms/Card';
-// import profileData from '@/data/profile.json';
 // import educationData from '@/data/education.json';
 // import certificationsData from '@/data/certifications.json';
 import type { Metadata } from 'next';
@@ -25,14 +24,22 @@ export default async function AboutPage() {
 
     return (
         <PageLayout>
-            <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <section data-testid="section-about" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <SectionTitle title="About Me" subtitle="Get to know the person behind the quality" />
 
                 <div className="space-y-8">
                     {/* Profile */}
                     <Card hover={false} className="text-center">
                         <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-secondary mx-auto mb-6 flex items-center justify-center text-5xl">
-                            <Image src={profileData.photo} alt={profileData.name} width={128} height={128} className="rounded-full" />
+                            <Image
+                                src={profileData.photo}
+                                alt={profileData.name}
+                                width={128}
+                                height={128}
+                                quality={90}
+                                priority
+                                className="rounded-full"
+                            />
                         </div>
                         <h3 className="text-2xl font-bold text-white mb-1">{profileData.name}</h3>
                         <p className="text-primary-light font-medium mb-2">{profileData.title}</p>

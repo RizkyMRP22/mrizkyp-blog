@@ -3,13 +3,13 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-interface NavLinkProps {
+interface NavLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     href: string;
     label: string;
     onClick?: () => void;
 }
 
-export default function NavLink({ href, label, onClick }: NavLinkProps) {
+export default function NavLink({ href, label, onClick, ...props }: NavLinkProps) {
     const pathname = usePathname();
     const isActive = pathname === href;
 
@@ -23,6 +23,7 @@ export default function NavLink({ href, label, onClick }: NavLinkProps) {
                     : 'text-slate-400 hover:text-white hover:bg-white/5'
                 }
       `}
+            {...props}
         >
             {label}
         </Link>

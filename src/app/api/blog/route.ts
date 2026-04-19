@@ -1,6 +1,5 @@
 export const dynamic = 'force-static';
 import { NextResponse } from 'next/server';
-import blogData from '@/data/blogPosts.json';
 
 export interface PostItem {
     id: number;
