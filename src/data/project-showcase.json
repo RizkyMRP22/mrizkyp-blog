@@ -1,0 +1,30 @@
+[
+    {
+        "id": "showcase-1",
+        "title": "Video Showcase",
+        "description": "A comprehensive video demonstration of the project capabilities.",
+        "type": "video",
+        "url": "https://drive.google.com/file/d/1ydwdDkqxn4LK5Xy8eoWVUleBeEf-Fr_P/preview"
+    },
+    {
+        "id": "showcase-2",
+        "title": "Video Showcase",
+        "description": "A comprehensive video demonstration of the project capabilities.",
+        "type": "video",
+        "url": "https://drive.google.com/file/d/1ydwdDkqxn4LK5Xy8eoWVUleBeEf-Fr_P/preview"
+    },
+    {
+        "id": "showcase-3",
+        "title": "Image Showcase",
+        "description": "Visual highlights of the application interfaces.",
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop"
+    },
+    {
+        "id": "showcase-4",
+        "title": "Image Showcase",
+        "description": "Visual highlights of the application interfaces.",
+        "type": "image",
+        "url": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop"
+    }
+]

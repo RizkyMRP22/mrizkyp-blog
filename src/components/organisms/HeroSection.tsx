@@ -36,7 +36,7 @@ export default function HeroSection({ profileData }: { profileData: ProfileItem 
     }, [charIndex, isDeleting, titleIndex]);
 
     return (
-        <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <section data-testid="section-hero" className="min-h-screen flex items-center justify-center relative overflow-hidden">
             {/* Decorative orbs */}
             <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-[100px] animate-float" />
             <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/15 rounded-full blur-[120px] animate-float delay-300" />

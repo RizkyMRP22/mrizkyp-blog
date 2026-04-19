@@ -15,7 +15,7 @@ export default async function ExperiencePage() {
 
     return (
         <PageLayout>
-            <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <section data-testid="section-experience" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <SectionTitle title="Experience" subtitle="My professional journey in quality assurance" />
 
                 <div className="mt-8">

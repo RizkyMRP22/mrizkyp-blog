@@ -22,12 +22,20 @@ export default async function TestArtifactsPage() {
     };
 
     const testCasesPayload = (apiData.testSuites?.testCases || [])
-        .map(tc => ({ ...tc, status: 'idle' as const }));
+        .map((tc: any) => ({
+            id: tc.id || '',
+            feature: tc.feature || 'General',
+            scenario: tc.scenario || tc.step || 'Undefined',
+            given: tc.given || 'Context',
+            when: tc.when || tc.action || 'Action',
+            then: tc.then || tc.expectedResult || 'Result',
+            status: 'idle' as const
+        })).filter(tc => tc.feature !== 'General'); // Filter out backend ones if they don't have BDD features defined yet
 
     return (
         <PageLayout>
             {/* Hero Section */}
-            <section className="bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-950 py-20 px-4 sm:px-6 lg:px-8 border-b border-gray-200 dark:border-gray-800">
+            <section data-testid="section-test-artifacts" className="bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-950 py-20 px-4 sm:px-6 lg:px-8 border-b border-gray-200 dark:border-gray-800">
                 <div className="max-w-4xl mx-auto text-center space-y-6">
                     <div className="inline-flex items-center justify-center px-4 py-1.5 mb-2 text-sm font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 ring-1 ring-inset ring-blue-600/20 dark:ring-blue-500/30">
                         Portfolio Showcases
@@ -42,7 +50,7 @@ export default async function TestArtifactsPage() {
             </section>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <TestArtifactsTabs 
+                <TestArtifactsTabs
                     bugReports={apiData.bugReports}
                     testCases={testCasesPayload}
                     automationData={automationData}
