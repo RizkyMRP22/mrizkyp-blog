@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@/components/atoms/Button';
 import Link from 'next/link';
-// import profileData from '@/data/profile.json';
 import { ProfileItem } from '@/app/api/profile/route';
 import { sendGAEvent } from '@next/third-parties/google';
 

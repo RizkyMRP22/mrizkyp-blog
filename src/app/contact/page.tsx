@@ -2,7 +2,6 @@ import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import ContactForm from '@/components/organisms/ContactForm';
 import Card from '@/components/atoms/Card';
-// import profileData from '@/data/profile.json';
 import { getProfiles } from '@/app/api/profile/route';
 import type { Metadata } from 'next';
 
