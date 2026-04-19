@@ -4,23 +4,23 @@ import TestCaseRow from '@/components/molecules/TestCaseRow';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import Button from '@/components/atoms/Button';
 
-interface TestCase {
+export interface TestCase {
     id: string;
-    step: string;
-    action: string;
-    expectedResult: string;
+    feature: string;
+    scenario: string;
+    given: string;
+    when: string;
+    then: string;
     status: 'idle' | 'pass' | 'fail' | 'skip';
 }
 
 const initialTestCases: TestCase[] = [
-    { id: 'TC-001', step: 'Navigate to login page', action: 'Open browser and go to /login', expectedResult: 'Login page loads with email and password fields', status: 'idle' },
-    { id: 'TC-002', step: 'Enter valid email', action: "Type 'user@example.com' in email field", expectedResult: 'Email field accepts input without error', status: 'idle' },
-    { id: 'TC-003', step: 'Enter valid password', action: "Type 'P@ssw0rd123' in password field", expectedResult: 'Password is masked and field shows no error', status: 'idle' },
-    { id: 'TC-004', step: 'Click login button', action: "Click the 'Sign In' button", expectedResult: 'Loading spinner appears, request sent to API', status: 'idle' },
-    { id: 'TC-005', step: 'Verify successful login', action: 'Wait for redirect to dashboard', expectedResult: 'User is redirected to /dashboard with welcome message', status: 'idle' },
-    { id: 'TC-006', step: 'Enter invalid email format', action: "Type 'invalid-email' in email field", expectedResult: "Validation error: 'Please enter a valid email address'", status: 'idle' },
-    { id: 'TC-007', step: 'Submit with empty password', action: 'Leave password field empty and click Sign In', expectedResult: "Validation error: 'Password is required'", status: 'idle' },
-    { id: 'TC-008', step: 'Test incorrect credentials', action: 'Enter valid email but wrong password, click Sign In', expectedResult: "Error message: 'Invalid email or password'", status: 'idle' },
+    { id: 'TC-001', feature: 'Navigation Menu', scenario: 'User navigates to the About page', given: 'The user is on the Home page', when: 'The user clicks on the "About" link in the navigation menu', then: 'The user should be redirected to the About page', status: 'idle' },
+    { id: 'TC-002', feature: 'Theme Toggle', scenario: 'User switches from dark to light mode', given: 'The user is on the application viewing in dark mode', when: 'The user clicks the theme toggle button', then: 'The application theme should switch to light mode', status: 'idle' },
+    { id: 'TC-003', feature: 'Blog', scenario: 'User reads a blog post', given: 'The user is on the Blog list page', when: 'The user clicks on a specific blog post title', then: 'The user should be redirected to the blog post details page', status: 'idle' },
+    { id: 'TC-004', feature: 'Contact Form', scenario: 'User submits a contact message', given: 'The user is on the Contact page', when: 'The user fills in "Name", "Email", and "Message" fields and clicks "Send"', then: 'A success message should be displayed', status: 'idle' },
+    { id: 'TC-005', feature: 'Test Case Artifacts', scenario: 'User marks a test case as passed', given: 'The user is on the Test Artifacts page viewing the Test Case Runner', when: 'The user clicks the "✓ Pass" button for a given test case', then: 'The test case status indicator should turn green and the passed count should increase', status: 'idle' },
+    { id: 'TC-006', feature: 'Projects List', scenario: 'User filters projects by skill', given: 'The user is on the Projects page', when: 'The user clicks on the "React" skill filter tag', then: 'Only projects built with React should be displayed in the list', status: 'idle' },
 ];
 
 export default function TestCaseRunner({ initialData }: { initialData?: TestCase[] }) {
@@ -64,9 +64,11 @@ export default function TestCaseRunner({ initialData }: { initialData?: TestCase
                     <TestCaseRow
                         key={tc.id}
                         id={tc.id}
-                        step={tc.step}
-                        action={tc.action}
-                        expectedResult={tc.expectedResult}
+                        feature={tc.feature}
+                        scenario={tc.scenario}
+                        given={tc.given}
+                        when={tc.when}
+                        then={tc.then}
                         status={tc.status}
                         onStatusChange={handleStatusChange}
                     />

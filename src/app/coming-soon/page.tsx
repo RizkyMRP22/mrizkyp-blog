@@ -11,7 +11,7 @@ function ComingSoonContent() {
 
     return (
         <PageLayout>
-            <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <section data-testid="section-coming-soon" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <SectionTitle title={page} subtitle="This section is currently under development" />
                 <div className="mt-8">
                     <ComingSoon

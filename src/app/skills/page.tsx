@@ -17,7 +17,7 @@ export default async function SkillsPage() {
                 <div className="absolute top-10 left-1/4 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/20 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
                 <div className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-purple-500/10 dark:bg-purple-500/20 rounded-full blur-3xl -z-10 animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
 
-                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 z-10 relative">
+                <section data-testid="section-skills" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 z-10 relative">
                     <div className="text-center mb-16">
                         <SectionTitle 
                             title="Skills & Expertise" 

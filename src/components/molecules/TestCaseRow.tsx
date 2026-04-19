@@ -3,14 +3,16 @@ import React from 'react';
 
 interface TestCaseRowProps {
     id: string;
-    step: string;
-    action: string;
-    expectedResult: string;
+    feature: string;
+    scenario: string;
+    given: string;
+    when: string;
+    then: string;
     status: 'idle' | 'pass' | 'fail' | 'skip';
     onStatusChange: (id: string, status: 'pass' | 'fail' | 'skip') => void;
 }
 
-export default function TestCaseRow({ id, step, action, expectedResult, status, onStatusChange }: TestCaseRowProps) {
+export default function TestCaseRow({ id, feature, scenario, given, when, then, status, onStatusChange }: TestCaseRowProps) {
     const statusColors = {
         idle: 'border-card-border bg-surface/40',
         pass: 'border-success/40 bg-success/10',
@@ -24,10 +26,12 @@ export default function TestCaseRow({ id, step, action, expectedResult, status, 
                 <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                         <span className="text-xs font-mono text-primary-light bg-primary/10 px-2 py-0.5 rounded">{id}</span>
-                        <span className="text-sm font-semibold text-white">{step}</span>
+                        <span className="text-sm font-semibold text-white">Feature: {feature}</span>
                     </div>
-                    <p className="text-xs text-muted mb-1"><strong className="text-slate-400">Action:</strong> {action}</p>
-                    <p className="text-xs text-muted"><strong className="text-slate-400">Expected:</strong> {expectedResult}</p>
+                    <p className="text-sm font-medium text-slate-300 mb-2 mt-1">Scenario: {scenario}</p>
+                    <div className="text-xs text-muted mb-1 flex items-start"><strong className="text-slate-400 w-12 shrink-0">Given</strong> <span>{given}</span></div>
+                    <div className="text-xs text-muted mb-1 flex items-start"><strong className="text-slate-400 w-12 shrink-0">When</strong> <span>{when}</span></div>
+                    <div className="text-xs text-muted flex items-start"><strong className="text-slate-400 w-12 shrink-0">Then</strong> <span>{then}</span></div>
                 </div>
 
                 <div className="flex gap-1.5 shrink-0">

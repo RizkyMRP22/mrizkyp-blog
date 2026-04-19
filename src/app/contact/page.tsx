@@ -2,7 +2,6 @@ import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import ContactForm from '@/components/organisms/ContactForm';
 import Card from '@/components/atoms/Card';
-// import profileData from '@/data/profile.json';
 import { getProfiles } from '@/app/api/profile/route';
 import type { Metadata } from 'next';
 
@@ -25,7 +24,7 @@ export default async function ContactPage() {
 
     return (
         <PageLayout>
-            <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <section data-testid="section-contact" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <SectionTitle title="Get In Touch" subtitle="Have a project or opportunity? I'd love to hear from you" />
 
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
