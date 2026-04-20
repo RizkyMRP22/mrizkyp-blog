@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '@/components/organisms/Navbar';
 import Footer from '@/components/organisms/Footer';
+import CTABanner from '@/components/organisms/CTABanner';
 
 interface PageLayoutProps {
     children: React.ReactNode;
@@ -13,6 +14,7 @@ export default function PageLayout({ children }: PageLayoutProps) {
             <main className="flex-1 pt-16">
                 {children}
             </main>
+            <CTABanner />
             <Footer />
         </div>
     );
