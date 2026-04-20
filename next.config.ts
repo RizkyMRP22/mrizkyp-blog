@@ -49,7 +49,7 @@ const securityHeaders = [
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https:",
       "connect-src 'self'",
-      "frame-src https://drive.google.com https://www.youtube.com https://www.loom.com",
+      "frame-src https://drive.google.com https://www.youtube.com https://www.loom.com https://othbk84gr5nz7rpr.public.blob.vercel-storage.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
@@ -58,6 +58,16 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "othbk84gr5nz7rpr.public.blob.vercel-storage.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+  },
   async headers() {
     return [
       {

@@ -26,9 +26,11 @@ const ImageIcon = () => (
 );
 
 export default function ProjectShowcaseTab({ data }: ProjectShowcaseTabProps) {
+    const safeData = Array.isArray(data) ? data : [];
+    
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-            {data.map((item) => (
+            {safeData.map((item) => (
                 <div
                     key={item.id}
                     className="group flex flex-col h-full bg-white dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-700/50 shadow-lg shadow-gray-200/40 dark:shadow-none hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/10 transition-all duration-500 will-change-transform"
