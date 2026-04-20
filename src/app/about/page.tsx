@@ -1,15 +1,11 @@
 import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import Card from '@/components/atoms/Card';
-// import educationData from '@/data/education.json';
-// import certificationsData from '@/data/certifications.json';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { getProfiles } from '@/app/api/profile/route';
 import { getCertifications } from '../api/certifications/route';
 import TrackingLink from '@/components/atoms/TrackingLink';
-// import { getEducation } from '@/app/api/education/route';
-
 
 export const metadata: Metadata = {
     title: 'About Me | QA Portfolio',
@@ -107,22 +103,6 @@ export default async function AboutPage() {
                             ))}
                         </ul>
                     </Card>
-
-                    {/* Stats */}
-                    {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {[
-                            { label: 'Years Experience', value: `${profileData.stats.yearsExperience}+`, icon: '📅' },
-                            { label: 'Projects', value: `${profileData.stats.projectsCompleted}+`, icon: '🚀' },
-                            { label: 'Bugs Found', value: `${profileData.stats.bugsFound.toLocaleString()}+`, icon: '🐛' },
-                            { label: 'Test Cases', value: `${profileData.stats.testCasesWritten.toLocaleString()}+`, icon: '📋' },
-                        ].map((stat) => (
-                            <Card key={stat.label} className="text-center">
-                                <div className="text-2xl mb-2">{stat.icon}</div>
-                                <div className="text-2xl font-bold gradient-text-primary">{stat.value}</div>
-                                <div className="text-xs text-muted mt-1">{stat.label}</div>
-                            </Card>
-                        ))}
-                    </div> */}
 
                     {/* Links */}
                     <Card hover={false}>
