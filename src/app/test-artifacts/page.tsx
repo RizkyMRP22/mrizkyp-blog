@@ -4,6 +4,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 import { getTestArtifacts } from '@/app/api/test-artifacts/route';
+import { getShowcases } from '@/app/api/project-showcases/route';
 
 export const metadata: Metadata = {
     title: 'Test Artifacts | QA Portfolio',
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 
 export default async function TestArtifactsPage() {
     const apiData = await getTestArtifacts();
+    const showcasesResponse = await getShowcases();
 
     // Map API response to match AutomationDashboard's expected DashboardData interface
     const automationData = {
@@ -55,6 +57,7 @@ export default async function TestArtifactsPage() {
                     bugReports={apiData.bugReports}
                     testCases={testCasesPayload}
                     automationData={automationData}
+                    projectShowcases={showcasesResponse?.showcases || (Array.isArray(showcasesResponse) ? showcasesResponse : [])}
                 />
             </div>
         </PageLayout>
