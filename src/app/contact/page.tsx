@@ -84,7 +84,7 @@ export default async function ContactPage() {
             icon: <EmailIcon />,
             label: 'Email',
             // Only show label text — never expose the raw email address in the DOM
-            displayText: 'Send me an email',
+            displayText: 'Let\'s Copy My Email',
             href: `mailto:${profileData.email}`,
             colorClass: 'text-indigo-300 hover:text-indigo-200',
             bgClass: 'bg-indigo-900/30 hover:bg-indigo-800/40',
@@ -118,7 +118,7 @@ export default async function ContactPage() {
             ping: false,
         }
     };
-    
+
     const currentStatus = statusConfig[siteConfig.contact.availabilityStatus] || statusConfig.available;
 
     return (
@@ -128,132 +128,148 @@ export default async function ContactPage() {
                 className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20"
             >
                 {/* ── Page Header & Location ───────────────────────── */}
-                <div className="animate-fade-in text-center mb-10">
+                <div className="animate-fade-in text-center mb-8">
                     <SectionTitle
                         title="Get In Touch"
                         subtitle="Have a project, opportunity, or just want to say hello? I'd love to hear from you."
+                        className="mb-8"
                     />
-                    
-                    {/* Location Badge (Centered uniquely below title divider) */}
-                    <div className="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/5 text-slate-300 text-sm font-medium">
-                        <span className="text-primary-light flex-shrink-0">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" aria-hidden="true">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                            </svg>
-                        </span>
-                        {profileData.location}
-                        <span className="text-muted mx-1">•</span>
-                        <span className="text-xs text-muted">Remote &amp; On-site</span>
-                    </div>
-                </div>
 
-                {/* ── Availability Badge ───────────────────────────── */}
-                <div className="flex justify-center mb-14 animate-fade-in delay-100">
-                    <div className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass border text-sm font-medium transition-colors ${currentStatus.colorClass}`}>
-                        <span className="relative flex h-2 w-2">
-                            {currentStatus.ping && (
-                                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${currentStatus.bgClass}`} />
-                            )}
-                            <span className={`relative inline-flex rounded-full h-2 w-2 ${currentStatus.bgClass}`} />
-                        </span>
-                        {currentStatus.text}
-                    </div>
-                </div>
-
-                {/* ── Main Grid ────────────────────────────────────── */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto items-stretch animate-fade-in delay-200">
-
-                    {/* Social / Contact Links */}
-                    <Card hover={true} className="flex flex-col">
-                        <h3 className="text-sm font-semibold text-white/80 uppercase tracking-wider mb-4">
-                            Reach me via
-                        </h3>
-                        <div className="space-y-3 flex-1 flex flex-col justify-center">
-                            {socialLinks.map((link) => (
-                                link.id === 'email' ? (
-                                    <CopyEmailButton
-                                        key={link.id}
-                                        email={profileData.email}
-                                        icon={link.icon}
-                                        label={link.label}
-                                        displayText={link.displayText}
-                                        colorClass={link.colorClass}
-                                        bgClass={link.bgClass}
-                                        borderClass={link.borderClass}
-                                    />
-                                ) : (
-                                    <a
-                                        key={link.id}
-                                        href={link.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        data-testid={`contact-link-${link.id}`}
-                                        aria-label={`${link.label}: ${link.displayText}`}
-                                        className={`
-                                            flex items-center gap-3 w-full px-4 py-3 rounded-xl border
-                                            transition-all duration-200 group
-                                            ${link.bgClass} ${link.borderClass}
-                                        `}
-                                    >
-                                        <span className={`transition-colors ${link.colorClass}`}>
-                                            {link.icon}
-                                        </span>
-                                        <div className="flex-1 min-w-0">
-                                            <p className="text-xs text-muted">{link.label}</p>
-                                            <p className={`text-sm font-medium transition-colors truncate ${link.colorClass}`}>
-                                                {link.displayText}
-                                            </p>
-                                        </div>
-                                        <span className="text-muted group-hover:translate-x-0.5 transition-transform duration-200 text-xs">
-                                            →
-                                        </span>
-                                    </a>
-                                )
-                            ))}
+                    {/* Badges Container */}
+                    <div className="flex flex-wrap justify-center items-center gap-4 mt-8">
+                        {/* Availability Badge */}
+                        <div className={`inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full glass border text-sm font-medium transition-colors shadow-lg ${currentStatus.colorClass}`}>
+                            <span className="relative flex h-2.5 w-2.5">
+                                {currentStatus.ping && (
+                                    <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${currentStatus.bgClass}`} />
+                                )}
+                                <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${currentStatus.bgClass}`} />
+                            </span>
+                            {currentStatus.text}
                         </div>
-                    </Card>
-
-                    {/* Open For */}
-                    <Card hover={true} className="flex flex-col">
-                        <h3 className="text-sm font-semibold text-white/80 uppercase tracking-wider mb-4">
-                            Open for
-                        </h3>
-                        <ul className="space-y-3 flex-1 flex flex-col justify-center" aria-label="Types of work I'm open to">
-                            {profileData.openFor.map((item: string) => (
-                                <li
-                                    key={item}
-                                    className="flex items-center gap-3 text-sm text-slate-300"
-                                >
-                                    <span className="text-success flex-shrink-0 bg-success/10 p-1 rounded-full">
-                                        <CheckIcon />
-                                    </span>
-                                    <span className="font-medium">{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </Card>
+                    </div>
                 </div>
 
-                {/* ── Contact Form ─────────────────────────────────── */}
-                <div className="max-w-4xl mx-auto mt-10 animate-fade-in delay-300">
-                    {/* Section label */}
-                    <div className="flex items-center gap-4 mb-6">
-                        <div className="flex-1 h-px bg-white/5" />
-                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest whitespace-nowrap">
-                            Or drop me a message directly
-                        </p>
-                        <div className="flex-1 h-px bg-white/5" />
+                {/* ── Main content layout ────────────────────────────────────── */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto items-start mt-16 animate-fade-in delay-200">
+
+                    {/* Left Column: Info Cards */}
+                    <div className="lg:col-span-5 space-y-6">
+                        {/* Social / Contact Links */}
+                        <Card hover={true} className="flex flex-col">
+                            <h3 className="text-sm font-semibold text-white/90 uppercase tracking-wider mb-5 flex items-center gap-2">
+                                <span className="w-8 h-px bg-primary/50"></span>
+                                Reach me via
+                            </h3>
+                            <div className="space-y-3">
+                                {socialLinks.map((link) => (
+                                    link.id === 'email' ? (
+                                        <CopyEmailButton
+                                            key={link.id}
+                                            email={profileData.email}
+                                            icon={link.icon}
+                                            label={link.label}
+                                            displayText={link.displayText}
+                                            colorClass={link.colorClass}
+                                            bgClass={link.bgClass}
+                                            borderClass={link.borderClass}
+                                        />
+                                    ) : (
+                                        <a
+                                            key={link.id}
+                                            href={link.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            data-testid={`contact-link-${link.id}`}
+                                            aria-label={`${link.label}: ${link.displayText}`}
+                                            className={`
+                                                flex items-center gap-4 w-full px-5 py-4 rounded-xl border
+                                                transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg
+                                                ${link.bgClass} ${link.borderClass}
+                                            `}
+                                        >
+                                            <span className={`transition-colors p-2 rounded-lg bg-white/5 group-hover:bg-white/10 ${link.colorClass}`}>
+                                                {link.icon}
+                                            </span>
+                                            <div className="flex-1 min-w-0 text-left">
+                                                <p className="text-xs text-muted mb-0.5">{link.label}</p>
+                                                <p className={`text-sm font-semibold transition-colors truncate ${link.colorClass}`}>
+                                                    {link.displayText}
+                                                </p>
+                                            </div>
+                                            <span className="text-muted group-hover:translate-x-1 group-hover:text-white transition-all duration-300 text-sm">
+                                                →
+                                            </span>
+                                        </a>
+                                    )
+                                ))}
+                            </div>
+                        </Card>
+
+                        {/* Location */}
+                        <Card hover={true} className="flex flex-col">
+                            <h3 className="text-sm font-semibold text-white/90 uppercase tracking-wider mb-5 flex items-center gap-2">
+                                <span className="w-8 h-px bg-amber-500/50"></span>
+                                Location
+                            </h3>
+                            <div className="flex items-start gap-4 w-full px-5 py-4 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg">
+                                <span className="text-amber-300 transition-colors p-2 rounded-lg bg-white/5 group-hover:bg-white/10 shrink-0 mt-1">
+                                    <LocationIcon />
+                                </span>
+                                <div className="flex flex-col flex-1 gap-3 w-full">
+                                    <div className="flex-1 min-w-0 text-left">
+                                        <p className="text-xs text-muted mb-0.5">Based in</p>
+                                        <p className="text-sm font-semibold text-amber-300 transition-colors truncate">
+                                            {profileData.location}
+                                        </p>
+                                    </div>
+                                    <div className="w-full h-px bg-white/5"></div>
+                                    <div className="flex-1 min-w-0 text-left">
+                                        <p className="text-xs text-muted mb-0.5">Working Mode</p>
+                                        <p className="text-sm font-semibold text-amber-300 transition-colors">
+                                            Remote / Hybrid / On-site
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Card>
+
+                        {/* Open For */}
+                        <Card hover={true} className="flex flex-col relative overflow-hidden">
+                            {/* Decorative background element */}
+                            <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-primary/10 blur-2xl pointer-events-none"></div>
+
+                            <h3 className="text-sm font-semibold text-white/90 uppercase tracking-wider mb-5 flex items-center gap-2 relative z-10">
+                                <span className="w-8 h-px bg-success/50"></span>
+                                Open for
+                            </h3>
+                            <ul className="space-y-4 relative z-10" aria-label="Types of work I'm open to">
+                                {profileData.openFor.map((item: string) => (
+                                    <li
+                                        key={item}
+                                        className="flex items-start gap-4 text-sm text-slate-300 group"
+                                    >
+                                        <span className="text-success flex-shrink-0 bg-success/10 p-1.5 rounded-full mt-0.5 group-hover:bg-success/20 group-hover:scale-110 transition-all duration-300 shadow-sm shadow-success/10">
+                                            <CheckIcon />
+                                        </span>
+                                        <span className="font-medium leading-relaxed group-hover:text-white transition-colors">{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </Card>
                     </div>
 
-                    <ContactForm />
-                </div>
+                    {/* Right Column: Contact Form */}
+                    <div className="lg:col-span-7 animate-fade-in delay-300">
+                        <div className="relative">
+                            {/* Subtle background glow for the form area */}
+                            <div className="absolute -inset-1 bg-gradient-to-br from-primary/20 via-accent/10 to-transparent rounded-3xl blur-xl opacity-50 z-0 pointer-events-none"></div>
 
-                {/* ── Bottom Divider Info ───────────────────────────── */}
-                <div className="mt-12 text-center animate-fade-in delay-400">
-                    <p className="text-xs text-muted">
-                        Your message is handled securely. No personal data is shared with third parties.
-                    </p>
+                            <div className="relative z-10">
+                                <ContactForm />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </PageLayout>
