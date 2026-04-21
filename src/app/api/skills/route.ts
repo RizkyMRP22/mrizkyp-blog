@@ -1,6 +1,6 @@
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
-// import skillsData from '@/data/skills.json';
+import { getDb } from '@/lib/mongodb';
 
 export interface SkillItem {
     name: string;
@@ -17,21 +17,12 @@ export interface SkillData {
 
 export async function getSkills(): Promise<SkillData> {
     try {
-        const response = await fetch(`${process.env.API_BASEURL}/skills` as string, {
-            headers: {
-                'x-api-key': process.env.API_KEY as string
-            },
-            next: { revalidate: Number(process.env.NEXT_PUBLIC_REVALIDATE_TIME) || 3600 }
-        });
-
-        if (!response.ok) {
-            console.error('Failed to fetch profile data');
-            return { skillCategories: [] }
-        }
-        return response.json();
+        const db = await getDb();
+        const skillCategories = await db.collection<SkillItem>('skills').find({}, { projection: { _id: 0 } }).toArray();
+        return { skillCategories };
     } catch (error) {
-        console.error('Error fetching profile data:', error);
-        return { skillCategories: [] }
+        console.error('Error fetching skills from MongoDB:', error);
+        return { skillCategories: [] };
     }
 }
 

@@ -1,5 +1,6 @@
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
 
 export interface ExperienceItem {
     id: string;
@@ -21,23 +22,15 @@ export interface ExperienceData {
 
 export async function getExperiences(): Promise<ExperienceData> {
     try {
-        const response = await fetch(`${process.env.API_BASEURL}/experiences` as string, {
-            headers: {
-                'x-api-key': process.env.API_KEY as string
-            },
-            next: { revalidate: Number(process.env.NEXT_PUBLIC_REVALIDATE_TIME) || 3600 }
-        });
-
-        if (!response.ok) {
-            console.error('Failed to fetch experience data');
-            return { experience: [] };
-        }
-        return response.json();
+        const db = await getDb();
+        const experience = await db.collection<ExperienceItem>('experiences').find({}, { projection: { _id: 0 } }).toArray();
+        return { experience };
     } catch (error) {
-        console.error('Error fetching experience data:', error);
+        console.error('Error fetching experiences from MongoDB:', error);
         return { experience: [] };
     }
 }
+
 export async function GET() {
     const data = await getExperiences();
     return NextResponse.json(data);

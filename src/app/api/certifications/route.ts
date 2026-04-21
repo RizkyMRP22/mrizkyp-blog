@@ -1,5 +1,6 @@
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
 
 export interface certificationItem {
     name: string;
@@ -14,20 +15,11 @@ export interface certificationData {
 
 export async function getCertifications(): Promise<certificationData> {
     try {
-        const response = await fetch(`${process.env.API_BASEURL}/certifications` as string, {
-            headers: {
-                'x-api-key': process.env.API_KEY as string
-            },
-            next: { revalidate: Number(process.env.NEXT_PUBLIC_REVALIDATE_TIME) || 3600 }
-        });
-
-        if (!response.ok) {
-            console.error('Failed to fetch certification data');
-            return { certifications: [] };
-        }
-        return response.json();
+        const db = await getDb();
+        const certifications = await db.collection<certificationItem>('certifications').find({}, { projection: { _id: 0 } }).toArray();
+        return { certifications };
     } catch (error) {
-        console.error('Error fetching certification data:', error);
+        console.error('Error fetching certifications from MongoDB:', error);
         return { certifications: [] };
     }
 }

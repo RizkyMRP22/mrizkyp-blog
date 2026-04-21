@@ -1,6 +1,6 @@
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
-
+import { getDb } from '@/lib/mongodb';
 
 export interface TestingStrategiesItems {
     id: string;
@@ -13,23 +13,13 @@ export interface TestingStrategiesData {
     phases: TestingStrategiesItems[];
 }
 
-
 export async function getTestingPhases(): Promise<TestingStrategiesData> {
     try {
-        const response = await fetch(`${process.env.API_BASEURL}/testing-strategies` as string, {
-            headers: {
-                'x-api-key': process.env.API_KEY as string
-            },
-            next: { revalidate: Number(process.env.NEXT_PUBLIC_REVALIDATE_TIME) || 3600 }
-        });
-
-        if (!response.ok) {
-            console.error('Failed to fetch testing strategies data');
-            return { phases: [] };
-        }
-        return response.json();
+        const db = await getDb();
+        const phases = await db.collection<TestingStrategiesItems>('testing-strategies').find({}, { projection: { _id: 0 } }).toArray();
+        return { phases };
     } catch (error) {
-        console.error('Error fetching testing strategies data:', error);
+        console.error('Error fetching testing strategies from MongoDB:', error);
         return { phases: [] };
     }
 }

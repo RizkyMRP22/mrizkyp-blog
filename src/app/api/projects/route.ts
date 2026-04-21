@@ -1,6 +1,6 @@
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
-//import projectsData from '@/data/projects.json';
+import { getDb } from '@/lib/mongodb';
 
 export interface ProjectsItem {
     id: string;
@@ -21,20 +21,11 @@ export interface ProjectsData {
 
 export async function getProjects(): Promise<ProjectsData> {
     try {
-        const response = await fetch(`${process.env.API_BASEURL}/projects` as string, {
-            headers: {
-                'x-api-key': process.env.API_KEY as string
-            },
-            next: { revalidate: Number(process.env.NEXT_PUBLIC_REVALIDATE_TIME) || 3600 }
-        });
-
-        if (!response.ok) {
-            console.error('Failed to fetch projects data');
-            return { projects: [] };
-        }
-        return response.json();
+        const db = await getDb();
+        const projects = await db.collection<ProjectsItem>('projects').find({}, { projection: { _id: 0 } }).toArray();
+        return { projects };
     } catch (error) {
-        console.error('Error fetching projects data:', error);
+        console.error('Error fetching projects from MongoDB:', error);
         return { projects: [] };
     }
 }

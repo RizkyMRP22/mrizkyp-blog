@@ -1,5 +1,6 @@
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
 
 export interface PostItem {
     id: number;
@@ -18,24 +19,14 @@ export interface postsData {
 
 export async function getPosts(): Promise<postsData> {
     try {
-        const response = await fetch(`${process.env.API_BASEURL}/posts` as string, {
-            headers: {
-                'x-api-key': process.env.API_KEY as string
-            },
-            next: { revalidate: Number(process.env.NEXT_PUBLIC_REVALIDATE_TIME) || 3600 }
-        });
-
-        if (!response.ok) {
-            console.error('Failed to fetch case study data');
-            return { posts: [] };
-        }
-        return response.json();
+        const db = await getDb();
+        const posts = await db.collection<PostItem>('posts').find({}, { projection: { _id: 0 } }).toArray();
+        return { posts };
     } catch (error) {
-        console.error('Error fetching case study data:', error);
+        console.error('Error fetching posts from MongoDB:', error);
         return { posts: [] };
     }
 }
-
 
 export async function GET() {
     const data = await getPosts();

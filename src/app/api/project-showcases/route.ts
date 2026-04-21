@@ -1,5 +1,6 @@
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
 
 export interface ShowcaseItem {
     id: string;
@@ -15,20 +16,11 @@ export interface ShowcaseData {
 
 export async function getShowcases(): Promise<ShowcaseData> {
     try {
-        const response = await fetch(`${process.env.API_BASEURL}/project-showcases` as string, {
-            headers: {
-                'x-api-key': process.env.API_KEY as string
-            },
-            next: { revalidate: Number(process.env.NEXT_PUBLIC_REVALIDATE_TIME) || 3600 }
-        });
-
-        if (!response.ok) {
-            console.error('Failed to fetch showcases data');
-            return { showcases: [] };
-        }
-        return response.json();
+        const db = await getDb();
+        const showcases = await db.collection<ShowcaseItem>('project-showcases').find({}, { projection: { _id: 0 } }).toArray();
+        return { showcases };
     } catch (error) {
-        console.error('Error fetching showcases data:', error);
+        console.error('Error fetching project showcases from MongoDB:', error);
         return { showcases: [] };
     }
 }
