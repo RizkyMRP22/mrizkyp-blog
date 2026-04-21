@@ -4,9 +4,11 @@ import TestingStrategyDiagram from '@/components/organisms/TestingStrategyDiagra
 import { getTestingPhases } from '@/app/api/testing-strategies/route';
 import type { Metadata } from 'next';
 
+import { siteConfig } from '@/config/site';
+
 export const metadata: Metadata = {
-    title: 'Testing Strategy | QA Portfolio',
-    description: 'Interactive overview of my end-to-end testing strategy, from grooming to post-production.',
+    title: siteConfig.pages.testingStrategy.title,
+    description: siteConfig.pages.testingStrategy.description,
 };
 
 export default async function TestingStrategyPage() {

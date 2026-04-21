@@ -6,9 +6,11 @@ import type { Metadata } from 'next';
 import { getTestArtifacts } from '@/app/api/test-artifacts/route';
 import { getShowcases } from '@/app/api/project-showcases/route';
 
+import { siteConfig } from '@/config/site';
+
 export const metadata: Metadata = {
-    title: 'Test Artifacts | QA Portfolio',
-    description: 'Interactive QA demos: bug report creator, test case runner, and automation result dashboard.',
+    title: siteConfig.pages.testArtifacts.title,
+    description: siteConfig.pages.testArtifacts.description,
 };
 
 export default async function TestArtifactsPage() {
