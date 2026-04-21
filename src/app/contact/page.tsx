@@ -2,6 +2,7 @@ import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import Card from '@/components/atoms/Card';
 import CopyEmailButton from '@/components/molecules/CopyEmailButton';
+import ContactForm from '@/components/molecules/ContactForm';
 import { getProfiles } from '@/app/api/profile/route';
 import type { Metadata } from 'next';
 import { siteConfig } from '@/config/site';
@@ -234,8 +235,22 @@ export default async function ContactPage() {
                     </Card>
                 </div>
 
+                {/* ── Contact Form ─────────────────────────────────── */}
+                <div className="max-w-4xl mx-auto mt-10 animate-fade-in delay-300">
+                    {/* Section label */}
+                    <div className="flex items-center gap-4 mb-6">
+                        <div className="flex-1 h-px bg-white/5" />
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest whitespace-nowrap">
+                            Or drop me a message directly
+                        </p>
+                        <div className="flex-1 h-px bg-white/5" />
+                    </div>
+
+                    <ContactForm />
+                </div>
+
                 {/* ── Bottom Divider Info ───────────────────────────── */}
-                <div className="mt-16 text-center animate-fade-in delay-300">
+                <div className="mt-12 text-center animate-fade-in delay-400">
                     <p className="text-xs text-muted">
                         Your message is handled securely. No personal data is shared with third parties.
                     </p>
