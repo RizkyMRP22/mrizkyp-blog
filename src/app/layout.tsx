@@ -10,10 +10,15 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+import { siteConfig } from "@/config/site";
+
 export const metadata: Metadata = {
-  title: "MRizkyP Blog",
-  description: "Quality Assurance Engineer portfolio showcasing test automation, bug reports, case studies, and QA expertise. 5+ years of experience in manual testing and test automation.",
-  keywords: ["QA Engineer", "Quality Assurance", "Test Automation", "Portfolio", "Selenium", "Cypress", "Playwright"],
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.titleSuffix}`,
+  },
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
 };
 
 export default function RootLayout({

@@ -3,9 +3,12 @@ import SectionTitle from '@/components/atoms/SectionTitle';
 import BlogClient from './BlogClient';
 import { getPosts } from '@/app/api/blog/route';
 
-export const metadata = {
-    title: 'Blog | QA Portfolio',
-    description: 'Insights, tutorials, and best practices in QA and Test Automation.',
+import { Metadata } from 'next';
+import { siteConfig } from '@/config/site';
+
+export const metadata: Metadata = {
+    title: siteConfig.pages.blog.title,
+    description: siteConfig.pages.blog.description,
 };
 
 export default async function BlogPage() {

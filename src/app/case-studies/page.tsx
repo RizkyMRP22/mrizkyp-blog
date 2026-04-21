@@ -4,9 +4,11 @@ import CaseStudyCard from '@/components/molecules/CaseStudyCard';
 import type { Metadata } from 'next';
 import { getCaseStudies } from '@/app/api/case-studies/route';
 
+import { siteConfig } from '@/config/site';
+
 export const metadata: Metadata = {
-    title: 'QA Case Studies | QA Portfolio',
-    description: 'Real-world QA success stories showcasing problem-solving and quality improvements.',
+    title: siteConfig.pages.caseStudies.title,
+    description: siteConfig.pages.caseStudies.description,
 };
 
 export default async function CaseStudiesPage() {
