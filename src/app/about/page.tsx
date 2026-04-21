@@ -115,7 +115,7 @@ export default async function AboutPage() {
                                 <span>💼</span> LinkedIn
                             </TrackingLink>
                             <TrackingLink href={`mailto:${profileData.email}`} className="flex items-center gap-2 text-primary-light hover:text-white transition-colors" eventName="generate_lead" eventParams={{ value: 'email_click' }}>
-                                <span>✉️</span> {profileData.email}
+                                <span>✉️</span> Email
                             </TrackingLink>
                         </div>
                     </Card>

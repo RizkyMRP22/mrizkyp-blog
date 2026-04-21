@@ -16,9 +16,9 @@ export default async function ContactPage() {
     const profileData = await getProfiles();
 
     const contactInfo = [
-        { icon: '✉️', label: 'Email', value: profileData.email, href: `mailto:${profileData.email}` },
-        { icon: '🐙', label: 'GitHub', value: profileData.github, href: profileData.github },
-        { icon: '💼', label: 'LinkedIn', value: profileData.linkedin, href: profileData.linkedin },
+        { icon: '✉️', label: 'Email', value: "Send Email", href: `mailto:${profileData.email}` },
+        { icon: '🐙', label: 'GitHub', value: "Open Github", href: profileData.github },
+        { icon: '💼', label: 'LinkedIn', value: "Open Linkedin", href: profileData.linkedin },
         { icon: '📍', label: 'Location', value: profileData.location, href: null },
     ];
 

@@ -6,49 +6,50 @@ import TestCaseRunner from '@/components/organisms/TestCaseRunner';
 import AutomationDashboard from '@/components/organisms/AutomationDashboard';
 import TestIdReferenceTab from '@/components/organisms/TestIdReferenceTab';
 import ProjectShowcaseTab from '@/components/organisms/ProjectShowcaseTab';
-import showcaseData from '@/data/project-showcase.json';
 
 interface TestArtifactsTabsProps {
     bugReports: any;
     testCases: any;
     automationData: any;
+    projectShowcases: any;
 }
 
 export default function TestArtifactsTabs({
     bugReports,
     testCases,
     automationData,
+    projectShowcases,
 }: TestArtifactsTabsProps) {
     const [activeTab, setActiveTab] = useState<'project-showcase' | 'bug-report' | 'test-runner' | 'automation-dashboard' | 'testid-reference'>('project-showcase');
 
     const tabs = [
-        { 
-            id: 'project-showcase', 
-            label: 'Project Showcase', 
+        {
+            id: 'project-showcase',
+            label: 'Project Showcase',
             description: 'Demonstrations and highlights',
             icon: '🎬',
             color: 'text-indigo-600 dark:text-indigo-400',
             bg: 'bg-indigo-100 dark:bg-indigo-900/30'
         },
-        { 
-            id: 'bug-report', 
-            label: 'Bug Report Creator', 
+        {
+            id: 'bug-report',
+            label: 'Bug Report Creator',
             description: 'Practice logging defects',
             icon: '🐞',
             color: 'text-red-600 dark:text-red-400',
             bg: 'bg-red-100 dark:bg-red-900/30'
         },
-        { 
-            id: 'test-runner', 
-            label: 'Interactive Test Runner', 
+        {
+            id: 'test-runner',
+            label: 'Interactive Test Runner',
             description: 'Execute predefined step-by-step test cases',
             icon: '⚡',
             color: 'text-emerald-600 dark:text-emerald-400',
             bg: 'bg-emerald-100 dark:bg-emerald-900/30'
         },
-        { 
-            id: 'automation-dashboard', 
-            label: 'Results Dashboard', 
+        {
+            id: 'automation-dashboard',
+            label: 'Results Dashboard',
             description: 'Analyze execution metrics and rates',
             icon: '📊',
             color: 'text-purple-600 dark:text-purple-400',
@@ -160,7 +161,7 @@ export default function TestArtifactsTabs({
                                 <p className="text-gray-500 dark:text-gray-400 text-xs md:text-sm">Video and image demonstrations of framework capabilities and features.</p>
                             </div>
                         </div>
-                        <ProjectShowcaseTab data={showcaseData as any} />
+                        <ProjectShowcaseTab data={projectShowcases as any} />
                     </div>
                 )}
 
@@ -175,7 +176,7 @@ export default function TestArtifactsTabs({
                         <BugReportDemo initialData={bugReports} />
                     </div>
                 )}
-                
+
                 {activeTab === 'test-runner' && (
                     <div className="bg-white dark:bg-gray-900/80 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl shadow-gray-200/40 dark:shadow-none border border-gray-100 dark:border-gray-800 p-4 sm:p-6 md:p-10 transition-all animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <div className="mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 border-b border-gray-100 dark:border-gray-800 pb-4 md:pb-6">
@@ -187,7 +188,7 @@ export default function TestArtifactsTabs({
                         <TestCaseRunner initialData={testCases} />
                     </div>
                 )}
-                
+
                 {activeTab === 'automation-dashboard' && (
                     <div className="bg-white dark:bg-gray-900/80 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl shadow-gray-200/40 dark:shadow-none border border-gray-100 dark:border-gray-800 p-4 sm:p-6 md:p-10 transition-all animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <div className="mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 border-b border-gray-100 dark:border-gray-800 pb-4 md:pb-6">
