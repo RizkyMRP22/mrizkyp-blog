@@ -19,10 +19,10 @@ export default async function AboutPage() {
 
     return (
         <PageLayout>
-            <section data-testid="section-about" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 animate-fade-in-up">
+            <section data-testid="section-about" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 animate-fade-in-up">
                 <SectionTitle title="About Me" subtitle="Get to know the person behind the quality" />
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mt-12">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start mt-8 lg:mt-12">
                     {/* Left Column: Sticky Profile Card */}
                     <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
                         <Card hover={false} className="text-center relative overflow-hidden backdrop-blur-md bg-slate-900/60 border border-slate-700/50 shadow-2xl">
@@ -139,10 +139,10 @@ export default async function AboutPage() {
                             </p>
 
                             {profileData.philosophy && (
-                                <div className="bg-slate-800/80 rounded-2xl p-8 border border-white/5 relative z-10 shadow-inner">
-                                    <div className="absolute top-4 left-6 text-7xl text-primary/20 font-serif leading-none select-none">&quot;</div>
-                                    <h4 className="text-sm font-bold text-primary uppercase tracking-widest pl-10 mb-3 relative z-10">QA Philosophy</h4>
-                                    <p className="text-slate-300 italic leading-relaxed pl-10 text-lg relative z-10">
+                                <div className="bg-slate-800/80 rounded-2xl p-5 sm:p-8 border border-white/5 relative z-10 shadow-inner mt-4">
+                                    <div className="absolute top-2 sm:top-4 left-4 sm:left-6 text-6xl sm:text-7xl text-primary/20 font-serif leading-none select-none">&quot;</div>
+                                    <h4 className="text-xs sm:text-sm font-bold text-primary uppercase tracking-widest pl-6 sm:pl-10 mb-2 sm:mb-3 relative z-10">QA Philosophy</h4>
+                                    <p className="text-slate-300 italic leading-relaxed pl-6 sm:pl-10 text-sm sm:text-lg relative z-10">
                                         {profileData.philosophy}
                                     </p>
                                 </div>
@@ -158,23 +158,23 @@ export default async function AboutPage() {
                                 Education
                             </h4>
 
-                            <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-600 before:to-transparent">
+                            <div className="space-y-6 sm:space-y-8 relative before:absolute before:inset-0 before:ml-4 sm:before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-600 before:to-transparent">
                                 {profileData.education.map((edu, idx) => (
-                                    <div key={idx} className="relative flex items-start gap-6 group">
+                                    <div key={idx} className="relative flex items-start gap-4 sm:gap-6 group">
                                         {/* Dot */}
-                                        <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-slate-900 bg-primary/90 shadow-lg shadow-primary/20 shrink-0 z-10 hover:bg-primary transition-colors hover:scale-110 duration-300">
-                                            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2z" /><path d="M12 14.07L4.76 10.8A1 1 0 003.5 11.5v5.5a1 1 0 00.5.87l8.02 4.63a1 1 0 001 0l8.02-4.63a1 1 0 00.5-.87v-5.5a1 1 0 00-1.26-.7L12 14.07z" opacity="0.5" /></svg>
+                                        <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full border-[3px] sm:border-4 border-slate-900 bg-primary/90 shadow-lg shadow-primary/20 shrink-0 z-10 hover:bg-primary transition-colors hover:scale-110 duration-300">
+                                            <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2z" /><path d="M12 14.07L4.76 10.8A1 1 0 003.5 11.5v5.5a1 1 0 00.5.87l8.02 4.63a1 1 0 001 0l8.02-4.63a1 1 0 00.5-.87v-5.5a1 1 0 00-1.26-.7L12 14.07z" opacity="0.5" /></svg>
                                         </div>
 
                                         {/* Card */}
-                                        <div className="w-full bg-slate-800/40 backdrop-blur-sm border border-slate-700/60 p-6 rounded-2xl shadow-lg hover:border-primary/50 hover:bg-slate-800/80 transition-all duration-300 group-hover:-translate-y-1">
-                                            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-2">
-                                                <h5 className="font-bold text-white text-xl">{edu.degree}</h5>
-                                                <span className="inline-block text-xs font-bold px-3 py-1.5 bg-primary/10 text-primary-light border border-primary/20 rounded-lg shadow-sm whitespace-nowrap sm:ml-auto">
+                                        <div className="w-full bg-slate-800/40 backdrop-blur-sm border border-slate-700/60 p-4 sm:p-6 rounded-2xl shadow-lg hover:border-primary/50 hover:bg-slate-800/80 transition-all duration-300 group-hover:-translate-y-1">
+                                            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 sm:mb-3 gap-2">
+                                                <h5 className="font-bold text-white text-lg sm:text-xl">{edu.degree}</h5>
+                                                <span className="inline-block w-fit text-[10px] sm:text-xs font-bold px-2.5 py-1 sm:px-3 sm:py-1.5 bg-primary/10 text-primary-light border border-primary/20 rounded-lg shadow-sm whitespace-nowrap sm:ml-auto">
                                                     {edu.period}
                                                 </span>
                                             </div>
-                                            <p className="text-slate-400 font-medium text-base">{edu.institution}</p>
+                                            <p className="text-slate-400 font-medium text-sm sm:text-base">{edu.institution}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -189,26 +189,28 @@ export default async function AboutPage() {
                                 </div>
                                 Certifications & Courses
                             </h4>
-                            <div className="flex flex-col gap-4">
+                            <div className="flex flex-col gap-3 sm:gap-4">
                                 {certificationsData.certifications.map((cert, idx) => {
                                     const cardContent = (
                                         <>
                                             {/* Left accent color */}
-                                            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-primary/50 to-primary/10 group-hover:from-primary group-hover:to-primary-light transition-colors"></div>
+                                            <div className="absolute left-0 top-0 bottom-0 w-1 sm:w-1.5 bg-gradient-to-b from-primary/50 to-primary/10 group-hover:from-primary group-hover:to-primary-light transition-colors"></div>
 
-                                            {/* Icon Container */}
-                                            <div className="flex-shrink-0 w-12 h-12 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center mr-4 group-hover:scale-110 group-hover:border-primary/30 group-hover:shadow-[0_0_15px_rgba(var(--color-primary),0.3)] transition-all duration-300 z-10">
-                                                <svg className="w-5 h-5 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                                            <div className="flex items-center w-full z-10 gap-3 sm:gap-4 sm:mr-auto">
+                                                {/* Icon Container */}
+                                                <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center group-hover:scale-110 group-hover:border-primary/30 group-hover:shadow-[0_0_15px_rgba(var(--color-primary),0.3)] transition-all duration-300">
+                                                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                                                </div>
+
+                                                <div className="flex-grow min-w-0 pr-1 sm:pr-4">
+                                                    <h5 className="text-white font-bold text-sm sm:text-[1.05rem] leading-snug group-hover:text-primary-light transition-colors">{cert.name}</h5>
+                                                    <p className="text-xs sm:text-sm text-slate-400 font-medium mt-0.5">{cert.issuer}</p>
+                                                </div>
                                             </div>
 
-                                            <div className="flex-grow min-w-0 pr-4 z-10">
-                                                <h5 className="text-white font-bold text-[1.05rem] leading-snug group-hover:text-primary-light transition-colors">{cert.name}</h5>
-                                                <p className="text-sm text-slate-400 font-medium mt-0.5">{cert.issuer}</p>
-                                            </div>
-
-                                            <div className="flex flex-col items-end flex-shrink-0 z-10 gap-2">
+                                            <div className="flex sm:flex-col items-center sm:items-end w-full sm:w-auto justify-between sm:justify-center flex-shrink-0 z-10 mt-3 sm:mt-0 pl-[3.25rem] sm:pl-0 gap-2">
                                                 {cert.year && (
-                                                    <span className="text-[11px] uppercase font-bold tracking-wider px-2.5 py-1 bg-slate-900 text-slate-300 border border-slate-700/50 rounded shadow-sm">
+                                                    <span className="text-[10px] sm:text-[11px] uppercase font-bold tracking-wider px-2 py-0.5 sm:px-2.5 sm:py-1 bg-slate-900 text-slate-300 border border-slate-700/50 rounded shadow-sm">
                                                         {cert.year}
                                                     </span>
                                                 )}
@@ -222,7 +224,7 @@ export default async function AboutPage() {
                                         </>
                                     );
 
-                                    const className = `group flex items-center p-5 bg-slate-800/40 hover:bg-slate-800/80 border border-slate-700/50 hover:border-primary/50 transition-all duration-300 rounded-2xl relative overflow-hidden ${cert.link ? 'cursor-pointer' : ''}`;
+                                    const className = `group flex flex-col sm:flex-row sm:items-center p-4 sm:p-5 bg-slate-800/40 hover:bg-slate-800/80 border border-slate-700/50 hover:border-primary/50 transition-all duration-300 rounded-2xl relative overflow-hidden ${cert.link ? 'cursor-pointer' : ''}`;
 
                                     if (cert.link) {
                                         return (

@@ -77,32 +77,43 @@ export default function ProfileImagePreview({ src, alt }: ProfileImagePreviewPro
             {/* Lightbox Overlay */}
             {isOpen && (
                 <div 
-                    className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/95 backdrop-blur-lg p-4 animate-in fade-in duration-300"
+                    className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/98 backdrop-blur-xl animate-in fade-in duration-300"
                     onClick={() => setIsOpen(false)}
+                    onContextMenu={(e) => e.preventDefault()} /* Prevent right click globally on overlay */
                 >
                     <div 
-                        className="relative max-w-3xl w-full flex flex-col items-center justify-center group/modal animate-in zoom-in-95 ease-out duration-300" 
+                        className="relative w-full h-full flex flex-col items-center justify-center group/modal animate-in zoom-in-95 ease-out duration-300 p-2 sm:p-6 md:p-12" 
                         onClick={(e) => e.stopPropagation()}
+                        onContextMenu={(e) => e.preventDefault()}
                     >
-                        {/* Close button slightly detached for elegant lightbox look */}
+                        {/* Close button */}
                         <button 
-                            className="absolute -top-14 right-0 md:-right-12 z-20 p-2.5 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 hover:scale-110 transition-all shadow-lg"
+                            className="absolute top-4 right-4 md:top-8 md:right-8 z-[60] p-3 rounded-full bg-slate-900/60 backdrop-blur-md border border-white/10 text-white/70 hover:text-white hover:bg-slate-800 hover:scale-110 transition-all shadow-2xl"
                             onClick={() => setIsOpen(false)}
                             aria-label="Close preview"
                         >
-                            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
 
-                        <div className="relative rounded-2xl md:rounded-[2rem] overflow-hidden shadow-[0_0_80px_rgba(var(--color-primary),0.15)] ring-1 ring-white/10 bg-slate-950 flex items-center justify-center">
+                        {/* Image Container */}
+                        <div className="relative w-full h-full flex items-center justify-center">
                             <Image
                                 src={src}
                                 alt={alt}
-                                width={1200}
-                                height={1200}
+                                fill
                                 quality={100}
-                                className="w-full h-auto max-h-[88vh] object-contain"
+                                className="object-contain select-none pointer-events-none"
                                 priority
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                                draggable={false}
                             />
+                            {/* Security overlay to catch interactions before they hit the image */}
+                            <div 
+                                className="absolute inset-0 z-[50]" 
+                                onContextMenu={(e) => e.preventDefault()}
+                                onDragStart={(e) => e.preventDefault()}
+                            ></div>
                         </div>
                     </div>
                 </div>

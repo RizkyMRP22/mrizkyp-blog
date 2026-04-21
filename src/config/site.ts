@@ -11,6 +11,10 @@ export const siteConfig = {
     "Cypress",
     "Playwright",
   ],
+  contact: {
+    // Current availability status. Options: "available", "freelance_only", "unavailable", "exploring"
+    availabilityStatus: (process.env.NEXT_PUBLIC_AVAILABILITY_STATUS || "exploring") as "available" | "freelance_only" | "unavailable" | "exploring",
+  },
   pages: {
     about: {
       title: "About Me",
