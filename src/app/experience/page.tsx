@@ -5,9 +5,11 @@ import ExperienceCard from '@/components/molecules/ExperienceCard';
 import type { Metadata } from 'next';
 import { getExperiences } from '../api/experience/route';
 
+import { siteConfig } from '@/config/site';
+
 export const metadata: Metadata = {
-    title: 'Experience | QA Portfolio',
-    description: 'Professional journey as a QA Engineer - work experience and achievements.',
+    title: siteConfig.pages.experience.title,
+    description: siteConfig.pages.experience.description,
 };
 
 export default async function ExperiencePage() {

@@ -5,9 +5,11 @@ import Card from '@/components/atoms/Card';
 import { getProfiles } from '@/app/api/profile/route';
 import type { Metadata } from 'next';
 
+import { siteConfig } from '@/config/site';
+
 export const metadata: Metadata = {
-    title: 'Contact | QA Portfolio',
-    description: 'Get in touch with M. Rizky Pratama - QA Engineer available for collaboration and opportunities.',
+    title: siteConfig.pages.contact.title,
+    description: siteConfig.pages.contact.description,
 };
 
 

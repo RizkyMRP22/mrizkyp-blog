@@ -7,9 +7,11 @@ import { getProfiles } from '@/app/api/profile/route';
 import { getCertifications } from '../api/certifications/route';
 import TrackingLink from '@/components/atoms/TrackingLink';
 
+import { siteConfig } from '@/config/site';
+
 export const metadata: Metadata = {
-    title: 'About Me | QA Portfolio',
-    description: 'Learn about M. Rizky Pratama - QA Engineer with 5+ years of experience in test automation and quality assurance.',
+    title: siteConfig.pages.about.title,
+    description: siteConfig.pages.about.description,
 };
 
 
