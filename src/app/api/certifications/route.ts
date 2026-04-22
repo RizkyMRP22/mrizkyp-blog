@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
+import { withCache } from '@/lib/redis';
 import { getDb } from '@/lib/mongodb';
 
 export interface certificationItem {
@@ -13,7 +14,8 @@ export interface certificationData {
     certifications: certificationItem[];
 }
 
-export async function getCertifications(): Promise<certificationData> {
+async function _getCertifications(): Promise<certificationData> {
+
     try {
         const db = await getDb();
         const certifications = await db.collection<certificationItem>('certifications').find({}, { projection: { _id: 0 } }).toArray();
@@ -22,6 +24,10 @@ export async function getCertifications(): Promise<certificationData> {
         console.error('Error fetching certifications from MongoDB:', error);
         return { certifications: [] };
     }
+}
+
+export async function getCertifications() {
+    return withCache('api:certifications', _getCertifications, 3600);
 }
 
 export async function GET() {

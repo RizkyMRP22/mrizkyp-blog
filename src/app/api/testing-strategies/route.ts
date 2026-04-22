@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
+import { withCache } from '@/lib/redis';
 import { getDb } from '@/lib/mongodb';
 
 export interface TestingStrategiesItems {
@@ -13,7 +14,8 @@ export interface TestingStrategiesData {
     phases: TestingStrategiesItems[];
 }
 
-export async function getTestingPhases(): Promise<TestingStrategiesData> {
+async function _getTestingPhases(): Promise<TestingStrategiesData> {
+
     try {
         const db = await getDb();
         const phases = await db.collection<TestingStrategiesItems>('testing-strategies').find({}, { projection: { _id: 0 } }).toArray();
@@ -22,6 +24,10 @@ export async function getTestingPhases(): Promise<TestingStrategiesData> {
         console.error('Error fetching testing strategies from MongoDB:', error);
         return { phases: [] };
     }
+}
+
+export async function getTestingPhases() {
+    return withCache('api:testing-strategies', _getTestingPhases, 3600);
 }
 
 export async function GET() {

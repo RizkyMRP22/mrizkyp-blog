@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
+import { withCache } from '@/lib/redis';
 import { getDb } from '@/lib/mongodb';
 
 export interface ExperienceItem {
@@ -20,7 +21,8 @@ export interface ExperienceData {
     experience: ExperienceItem[];
 }
 
-export async function getExperiences(): Promise<ExperienceData> {
+async function _getExperiences(): Promise<ExperienceData> {
+
     try {
         const db = await getDb();
         const experience = await db.collection<ExperienceItem>('experiences').find({}, { projection: { _id: 0 } }).toArray();
@@ -29,6 +31,10 @@ export async function getExperiences(): Promise<ExperienceData> {
         console.error('Error fetching experiences from MongoDB:', error);
         return { experience: [] };
     }
+}
+
+export async function getExperiences() {
+    return withCache('api:experience', _getExperiences, 3600);
 }
 
 export async function GET() {

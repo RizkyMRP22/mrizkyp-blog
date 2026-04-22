@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
+import { withCache } from '@/lib/redis';
 import { getDb } from '@/lib/mongodb';
 
 export interface ProfileItem {
@@ -31,7 +32,8 @@ export interface ProfileItem {
     openFor: string[];
 }
 
-export async function getProfiles(): Promise<ProfileItem> {
+async function _getProfiles(): Promise<ProfileItem> {
+
     try {
         const db = await getDb();
         const profile = await db.collection<ProfileItem>('profiles').findOne({}, { projection: { _id: 0 } });
@@ -43,6 +45,10 @@ export async function getProfiles(): Promise<ProfileItem> {
         console.error('Error fetching profile from MongoDB:', error);
         throw error;
     }
+}
+
+export async function getProfiles() {
+    return withCache('api:profile', _getProfiles, 3600);
 }
 
 export async function GET() {

@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
+import { withCache } from '@/lib/redis';
 import { getDb } from '@/lib/mongodb';
 
 export interface ProjectsItem {
@@ -19,7 +20,8 @@ export interface ProjectsData {
     projects: ProjectsItem[];
 }
 
-export async function getProjects(): Promise<ProjectsData> {
+async function _getProjects(): Promise<ProjectsData> {
+
     try {
         const db = await getDb();
         const projects = await db.collection<ProjectsItem>('projects').find({}, { projection: { _id: 0 } }).toArray();
@@ -28,6 +30,10 @@ export async function getProjects(): Promise<ProjectsData> {
         console.error('Error fetching projects from MongoDB:', error);
         return { projects: [] };
     }
+}
+
+export async function getProjects() {
+    return withCache('api:projects', _getProjects, 3600);
 }
 
 export async function GET() {

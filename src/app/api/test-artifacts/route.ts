@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
+import { withCache } from '@/lib/redis';
 import { getDb } from '@/lib/mongodb';
 
 export interface TestSuites {
@@ -59,7 +60,8 @@ export interface TestArtifactsItem {
     bugReports: BugReport[];
 }
 
-export async function getTestArtifacts(): Promise<TestArtifactsItem> {
+async function _getTestArtifacts(): Promise<TestArtifactsItem> {
+
     try {
         const db = await getDb();
         const data = await db.collection<TestArtifactsItem>('test-artifacts').findOne({}, { projection: { _id: 0 } });
@@ -71,6 +73,10 @@ export async function getTestArtifacts(): Promise<TestArtifactsItem> {
         console.error('Error fetching test artifacts from MongoDB:', error);
         throw error;
     }
+}
+
+export async function getTestArtifacts() {
+    return withCache('api:test-artifacts', _getTestArtifacts, 3600);
 }
 
 export async function GET() {

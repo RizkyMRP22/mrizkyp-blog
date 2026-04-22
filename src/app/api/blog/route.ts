@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
+import { withCache } from '@/lib/redis';
 import { getDb } from '@/lib/mongodb';
 
 export interface PostItem {
@@ -17,7 +18,8 @@ export interface postsData {
     posts: PostItem[];
 }
 
-export async function getPosts(): Promise<postsData> {
+async function _getPosts(): Promise<postsData> {
+
     try {
         const db = await getDb();
         const posts = await db.collection<PostItem>('posts').find({}, { projection: { _id: 0 } }).toArray();
@@ -26,6 +28,10 @@ export async function getPosts(): Promise<postsData> {
         console.error('Error fetching posts from MongoDB:', error);
         return { posts: [] };
     }
+}
+
+export async function getPosts() {
+    return withCache('api:blog', _getPosts, 3600);
 }
 
 export async function GET() {
