@@ -9,6 +9,7 @@ export const navItems = [
     { href: '/blog', label: 'Blog', comingSoon: process.env.NEXT_PUBLIC_ENABLE_BLOG !== 'true' },
     { href: '/test-artifacts', label: 'Test Artifacts', comingSoon: process.env.NEXT_PUBLIC_ENABLE_TEST_ARTIFACTS !== 'true' },
     { href: '/contact', label: 'Contact', comingSoon: process.env.NEXT_PUBLIC_ENABLE_CONTACT !== 'true' },
+    { href: '/endorsements', label: 'Endorsements', comingSoon: process.env.NEXT_PUBLIC_ENABLE_ENDORSEMENTS !== 'true' },
 ].map(item => ({
     ...item,
     href: item.comingSoon ? `/coming-soon?page=${encodeURIComponent(item.label)}` : item.href,

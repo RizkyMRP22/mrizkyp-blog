@@ -35,3 +35,46 @@ export function Textarea({ label, error, className = '', ...props }: TextareaPro
         </div>
     );
 }
+
+interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+    label?: string;
+    error?: string;
+    options: { value: string; label: string }[] | string[];
+    placeholder?: string;
+}
+
+export function Select({ label, error, options, placeholder, className = '', ...props }: SelectProps) {
+    return (
+        <div className="flex flex-col gap-1.5">
+            {label && <label className="text-sm font-medium text-slate-300">{label}</label>}
+            <div className="relative">
+                <select
+                    className={`w-full px-4 py-3 rounded-xl bg-surface/60 border border-card-border text-foreground appearance-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300 ${error ? 'border-danger/50 ring-1 ring-danger/30' : ''} ${className}`}
+                    {...props}
+                >
+                    {placeholder && (
+                        <option value="" disabled className="bg-surface text-muted">
+                            {placeholder}
+                        </option>
+                    )}
+                    {options.map((opt, i) => {
+                        const isString = typeof opt === 'string';
+                        const val = isString ? opt : (opt as any).value;
+                        const lab = isString ? opt : (opt as any).label;
+                        return (
+                            <option key={i} value={val} className="bg-surface text-foreground py-2">
+                                {lab}
+                            </option>
+                        );
+                    })}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-muted">
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                        <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                </div>
+            </div>
+            {error && <span className="text-xs text-red-400">{error}</span>}
+        </div>
+    );
+}

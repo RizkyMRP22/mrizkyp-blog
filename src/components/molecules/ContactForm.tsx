@@ -166,7 +166,7 @@ export default function ContactForm() {
             <div className="mb-2">
                 <h3 className="text-base font-semibold text-white">Send a Message</h3>
                 <p className="text-xs text-slate-500 mt-1">
-                    All fields marked <span className="text-danger">*</span> are required. I typically reply within 1–2 business days.
+                    All fields marked <span className="text-danger">*</span> are required.
                 </p>
             </div>
 

@@ -104,24 +104,6 @@ export default async function AboutPage() {
                     {/* Right Column: Main Content */}
                     <div className="lg:col-span-8 space-y-8">
 
-                        {/* Stats Grid */}
-                        {/* {profileData.stats && (profileData.stats.yearsExperience > 0 || profileData.stats.projectsCompleted > 0) && (
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                {[
-                                    { label: 'Years Exp.', value: `${profileData.stats.yearsExperience}+`, icon: '⏳', gradient: 'from-blue-500/20 to-blue-500/5' },
-                                    { label: 'Projects', value: `${profileData.stats.projectsCompleted}+`, icon: '🚀', gradient: 'from-primary/20 to-primary/5' },
-                                    { label: 'Bugs Found', value: `${profileData.stats.bugsFound}+`, icon: '🐛', gradient: 'from-orange-500/20 to-orange-500/5' },
-                                    { label: 'Test Cases', value: `${profileData.stats.testCasesWritten}+`, icon: '📝', gradient: 'from-purple-500/20 to-purple-500/5' },
-                                ].filter(stat => !stat.value.startsWith('0')).map((stat, idx) => (
-                                    <Card key={idx} hover={true} className={`text-center p-6 flex flex-col justify-center items-center bg-gradient-to-b ${stat.gradient} border-slate-700/50 backdrop-blur-sm group`}>
-                                        <span className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">{stat.icon}</span>
-                                        <h4 className="text-3xl font-extrabold text-white mb-1 group-hover:text-primary transition-colors">{stat.value}</h4>
-                                        <p className="text-xs text-slate-400 uppercase tracking-widest font-semibold">{stat.label}</p>
-                                    </Card>
-                                ))}
-                            </div>
-                        )} */}
-
                         {/* Bio & Philosophy Block */}
                         <Card hover={false} className="relative overflow-hidden bg-slate-900/60 border-slate-700/50 backdrop-blur-sm">
                             <div className="absolute -top-10 -right-10 p-8 opacity-[0.03] text-primary pointer-events-none">

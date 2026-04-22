@@ -7,7 +7,7 @@ export default function CTABanner() {
     const pathname = usePathname();
 
     // Do not show on coming-soon page or contact page
-    if (pathname === '/' || pathname === '/about' || pathname === '/coming-soon' || pathname === '/contact') {
+    if (pathname === '/' || pathname === '/about' || pathname === '/coming-soon' || pathname === '/contact' || pathname === '/endorsements') {
         return null;
     }
 
