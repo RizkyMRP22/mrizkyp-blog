@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@/components/atoms/Button';
 import { Input, Textarea, Select } from '@/components/atoms/Input';
+import EndorsementCard from '@/components/molecules/EndorsementCard';
 
 const RELATIONSHIP_OPTIONS = [
     "Manager",
@@ -28,6 +29,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isPreview, setIsPreview] = useState(false);
 
     // Form inputs state
     const [formData, setFormData] = useState({
@@ -52,6 +54,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
             });
             setError(null);
             setIsSuccess(false);
+            setIsPreview(false);
         }
     }, [isOpen]);
 
@@ -62,8 +65,12 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handlePreview = (e: React.FormEvent) => {
         e.preventDefault();
+        setIsPreview(true);
+    };
+
+    const handleSubmit = async () => {
         setIsSubmitting(true);
         setError(null);
 
@@ -133,6 +140,44 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                                 Back to Endorsements
                             </Button>
                         </div>
+                    ) : isPreview ? (
+                        <>
+                            <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary mb-2">Preview Endorsement</h2>
+                            <p className="text-muted text-sm mb-6">Here is how your endorsement will look. Please review before submitting.</p>
+
+                            {error && (
+                                <div className="mb-6 p-4 bg-danger/10 border border-danger/30 rounded-xl text-danger text-sm">
+                                    {error}
+                                </div>
+                            )}
+
+                            <div className="mb-8">
+                                <EndorsementCard
+                                    endorsement={{
+                                        ...formData,
+                                        rating: formData.rating ? parseInt(formData.rating) : undefined,
+                                        createdAt: new Date().toISOString()
+                                    }}
+                                />
+                            </div>
+
+                            <div className="pt-4 flex flex-col-reverse sm:flex-row justify-end gap-3 border-t border-card-border/50">
+                                <Button type="button" variant="ghost" onClick={() => setIsPreview(false)} disabled={isSubmitting} className="w-full sm:w-auto">
+                                    Back to Edit
+                                </Button>
+                                <Button onClick={handleSubmit} disabled={isSubmitting} className="w-full sm:w-auto">
+                                    {isSubmitting ? (
+                                        <span className="flex items-center gap-2">
+                                            <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            Submitting...
+                                        </span>
+                                    ) : 'Confirm & Submit'}
+                                </Button>
+                            </div>
+                        </>
                     ) : (
                         <>
                             <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary mb-2">Write an Endorsement</h2>
@@ -144,7 +189,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                                 </div>
                             )}
 
-                            <form onSubmit={handleSubmit} className="space-y-4">
+                            <form onSubmit={handlePreview} className="space-y-4">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <Input
                                         label="Full Name *"
@@ -212,16 +257,8 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                                     <Button type="button" variant="ghost" onClick={onClose} className="w-full sm:w-auto">
                                         Cancel
                                     </Button>
-                                    <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
-                                        {isSubmitting ? (
-                                            <span className="flex items-center gap-2">
-                                                <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                                </svg>
-                                                Submitting...
-                                            </span>
-                                        ) : 'Submit Endorsement'}
+                                    <Button type="submit" className="w-full sm:w-auto">
+                                        Preview Endorsement
                                     </Button>
                                 </div>
                             </form>
