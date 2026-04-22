@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 interface ProfileImagePreviewProps {
     src: string;
@@ -10,6 +11,57 @@ interface ProfileImagePreviewProps {
 
 export default function ProfileImagePreview({ src, alt }: ProfileImagePreviewProps) {
     const [isOpen, setIsOpen] = useState(false);
+    const [isBlurred, setIsBlurred] = useState(false);
+
+    // Anti-screenshot obfuscation (Window focus + Keyboard Shortcuts)
+    useEffect(() => {
+        const handleBlur = () => setIsBlurred(true);
+        const handleFocus = () => setIsBlurred(false);
+        const handleVisibilityChange = () => {
+            setIsBlurred(document.hidden);
+        };
+
+        // Aggressive preemptive strike:
+        // Mac screenshot relies on Cmd+Shift (Meta+Shift). 
+        // Windows snipping tool relies on Win+Shift (Meta+Shift) or Ctrl+Shift or PrintScreen.
+        // We blur instantly the moment modifier keys are held down, BEFORE the screenshot key is even pressed.
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if ((e.metaKey || e.ctrlKey) && e.shiftKey) {
+                setIsBlurred(true);
+            }
+            if (e.key === 'PrintScreen') {
+                setIsBlurred(true);
+                // PrintScreen takes it instantly, keep it blurred briefly
+                setTimeout(() => {
+                    if (document.hasFocus() && !document.hidden) setIsBlurred(false);
+                }, 3000);
+            }
+        };
+
+        const handleKeyUp = (e: KeyboardEvent) => {
+            // Restore if modifiers are released AND window hasn't lost focus to an OS snipping tool
+            if (!((e.metaKey || e.ctrlKey) && e.shiftKey) && document.hasFocus() && !document.hidden) {
+                setIsBlurred(false);
+            }
+        };
+
+        window.addEventListener('blur', handleBlur);
+        window.addEventListener('focus', handleFocus);
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        window.addEventListener('keydown', handleKeyDown, { capture: true });
+        window.addEventListener('keyup', handleKeyUp, { capture: true });
+
+        // Run once on mount in case it spawned in background
+        setIsBlurred(document.hidden || !document.hasFocus());
+
+        return () => {
+            window.removeEventListener('blur', handleBlur);
+            window.removeEventListener('focus', handleFocus);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.removeEventListener('keydown', handleKeyDown, { capture: true });
+            window.removeEventListener('keyup', handleKeyUp, { capture: true });
+        };
+    }, []);
 
     // Escape key to close
     useEffect(() => {
@@ -29,80 +81,96 @@ export default function ProfileImagePreview({ src, alt }: ProfileImagePreviewPro
     return (
         <>
             <div 
-                className="relative z-10 w-48 h-48 mx-auto mt-8 mb-10 group/avatar cursor-pointer flex items-center justify-center"
+                className="relative z-10 w-32 h-32 md:w-40 xl:w-48 md:h-40 xl:h-48 mx-auto mt-6 lg:mt-8 mb-8 group/avatar cursor-pointer"
                 onClick={() => setIsOpen(true)}
                 title="Click to expand photo"
             >
-                {/* Outside subtle rotating dashed ring */}
-                <div className="absolute inset-0 rounded-full border border-dashed border-primary/30 group-hover/avatar:border-primary/60 group-hover/avatar:scale-105 animate-[spin_15s_linear_infinite] transition-all duration-700"></div>
+                {/* Glowing ambient background */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary via-primary-light to-secondary blur-xl md:blur-2xl opacity-40 group-hover/avatar:opacity-80 transition-opacity duration-700"></div>
                 
-                {/* Secondary inner rotating solid ring */}
-                <div className="absolute inset-[6px] rounded-full border border-secondary/20 group-hover/avatar:border-secondary/50 group-hover/avatar:scale-105 animate-[spin_20s_linear_infinite_reverse] transition-all duration-700"></div>
+                {/* Animated gradient ring wrapper */}
+                <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-primary/50 to-secondary/50 p-[2px] opacity-70 group-hover/avatar:opacity-100 transition-opacity duration-500">
+                    <div className="w-full h-full rounded-full bg-slate-900 border border-slate-800"></div>
+                </div>
 
-                {/* Expansive glowing shadow mask */}
-                <div className="absolute inset-4 rounded-full bg-gradient-to-br from-primary to-secondary blur-xl opacity-30 group-hover/avatar:opacity-70 group-hover/avatar:scale-110 transition-all duration-700 ease-in-out"></div>
-                
                 {/* Core Image container */}
-                <div className="absolute inset-4 rounded-full bg-slate-800 overflow-hidden border-[3px] border-slate-900 shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10 flex items-center justify-center transform group-hover/avatar:scale-[1.02] transition-transform duration-500 ease-out">
+                <div className="relative w-full h-full rounded-full overflow-hidden border-[3px] md:border-[4px] border-slate-900 shadow-2xl z-10 flex items-center justify-center transform group-hover/avatar:scale-105 transition-transform duration-500 ease-out bg-slate-800">
                     <Image
                         src={src}
                         alt={alt}
-                        width={200}
-                        height={200}
+                        fill
+                        sizes="(max-width: 640px) 128px, (max-width: 1024px) 160px, 192px"
                         quality={100}
                         priority
-                        className="rounded-full object-cover w-full h-full group-hover/avatar:scale-110 group-hover/avatar:rotate-1 transition-all duration-700 ease-out"
+                        className={`rounded-full object-cover group-hover/avatar:scale-110 group-hover/avatar:-rotate-2 transition-all duration-700 ease-out select-none ${isBlurred ? 'blur-xl opacity-20 grayscale scale-110' : ''}`}
+                        style={{ WebkitUserSelect: 'none', WebkitTouchCallout: 'none' }}
                     />
                     
-                    {/* Dark bottom gradient overlay for contrast punch when hovering */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-0 group-hover/avatar:opacity-100 transition-opacity duration-500"></div>
+                    {/* Privacy Lock Icon (Shows when blurred) */}
+                    <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 pointer-events-none ${isBlurred ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
+                        <div className="p-3 rounded-xl bg-slate-900/80 backdrop-blur-md border border-slate-700 text-white shadow-2xl flex flex-col items-center gap-1">
+                            <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            <span className="text-[10px] uppercase tracking-widest font-bold text-slate-400">Protected</span>
+                        </div>
+                    </div>
+                    
+                    {/* Dark gradient overlay for hover contrast */}
+                    <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover/avatar:opacity-100 transition-opacity duration-500"></div>
 
-                    {/* Hover Magnify Overlay Icon - with a smooth upward float animation */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-all duration-700 translate-y-4 group-hover/avatar:translate-y-0">
-                        <div className="p-3.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-2xl group-hover/avatar:animate-pulse">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+                    {/* Hover Magnify Overlay Icon */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-all duration-500 scale-50 group-hover/avatar:scale-100">
+                        <div className="p-2 sm:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-2xl">
+                            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
                         </div>
                     </div>
                 </div>
 
-                {/* Pulsing Status Dot ("Available / Online") */}
-                <div className="absolute bottom-5 right-5 z-20" title="Actively Seeking Opportunities">
-                    <div className="relative flex h-5 w-5">
+                {/* Status Dot ("Available / Online") */}
+                <div className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 lg:bottom-3 lg:right-3 z-20" title="Actively Seeking Opportunities">
+                    <div className="relative flex h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-5 w-5 bg-green-500 border-2 border-slate-900 shadow-lg"></span>
+                        <span className="relative inline-flex rounded-full h-full w-full bg-green-500 border-2 border-slate-900 shadow-lg"></span>
                     </div>
                 </div>
             </div>
 
-            {/* Lightbox Overlay */}
-            {isOpen && (
+            {/* Lightbox Overlay using Portal to break out of containing blocks */}
+            {isOpen && typeof document !== 'undefined' && createPortal(
                 <div 
-                    className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/98 backdrop-blur-xl animate-in fade-in duration-300"
+                    className="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-950/98 backdrop-blur-xl animate-in fade-in duration-300 cursor-zoom-out"
                     onClick={() => setIsOpen(false)}
                     onContextMenu={(e) => e.preventDefault()} /* Prevent right click globally on overlay */
                 >
                     <div 
-                        className="relative w-full h-full flex flex-col items-center justify-center group/modal animate-in zoom-in-95 ease-out duration-300 p-2 sm:p-6 md:p-12" 
-                        onClick={(e) => e.stopPropagation()}
+                        className="relative w-full h-full flex flex-col items-center justify-center animate-in zoom-in-95 slide-in-from-bottom-2 sm:slide-in-from-bottom-0 ease-out duration-300 p-4 sm:p-8 md:p-16" 
                         onContextMenu={(e) => e.preventDefault()}
                     >
+                        {/* Interactive Hint (Desktop) */}
+                        <div className="absolute top-6 md:top-8 left-1/2 -translate-x-1/2 z-[60] px-4 py-2 rounded-full bg-slate-900/60 backdrop-blur-md border border-white/10 text-white/60 text-xs sm:text-sm font-medium hidden sm:flex items-center gap-2 animate-in fade-in slide-in-from-top-4 duration-700 delay-300 fill-mode-both pointer-events-none shadow-lg">
+                            Press <kbd className="px-1.5 py-0.5 rounded bg-white/20 text-white font-mono text-[10px] sm:text-xs">ESC</kbd> or click outside to close
+                        </div>
+
                         {/* Close button */}
                         <button 
-                            className="absolute top-4 right-4 md:top-8 md:right-8 z-[60] p-3 rounded-full bg-slate-900/60 backdrop-blur-md border border-white/10 text-white/70 hover:text-white hover:bg-slate-800 hover:scale-110 transition-all shadow-2xl"
-                            onClick={() => setIsOpen(false)}
+                            className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-[60] p-2.5 sm:p-3 rounded-full bg-slate-900/60 backdrop-blur-md border border-white/10 text-white/70 hover:text-white hover:bg-slate-800 hover:scale-110 active:scale-95 transition-all shadow-2xl flex items-center justify-center group"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setIsOpen(false);
+                            }}
                             aria-label="Close preview"
                         >
-                            <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
 
                         {/* Image Container */}
-                        <div className="relative w-full h-full flex items-center justify-center">
+                        <div className={`relative w-full h-full flex items-center justify-center max-w-5xl mx-auto transition-all duration-700 ${isBlurred ? 'blur-3xl opacity-10 scale-95 grayscale' : ''}`}>
                             <Image
                                 src={src}
                                 alt={alt}
                                 fill
                                 quality={100}
-                                className="object-contain select-none pointer-events-none"
+                                className="object-contain select-none pointer-events-none drop-shadow-2xl"
+                                style={{ WebkitUserSelect: 'none', WebkitTouchCallout: 'none' }}
                                 priority
                                 onContextMenu={(e) => e.preventDefault()}
                                 onDragStart={(e) => e.preventDefault()}
@@ -115,8 +183,17 @@ export default function ProfileImagePreview({ src, alt }: ProfileImagePreviewPro
                                 onDragStart={(e) => e.preventDefault()}
                             ></div>
                         </div>
+
+                        {/* Privacy Lock inside Lightbox (Shows when blurred) */}
+                        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-3 transition-all duration-500 pointer-events-none ${isBlurred ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
+                            <div className="p-6 rounded-3xl bg-slate-900/80 backdrop-blur-md border border-slate-700 shadow-2xl flex flex-col items-center gap-3">
+                                <svg className="w-12 h-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                <span className="text-sm uppercase tracking-[0.2em] font-bold text-slate-400">Content Protected</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </>
     );
