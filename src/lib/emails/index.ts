@@ -81,7 +81,7 @@ export const EmailService = {
     async sendNewEndorsement(endorsement: EndorsementItem, endorsementId: string) {
         const appUrl = process.env.APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
         const approveUrl = `${appUrl}/api/endorsements/approve?id=${endorsementId}`;
-        
+
         const subject = `New Endorsement Pending: ${endorsement.fullName}`;
         const html = `
             <div style="${styles.wrapper}">
@@ -154,7 +154,7 @@ export function generateApproveSuccessHtml(appUrl: string) {
                 <div class="icon">✓</div>
                 <h1>Endorsement Live!</h1>
                 <p>This endorsement has been successfully approved and is now publicly visible on your website.</p>
-                <a href="${appUrl}" class="btn">View Website</a>
+                <a href="${appUrl}/endorsements" class="btn">View Website</a>
             </div>
         </body>
         </html>
@@ -187,7 +187,7 @@ export function generateAlreadyApprovedHtml(appUrl: string) {
                 <div class="icon">ℹ️</div>
                 <h1>Already Approved</h1>
                 <p>This endorsement was already approved previously and is live on your website.</p>
-                <a href="${appUrl}" class="btn">Return to Website</a>
+                <a href="${appUrl}/endorsements"  class="btn">Return to Website</a>
             </div>
         </body>
         </html>
