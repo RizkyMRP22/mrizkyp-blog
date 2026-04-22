@@ -2,7 +2,7 @@ export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { EmailService } from '@/lib/emails';
-import { withCache } from '@/lib/redis';
+
 import { verifyTurnstileToken } from '@/lib/turnstile';
 
 
@@ -22,14 +22,11 @@ export interface EndorsementItem {
 
 export async function GET() {
     try {
-
-        const endorsements = await withCache('endorsements:approved', async () => {
-            const db = await getDb();
-            return await db.collection('endorsements')
-                .find({ isApprove: true })
-                .sort({ createdAt: -1 })
-                .toArray();
-        }, 3600); // Cache for 1 hour
+        const db = await getDb();
+        const endorsements = await db.collection('endorsements')
+            .find({ isApprove: true })
+            .sort({ createdAt: -1 })
+            .toArray();
 
         return NextResponse.json({ success: true, data: endorsements }, { status: 200 });
     } catch (error) {
