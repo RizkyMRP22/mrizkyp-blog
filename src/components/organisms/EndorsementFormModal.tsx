@@ -56,27 +56,48 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
             setError(null);
             setIsSuccess(false);
             setIsPreview(false);
+            setTurnstileToken('');
         }
     }, [isOpen]);
 
     const turnstileRef = useRef<HTMLDivElement>(null);
+    const [turnstileToken, setTurnstileToken] = useState<string>('');
 
     useEffect(() => {
-        if (isPreview && turnstileRef.current && process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
+        let intervalId: NodeJS.Timeout;
+
+        const attemptRender = () => {
             const ts = (window as any).turnstile;
-            if (ts) {
+            if (ts && turnstileRef.current) {
                 try {
                     // Try to reset the container, then render explicitly
                     turnstileRef.current.innerHTML = '';
+                    setTurnstileToken('');
                     ts.render(turnstileRef.current, {
                         sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
-                        theme: 'dark'
+                        theme: 'dark',
+                        callback: function(token: string) {
+                            setTurnstileToken(token);
+                        }
                     });
+                    if (intervalId) clearInterval(intervalId);
                 } catch (e) {
                     console.error("Turnstile explicit render error:", e);
                 }
             }
+        };
+
+        if (isPreview && process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
+            if ((window as any).turnstile) {
+                attemptRender();
+            } else {
+                intervalId = setInterval(attemptRender, 500);
+            }
         }
+
+        return () => {
+            if (intervalId) clearInterval(intervalId);
+        };
     }, [isPreview]);
 
     if (!isOpen) return null;
@@ -95,17 +116,17 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
         setIsSubmitting(true);
         setError(null);
 
-        const turnstileInput = document.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement;
-        const turnstileToken = turnstileInput ? turnstileInput.value : '';
+        const turnstileInput = turnstileRef.current?.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement;
+        const currentToken = turnstileToken || (turnstileInput ? turnstileInput.value : '');
 
-        if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && !turnstileToken) {
+        if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && !currentToken) {
             setError('Please complete the safety verification to proceed.');
             setIsSubmitting(false);
             return;
         }
 
         try {
-            const payload = { ...formData, turnstileToken };
+            const payload = { ...formData, turnstileToken: currentToken };
             const response = await fetch('/api/endorsements', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
