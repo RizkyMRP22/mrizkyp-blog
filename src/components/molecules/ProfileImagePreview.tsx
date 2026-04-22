@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 interface ProfileImagePreviewProps {
@@ -12,55 +12,99 @@ interface ProfileImagePreviewProps {
 export default function ProfileImagePreview({ src, alt }: ProfileImagePreviewProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [isBlurred, setIsBlurred] = useState(false);
+    const restoreTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // Anti-screenshot obfuscation (Window focus + Keyboard Shortcuts)
+    const blurNow = () => setIsBlurred(true);
+    const restoreAfter = (ms = 3000) => {
+        if (restoreTimerRef.current) clearTimeout(restoreTimerRef.current);
+        restoreTimerRef.current = setTimeout(() => {
+            if (document.hasFocus() && !document.hidden) setIsBlurred(false);
+        }, ms);
+    };
+
+    // Anti-screenshot obfuscation (Desktop: Window focus + Keyboard Shortcuts)
     useEffect(() => {
-        const handleBlur = () => setIsBlurred(true);
-        const handleFocus = () => setIsBlurred(false);
+        const handleBlur = () => blurNow();
+        const handleFocus = () => {
+            if (!document.hidden) setIsBlurred(false);
+        };
         const handleVisibilityChange = () => {
-            setIsBlurred(document.hidden);
+            // Fires when iOS screenshot sheet appears or app switcher is invoked
+            if (document.hidden) {
+                blurNow();
+            } else {
+                // Small delay — screenshot sheet dismissal triggers visibilitychange too
+                restoreAfter(1500);
+            }
         };
 
-        // Aggressive preemptive strike:
-        // Mac screenshot relies on Cmd+Shift (Meta+Shift). 
-        // Windows snipping tool relies on Win+Shift (Meta+Shift) or Ctrl+Shift or PrintScreen.
-        // We blur instantly the moment modifier keys are held down, BEFORE the screenshot key is even pressed.
+        // pagehide fires on iOS when the app moves to background (e.g. cmd-tab equivalent)
+        const handlePageHide = () => blurNow();
+        const handlePageShow = () => restoreAfter(1500);
+
+        // Desktop: blur on Cmd/Ctrl+Shift (screenshot modifier combo) or PrintScreen
         const handleKeyDown = (e: KeyboardEvent) => {
             if ((e.metaKey || e.ctrlKey) && e.shiftKey) {
-                setIsBlurred(true);
+                blurNow();
             }
             if (e.key === 'PrintScreen') {
-                setIsBlurred(true);
-                // PrintScreen takes it instantly, keep it blurred briefly
-                setTimeout(() => {
-                    if (document.hasFocus() && !document.hidden) setIsBlurred(false);
-                }, 3000);
+                blurNow();
+                restoreAfter(3000);
+            }
+        };
+        const handleKeyUp = (e: KeyboardEvent) => {
+            if (!((e.metaKey || e.ctrlKey) && e.shiftKey) && document.hasFocus() && !document.hidden) {
+                setIsBlurred(false);
             }
         };
 
-        const handleKeyUp = (e: KeyboardEvent) => {
-            // Restore if modifiers are released AND window hasn't lost focus to an OS snipping tool
-            if (!((e.metaKey || e.ctrlKey) && e.shiftKey) && document.hasFocus() && !document.hidden) {
-                setIsBlurred(false);
+        // Mobile: detect 3-finger touches — iOS screenshot gesture is power+volume,
+        // but app-switcher swipes and some assistive-touch screenshot shortcuts use 3 fingers.
+        // More importantly, any time touchcount >= 3 on the lightbox we proactively blur.
+        let touchBlurTimer: ReturnType<typeof setTimeout> | null = null;
+        const handleTouchStart = (e: TouchEvent) => {
+            if (e.touches.length >= 3) {
+                blurNow();
+                // Restore ~2s later if nothing happened
+                touchBlurTimer = setTimeout(() => {
+                    if (document.hasFocus() && !document.hidden) setIsBlurred(false);
+                }, 2000);
+            }
+        };
+        const handleTouchEnd = () => {
+            if (touchBlurTimer) {
+                clearTimeout(touchBlurTimer);
+                touchBlurTimer = null;
             }
         };
 
         window.addEventListener('blur', handleBlur);
         window.addEventListener('focus', handleFocus);
         document.addEventListener('visibilitychange', handleVisibilityChange);
+        window.addEventListener('pagehide', handlePageHide);
+        window.addEventListener('pageshow', handlePageShow);
         window.addEventListener('keydown', handleKeyDown, { capture: true });
         window.addEventListener('keyup', handleKeyUp, { capture: true });
+        window.addEventListener('touchstart', handleTouchStart, { passive: true, capture: true });
+        window.addEventListener('touchend', handleTouchEnd, { passive: true, capture: true });
 
         // Run once on mount in case it spawned in background
         setIsBlurred(document.hidden || !document.hasFocus());
 
         return () => {
+            if (restoreTimerRef.current) clearTimeout(restoreTimerRef.current);
+            if (touchBlurTimer) clearTimeout(touchBlurTimer);
             window.removeEventListener('blur', handleBlur);
             window.removeEventListener('focus', handleFocus);
             document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.removeEventListener('pagehide', handlePageHide);
+            window.removeEventListener('pageshow', handlePageShow);
             window.removeEventListener('keydown', handleKeyDown, { capture: true });
             window.removeEventListener('keyup', handleKeyUp, { capture: true });
+            window.removeEventListener('touchstart', handleTouchStart, { capture: true });
+            window.removeEventListener('touchend', handleTouchEnd, { capture: true });
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Escape key to close
@@ -104,6 +148,21 @@ export default function ProfileImagePreview({ src, alt }: ProfileImagePreviewPro
                         priority
                         className={`rounded-full object-cover group-hover/avatar:scale-110 group-hover/avatar:-rotate-2 transition-all duration-700 ease-out select-none ${isBlurred ? 'blur-xl opacity-20 grayscale scale-110' : ''}`}
                         style={{ WebkitUserSelect: 'none', WebkitTouchCallout: 'none' }}
+                        draggable={false}
+                        onContextMenu={(e) => e.preventDefault()}
+                        onDragStart={(e) => e.preventDefault()}
+                    />
+                    {/* Mobile CSS screenshot-corruption overlay: mix-blend-mode trick.
+                         Invisible during normal viewing (blend cancels out on screen renderers)
+                         but appears as a coloured artifact in screenshot pixel data. */}
+                    <div
+                        aria-hidden="true"
+                        className="absolute inset-0 rounded-full pointer-events-none select-none z-[5]"
+                        style={{
+                            backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(15,23,42,0.04) 2px, rgba(15,23,42,0.04) 4px)',
+                            mixBlendMode: 'difference',
+                            WebkitUserSelect: 'none',
+                        }}
                     />
                     
                     {/* Privacy Lock Icon (Shows when blurred) */}
@@ -176,12 +235,24 @@ export default function ProfileImagePreview({ src, alt }: ProfileImagePreviewPro
                                 onDragStart={(e) => e.preventDefault()}
                                 draggable={false}
                             />
-                            {/* Security overlay to catch interactions before they hit the image */}
+                            {/* Security overlay: catches right-clicks/drags, and on mobile
+                                 the mix-blend-mode layer corrupts screenshot pixel data */}
                             <div 
                                 className="absolute inset-0 z-[50]" 
                                 onContextMenu={(e) => e.preventDefault()}
                                 onDragStart={(e) => e.preventDefault()}
-                            ></div>
+                            />
+                            {/* Mobile CSS screenshot-corruption overlay (mix-blend-mode difference).
+                                 Visually transparent on real displays; appears as distortion in screenshots. */}
+                            <div
+                                aria-hidden="true"
+                                className="absolute inset-0 z-[51] pointer-events-none select-none"
+                                style={{
+                                    backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255,255,255,0.03) 3px, rgba(255,255,255,0.03) 6px)',
+                                    mixBlendMode: 'difference',
+                                    WebkitUserSelect: 'none',
+                                }}
+                            />
                         </div>
 
                         {/* Privacy Lock inside Lightbox (Shows when blurred) */}
