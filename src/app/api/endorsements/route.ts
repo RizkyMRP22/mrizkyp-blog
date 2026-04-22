@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { EmailService } from '@/lib/emails';
 
 export interface EndorsementItem {
     fullName: string;
@@ -74,6 +75,9 @@ export async function POST(req: NextRequest) {
 
         const db = await getDb();
         const result = await db.collection('endorsements').insertOne(endorsement);
+
+        // ── Notifications ─────────────────────────────────────────────
+        await EmailService.sendNewEndorsement(endorsement, result.insertedId.toString());
 
         return NextResponse.json(
             { success: true, message: 'Thank you for your endorsement!', id: result.insertedId },

@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { EmailService } from '@/lib/emails';
 
 export interface LeadItem {
     // Who is reaching out
@@ -75,6 +76,9 @@ export async function POST(req: NextRequest) {
         // ── Persist ───────────────────────────────────────────────────
         const db = await getDb();
         const result = await db.collection('leads').insertOne(lead);
+
+        // ── Notifications ─────────────────────────────────────────────
+        await EmailService.sendNewLead(lead);
 
         return NextResponse.json(
             { success: true, message: 'Your message was sent successfully! I\'ll get back to you soon.', id: result.insertedId },
