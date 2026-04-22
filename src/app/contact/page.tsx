@@ -82,9 +82,9 @@ export default async function ContactPage() {
         {
             id: 'email',
             icon: <EmailIcon />,
-            label: 'Email',
+            label: 'Let\'s Talk',
             // Only show label text — never expose the raw email address in the DOM
-            displayText: 'Let\'s Copy My Email',
+            displayText: 'Copy My Email or Send a Message',
             href: `mailto:${profileData.email}`,
             colorClass: 'text-indigo-300 hover:text-indigo-200',
             bgClass: 'bg-indigo-900/30 hover:bg-indigo-800/40',
@@ -260,7 +260,7 @@ export default async function ContactPage() {
                     </div>
 
                     {/* Right Column: Contact Form */}
-                    <div className="lg:col-span-7 animate-fade-in delay-300">
+                    <div className="lg:col-span-7 animate-fade-in delay-300" id="contact-form-section">
                         <div className="relative">
                             {/* Subtle background glow for the form area */}
                             <div className="absolute -inset-1 bg-gradient-to-br from-primary/20 via-accent/10 to-transparent rounded-3xl blur-xl opacity-50 z-0 pointer-events-none"></div>
