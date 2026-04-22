@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Script from 'next/script';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
@@ -66,10 +66,48 @@ const labelBase = 'block text-xs font-medium text-slate-400 mb-1.5 uppercase tra
 
 export default function ContactForm() {
     const formRef = useRef<HTMLFormElement>(null);
+    const turnstileRef = useRef<HTMLDivElement>(null);
     const [status, setStatus] = useState<FormStatus>('idle');
     const [serverMessage, setServerMessage] = useState('');
     const [errors, setErrors] = useState<Partial<FormState>>({});
     const [showBudget, setShowBudget] = useState(false);
+    const [turnstileToken, setTurnstileToken] = useState('');
+
+    useEffect(() => {
+        let intervalId: NodeJS.Timeout;
+
+        const attemptRender = () => {
+            const ts = (window as any).turnstile;
+            if (ts && turnstileRef.current) {
+                try {
+                    turnstileRef.current.innerHTML = '';
+                    setTurnstileToken('');
+                    ts.render(turnstileRef.current, {
+                        sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
+                        theme: 'dark',
+                        callback: function(token: string) {
+                            setTurnstileToken(token);
+                        }
+                    });
+                    if (intervalId) clearInterval(intervalId);
+                } catch (e) {
+                    console.error("Turnstile explicit render error:", e);
+                }
+            }
+        };
+
+        if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
+            if ((window as any).turnstile) {
+                attemptRender();
+            } else {
+                intervalId = setInterval(attemptRender, 500);
+            }
+        }
+
+        return () => {
+            if (intervalId) clearInterval(intervalId);
+        };
+    }, []);
 
     const [form, setForm] = useState<FormState>({
         fullName: '',
@@ -112,10 +150,10 @@ export default function ContactForm() {
         if (!validate()) return;
 
         const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-        const formData = new FormData(e.currentTarget);
-        const turnstileToken = formData.get('cf-turnstile-response');
+        const fallbackInput = turnstileRef.current?.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement;
+        const currentToken = turnstileToken || (fallbackInput ? fallbackInput.value : '');
 
-        if (siteKey && !turnstileToken) {
+        if (siteKey && !currentToken) {
             setStatus('error');
             setServerMessage('Please complete the safety verification to proceed.');
             return;
@@ -125,7 +163,7 @@ export default function ContactForm() {
         setServerMessage('');
 
         try {
-            const payload = { ...form, turnstileToken };
+            const payload = { ...form, turnstileToken: currentToken };
             const res = await fetch('/api/leads', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -140,6 +178,7 @@ export default function ContactForm() {
                 formRef.current?.reset();
                 setForm({ fullName: '', email: '', company: '', role: '', subject: '', opportunityType: '', message: '', timeline: '', linkedinUrl: '' });
                 setShowBudget(false);
+                setTurnstileToken('');
             } else {
                 setStatus('error');
                 setServerMessage(data.error || 'Something went wrong. Please try again.');
@@ -366,7 +405,7 @@ export default function ContactForm() {
             {/* Submit */}
             {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
                 <div className="flex justify-center w-full mt-2 mb-4">
-                    <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} data-theme="dark"></div>
+                    <div ref={turnstileRef} className="cf-turnstile" data-theme="dark"></div>
                 </div>
             )}
             <button
