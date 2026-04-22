@@ -8,6 +8,10 @@ import { navItems } from '@/config/navigation';
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    
+    // Group active and coming soon items
+    const activeNavItems = navItems.filter((item) => !item.comingSoon);
+    const comingSoonNavItems = navItems.filter((item) => item.comingSoon);
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -43,9 +47,37 @@ export default function Navbar() {
 
                     {/* Desktop nav */}
                     <div className="hidden lg:flex items-center gap-1">
-                        {navItems.map((item) => (
+                        {activeNavItems.map((item) => (
                             <NavLink key={item.href} href={item.href} label={item.label} data-testid={`nav-desktop-${item.label.toLowerCase().replace(/\s+/g, '-')}`} />
                         ))}
+
+                        {/* Coming Soon Dropdown */}
+                        {comingSoonNavItems.length > 0 && (
+                            <div className="relative group">
+                                <button className="px-3 py-1.5 text-sm font-medium transition-colors duration-200 rounded-full text-slate-400 hover:text-white hover:bg-white/5 flex items-center gap-1 cursor-default">
+                                    Coming Soon
+                                    <svg className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+                                {/* Invisible pt-2 bridge connects hover target area strictly */}
+                                <div className="absolute top-full right-0 pt-2 w-48 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200">
+                                    <div className="bg-nav-bg/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-xl">
+                                        <div className="p-2 flex flex-col gap-1">
+                                            {comingSoonNavItems.map((item) => (
+                                                <Link 
+                                                    key={item.href} 
+                                                    href={item.href}
+                                                    className="block px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                                                >
+                                                    {item.label}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     {/* Mobile burger */}
@@ -76,7 +108,7 @@ export default function Navbar() {
             `}>
                 <div className="bg-nav-bg/95 backdrop-blur-xl shadow-2xl max-h-[80vh] overflow-y-auto w-full border-t border-card-border">
                     <div className="px-6 py-6 flex flex-col gap-3">
-                        {navItems.map((item, index) => (
+                        {activeNavItems.map((item, index) => (
                             <div
                                 key={item.href}
                                 className={`transform transition-all duration-300 flex flex-col ${isOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'}`}
@@ -85,9 +117,32 @@ export default function Navbar() {
                                 <NavLink href={item.href} label={item.label} onClick={() => setIsOpen(false)} data-testid={`nav-mobile-${item.label.toLowerCase().replace(/\s+/g, '-')}`} />
                             </div>
                         ))}
+
+                        {/* Coming Soon Mobile Submenu */}
+                        {comingSoonNavItems.length > 0 && (
+                            <div 
+                                className={`transform transition-all duration-300 flex flex-col gap-2 ${isOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'}`}
+                                style={{ transitionDelay: `${activeNavItems.length * 40}ms` }}
+                            >
+                                <div className="px-3 py-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mt-4 border-t border-white/10 pt-6 mb-1">
+                                    Coming Soon
+                                </div>
+                                {comingSoonNavItems.map((item) => (
+                                    <Link 
+                                        key={item.href} 
+                                        href={item.href}
+                                        onClick={() => setIsOpen(false)}
+                                        className="px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors ml-2"
+                                    >
+                                        {item.label}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
         </nav>
     );
 }
+
