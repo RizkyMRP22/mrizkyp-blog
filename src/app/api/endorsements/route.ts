@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { EmailService } from '@/lib/emails';
 import { withCache } from '@/lib/redis';
+import { verifyTurnstileToken } from '@/lib/turnstile';
+
 
 export interface EndorsementItem {
     fullName: string;
@@ -11,7 +13,7 @@ export interface EndorsementItem {
     description: string;
     linkedinUrl?: string;
     rating?: number; // 0 - 100
-    
+
     // System fields
     isApprove: boolean;
     createdAt: string;
@@ -20,6 +22,7 @@ export interface EndorsementItem {
 
 export async function GET() {
     try {
+
         const endorsements = await withCache('endorsements:approved', async () => {
             const db = await getDb();
             return await db.collection('endorsements')
@@ -38,7 +41,13 @@ export async function GET() {
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { fullName, role, relation, description, linkedinUrl, rating } = body;
+        const { fullName, role, relation, description, linkedinUrl, rating, turnstileToken } = body;
+
+        // ── Turnstile CAPTCHA Verification ────────────────────────────
+        const turnstileVerification = await verifyTurnstileToken(turnstileToken);
+        if (!turnstileVerification.success) {
+            return NextResponse.json({ success: false, error: turnstileVerification.error }, { status: 400 });
+        }
 
         // Validation
         if (!fullName || typeof fullName !== 'string' || fullName.trim().length < 2) {
@@ -53,7 +62,7 @@ export async function POST(req: NextRequest) {
         if (!description || typeof description !== 'string' || description.trim().length < 10) {
             return NextResponse.json({ success: false, error: 'Description must be at least 10 characters.' }, { status: 400 });
         }
-        
+
         // Parse rating
         let finalRating: number | undefined = undefined;
         if (rating !== undefined && rating !== null && rating !== '') {

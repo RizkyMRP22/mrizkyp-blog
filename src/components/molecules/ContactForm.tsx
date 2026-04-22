@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Script from 'next/script';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -106,18 +107,30 @@ export default function ContactForm() {
         return Object.keys(newErrors).length === 0;
     }
 
-    async function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (!validate()) return;
+
+        const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+        const formData = new FormData(e.currentTarget);
+        const turnstileToken = formData.get('cf-turnstile-response');
+
+        if (siteKey && !turnstileToken) {
+            setStatus('error');
+            setServerMessage('Please complete the safety verification to proceed.');
+            return;
+        }
 
         setStatus('submitting');
         setServerMessage('');
 
         try {
+            const payload = { ...form, turnstileToken };
             const res = await fetch('/api/leads', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(form),
+                body: JSON.stringify(payload),
+
             });
             const data = await res.json();
 
@@ -163,6 +176,7 @@ export default function ContactForm() {
             data-testid="contact-form"
             className="glass rounded-2xl p-6 sm:p-8 space-y-6"
         >
+            <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" />
             <div className="mb-2">
                 <h3 className="text-base font-semibold text-white">Send a Message</h3>
                 <p className="text-xs text-slate-500 mt-1">
@@ -350,6 +364,11 @@ export default function ContactForm() {
             </div>
 
             {/* Submit */}
+            {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                <div className="flex justify-center w-full mt-2 mb-4">
+                    <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} data-theme="dark"></div>
+                </div>
+            )}
             <button
                 type="submit"
                 id="contact-form-submit"

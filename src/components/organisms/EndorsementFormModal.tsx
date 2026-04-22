@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Script from 'next/script';
 import Button from '@/components/atoms/Button';
 import { Input, Textarea, Select } from '@/components/atoms/Input';
 import EndorsementCard from '@/components/molecules/EndorsementCard';
@@ -58,6 +59,26 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
         }
     }, [isOpen]);
 
+    const turnstileRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (isPreview && turnstileRef.current && process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
+            const ts = (window as any).turnstile;
+            if (ts) {
+                try {
+                    // Try to reset the container, then render explicitly
+                    turnstileRef.current.innerHTML = '';
+                    ts.render(turnstileRef.current, {
+                        sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
+                        theme: 'dark'
+                    });
+                } catch (e) {
+                    console.error("Turnstile explicit render error:", e);
+                }
+            }
+        }
+    }, [isPreview]);
+
     if (!isOpen) return null;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -74,11 +95,21 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
         setIsSubmitting(true);
         setError(null);
 
+        const turnstileInput = document.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement;
+        const turnstileToken = turnstileInput ? turnstileInput.value : '';
+
+        if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && !turnstileToken) {
+            setError('Please complete the safety verification to proceed.');
+            setIsSubmitting(false);
+            return;
+        }
+
         try {
+            const payload = { ...formData, turnstileToken };
             const response = await fetch('/api/endorsements', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(payload),
             });
 
             const data = await response.json();
@@ -103,6 +134,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-6 overflow-y-auto pt-[10vh]">
+            <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" />
             <div
                 className="bg-surface border border-card-border rounded-2xl w-full max-w-2xl shadow-2xl relative my-auto animate-fade-in-up"
             >
@@ -160,6 +192,13 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                                     }}
                                 />
                             </div>
+
+                            {/* CAPTCHA Widget */}
+                            {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                                <div className="flex justify-center w-full mb-6 relative z-10">
+                                    <div ref={turnstileRef} className="cf-turnstile" data-theme="dark"></div>
+                                </div>
+                            )}
 
                             <div className="pt-4 flex flex-col-reverse sm:flex-row justify-end gap-3 border-t border-card-border/50">
                                 <Button type="button" variant="ghost" onClick={() => setIsPreview(false)} disabled={isSubmitting} className="w-full sm:w-auto">

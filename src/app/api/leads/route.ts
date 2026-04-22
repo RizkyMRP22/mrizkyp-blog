@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { EmailService } from '@/lib/emails';
+import { verifyTurnstileToken } from '@/lib/turnstile';
 
 export interface LeadItem {
     // Who is reaching out
@@ -36,7 +37,13 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
 
-        const { fullName, email, company, role, subject, opportunityType, message, timeline, linkedinUrl } = body;
+        const { fullName, email, company, role, subject, opportunityType, message, timeline, linkedinUrl, turnstileToken } = body;
+
+        // ── Turnstile CAPTCHA Verification ────────────────────────────
+        const turnstileVerification = await verifyTurnstileToken(turnstileToken);
+        if (!turnstileVerification.success) {
+            return NextResponse.json({ success: false, error: turnstileVerification.error }, { status: 400 });
+        }
 
         // ── Validation ────────────────────────────────────────────────
         if (!fullName || typeof fullName !== 'string' || fullName.trim().length < 2) {
