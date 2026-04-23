@@ -1,6 +1,7 @@
 'use client';
 import { useState, useMemo } from 'react';
 import ProjectCard from '@/components/molecules/ProjectCard';
+import ProjectImageModal from '@/components/organisms/ProjectImageModal';
 import { ProjectsItem } from '@/app/api/projects/route';
 
 interface ProjectClientProps {
@@ -9,6 +10,7 @@ interface ProjectClientProps {
 
 export default function ProjectClient({ projects }: ProjectClientProps) {
     const [activeCategory, setActiveCategory] = useState('All');
+    const [selectedProject, setSelectedProject] = useState<{ images: string[], title: string } | null>(null);
 
     const safeProjects = projects || [];
     
@@ -28,6 +30,11 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
                 || (Array.isArray(p.category) ? p.category.includes(activeCategory) : p.category === activeCategory);
         });
     }, [safeProjects, activeCategory]);
+
+    const handleImageClick = (project: ProjectsItem) => {
+        const images = Array.isArray(project.image) ? project.image : [project.image];
+        setSelectedProject({ images, title: project.title });
+    };
 
     return (
         <div className="flex flex-col space-y-12">
@@ -62,6 +69,7 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
                             tags={project.tags}
                             category={project.category}
                             image={project.image}
+                            onImageClick={() => handleImageClick(project)}
                             highlights={project.highlights}
                             githubUrl={project.githubUrl}
                             webUrl={project.webUrl}
@@ -75,6 +83,15 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
                 <div className="text-center text-slate-400 py-12">
                     No projects found for this category.
                 </div>
+            )}
+
+            {/* Project Image Modal */}
+            {selectedProject && (
+                <ProjectImageModal
+                    images={selectedProject.images}
+                    title={selectedProject.title}
+                    onClose={() => setSelectedProject(null)}
+                />
             )}
         </div>
     );
