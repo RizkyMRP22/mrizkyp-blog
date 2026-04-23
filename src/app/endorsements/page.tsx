@@ -4,10 +4,12 @@ import SectionTitle from '@/components/atoms/SectionTitle';
 import CTABanner from '@/components/organisms/CTABanner';
 import EndorsementList from '@/components/organisms/EndorsementList';
 import PageLayout from '@/components/templates/PageLayout';
+import { siteConfig } from '@/config/site';
+
 
 export const metadata: Metadata = {
-    title: 'Endorsements | Rizky',
-    description: 'Recommendations and feedback from colleagues, friends, and connections.',
+    title: siteConfig.pages.endorsements.title,
+    description: siteConfig.pages.endorsements.description,
 };
 
 export default function EndorsementsPage() {
