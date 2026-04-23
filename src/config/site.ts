@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "MRizkyP Profile",
   titleSuffix: "QA Portfolio",
-  description: "Quality Assurance Engineer portfolio showcasing test automation, bug reports, case studies, and QA expertise. 5+ years of experience in manual testing and test automation.",
+  description: "Showcasing Experience, Strategic QA, Case Studies, and Testing Expertise. Explore the portfolio of Mohammad Rizky Pratama.",
   keywords: [
     "QA Engineer",
     "Quality Assurance",
@@ -10,6 +10,11 @@ export const siteConfig = {
     "Selenium",
     "Cypress",
     "Playwright",
+    "QA Strategy",
+    "Case Studies",
+    "Testing Expertise",
+    "Mohammad Rizky Pratama",
+    "QA Engineer",
   ],
   contact: {
     // Current availability status. Options: "available", "freelance_only", "unavailable", "exploring"
