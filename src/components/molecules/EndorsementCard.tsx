@@ -11,9 +11,10 @@ interface EndorsementCardProps {
         rating?: number;
         createdAt: string;
     };
+    onReadMore?: () => void;
 }
 
-export default function EndorsementCard({ endorsement }: EndorsementCardProps) {
+export default function EndorsementCard({ endorsement, onReadMore }: EndorsementCardProps) {
     // Generate Initials
     const initials = endorsement.fullName
         .split(' ')
@@ -35,9 +36,11 @@ export default function EndorsementCard({ endorsement }: EndorsementCardProps) {
     const hash = endorsement.fullName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const colorClass = colors[hash % colors.length];
 
+    const isLongDescription = endorsement.description.length > 160;
+
     return (
-        <Card className="h-full flex flex-col justify-between" hover>
-            <div>
+        <Card className="h-full flex flex-col min-h-[300px] group/card transition-all duration-500" hover onClick={onReadMore}>
+            <div className="flex-1 flex flex-col">
                 {endorsement.rating !== undefined && endorsement.rating !== null && (
                     <div className="flex justify-start mb-4">
                         <div className="inline-flex items-center px-3 py-1.5 rounded-md bg-white/5 border border-white/10 text-xs">
@@ -46,9 +49,21 @@ export default function EndorsementCard({ endorsement }: EndorsementCardProps) {
                         </div>
                     </div>
                 )}
-                <p className="text-muted text-sm italic mb-6 leading-relaxed">
-                    &quot;{endorsement.description}&quot;
-                </p>
+                <div className="relative flex-1">
+                    <p className="text-muted text-sm italic mb-4 leading-relaxed line-clamp-4 group-hover/card:text-slate-200 transition-colors whitespace-pre-wrap">
+                        &quot;{endorsement.description.replace(/\\n/g, '\n').replace(/<br\s*\/?>/gi, '\n')}&quot;
+                    </p>
+                    {isLongDescription && (
+                        <div className="mt-auto mb-4">
+                            <span className="text-primary text-xs font-bold flex items-center gap-1 group-hover/card:translate-x-1 transition-transform">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="m9 18 6-6-6-6"/>
+                                </svg>
+                            </span>
+                        </div>
+                    )}
+                </div>
             </div>
             
             <div className="flex items-center gap-4 mt-auto pt-6 border-t border-card-border/50">
