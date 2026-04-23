@@ -49,5 +49,9 @@ export const siteConfig = {
       title: "Testing Strategy",
       description: "Interactive overview of my end-to-end testing strategy, from grooming to post-production.",
     },
+    endorsements: {
+      title: "Endorsements",
+      description: "Recommendations and feedback from colleagues, friends, and connections.",
+    },
   },
 };
