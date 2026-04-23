@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
+  icons: {
+    icon: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico`,
+  },
 };
 
 export default function RootLayout({

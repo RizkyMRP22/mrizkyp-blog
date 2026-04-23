@@ -1,5 +1,8 @@
 import type { NextConfig } from "next";
 
+const blobStorageUrl = process.env.NEXT_PUBLIC_BLOB_STORAGE_URL || "";
+const blobStorageHostname = new URL(blobStorageUrl).hostname;
+
 const securityHeaders = [
   {
     // Disable DNS prefetching to prevent information leakage via pre-resolved hostnames
@@ -49,7 +52,7 @@ const securityHeaders = [
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https:",
       "connect-src 'self' https://challenges.cloudflare.com",
-      "frame-src https://drive.google.com https://www.youtube.com https://www.loom.com https://othbk84gr5nz7rpr.public.blob.vercel-storage.com https://challenges.cloudflare.com",
+      `frame-src https://drive.google.com https://www.youtube.com https://www.loom.com ${blobStorageUrl} https://challenges.cloudflare.com`,
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
@@ -62,7 +65,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "othbk84gr5nz7rpr.public.blob.vercel-storage.com",
+        hostname: blobStorageHostname,
         port: "",
         pathname: "/**",
       },
