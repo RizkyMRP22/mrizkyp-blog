@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const blobStorageUrl = process.env.NEXT_PUBLIC_BLOB_STORAGE_URL || "";
-const blobStorageHostname = new URL(blobStorageUrl).hostname;
+const blobStorageHostname = blobStorageUrl ? new URL(blobStorageUrl).hostname : "";
 
 const securityHeaders = [
   {

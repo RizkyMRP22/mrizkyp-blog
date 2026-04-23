@@ -21,6 +21,29 @@ export const metadata: Metadata = {
   keywords: siteConfig.keywords,
   icons: {
     icon: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico`,
+    shortcut: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico`,
+    apple: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico`,
+  },
+  openGraph: {
+    title: siteConfig.name,
+    description: siteConfig.description,
+    url: "https://mrizkyp.me",
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico`,
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [`${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico`],
   },
 };
 
