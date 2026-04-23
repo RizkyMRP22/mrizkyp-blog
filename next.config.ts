@@ -27,12 +27,22 @@ const securityHeaders = [
   {
     // Only send origin on cross-origin requests, no path/query leakage
     key: "Referrer-Policy",
-    value: "strict-origin",
+    value: "strict-origin-when-cross-origin",
   },
   {
     // Restrict access to browser features
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+  },
+  {
+    // Legacy XSS protection for older browsers
+    key: "X-XSS-Protection",
+    value: "1; mode=block",
+  },
+  {
+    // Prevent cross-origin leakage of the window object
+    key: "Cross-Origin-Opener-Policy",
+    value: "same-origin",
   },
   {
     // Content Security Policy

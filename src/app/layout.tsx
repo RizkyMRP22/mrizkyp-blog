@@ -20,18 +20,18 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   keywords: siteConfig.keywords,
   icons: {
-    icon: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico`,
-    shortcut: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico`,
-    apple: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico`,
+    icon: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico?v=1`,
+    shortcut: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico?v=1`,
+    apple: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico?v=1`,
   },
   openGraph: {
     title: siteConfig.name,
     description: siteConfig.description,
-    url: "https://mrizkyp.me",
+    url: "https://mrizkyp.vercel.app",
     siteName: siteConfig.name,
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico`,
+        url: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico?v=1`,
         width: 800,
         height: 600,
       },
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [`${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico`],
+    images: [`${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico?v=1`],
   },
 };
 
