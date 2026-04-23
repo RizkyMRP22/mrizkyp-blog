@@ -13,6 +13,14 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
     const [selectedProject, setSelectedProject] = useState<{ images: string[], title: string } | null>(null);
 
     const safeProjects = projects || [];
+    const baseURL = process.env.NEXT_PUBLIC_BLOB_STORAGE_URL || '';
+
+    // Helper to process images with baseURL
+    const processImages = (image: string | string[] | undefined): string[] => {
+        if (!image) return [];
+        const imageArray = Array.isArray(image) ? image : [image];
+        return imageArray.map(img => img.startsWith('/') ? `${baseURL}${img}` : img);
+    };
     
     // Extract unique categories safely
     const categories = useMemo(() => {
@@ -32,7 +40,7 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
     }, [safeProjects, activeCategory]);
 
     const handleImageClick = (project: ProjectsItem) => {
-        const images = Array.isArray(project.image) ? project.image : [project.image];
+        const images = processImages(project.image);
         setSelectedProject({ images, title: project.title });
     };
 
@@ -68,7 +76,7 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
                             description={project.description}
                             tags={project.tags}
                             category={project.category}
-                            image={project.image}
+                            image={processImages(project.image)}
                             onImageClick={() => handleImageClick(project)}
                             highlights={project.highlights}
                             githubUrl={project.githubUrl}
