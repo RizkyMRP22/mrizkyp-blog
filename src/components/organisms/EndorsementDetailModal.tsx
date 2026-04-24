@@ -55,12 +55,12 @@ export default function EndorsementDetailModal({ endorsement, onClose }: Endorse
                 </button>
 
                 <div className="p-6 sm:p-10">
-                    <div className="flex items-center gap-5 mb-8">
+                    <div className="flex items-start gap-5 mb-8 pr-8 sm:pr-0">
                         <div className={`w-16 h-16 shrink-0 rounded-full flex items-center justify-center font-bold text-2xl bg-gradient-to-br border ${colorClass}`}>
                             {initials}
                         </div>
-                        <div>
-                            <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                        <div className="flex-1 min-w-0">
+                            <h2 className="text-2xl font-bold text-white flex flex-wrap items-center gap-3 break-words">
                                 {endorsement.fullName}
                                 {endorsement.linkedinUrl && (
                                     <a 
@@ -75,7 +75,7 @@ export default function EndorsementDetailModal({ endorsement, onClose }: Endorse
                                     </a>
                                 )}
                             </h2>
-                            <p className="text-muted text-sm sm:text-base">
+                            <p className="text-muted text-sm sm:text-base break-words">
                                 {endorsement.role} <span className="opacity-50 mx-2">•</span> {endorsement.relation}
                             </p>
                         </div>
@@ -92,7 +92,7 @@ export default function EndorsementDetailModal({ endorsement, onClose }: Endorse
                         <svg className="absolute top-4 left-4 w-8 h-8 text-white/5 -z-10" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11M10.017 21L10.017 18C10.017 16.8954 9.12157 16 8.017 16H5.017C4.46472 16 4.017 15.5523 4.017 15V9C4.017 8.44772 4.46472 8 5.017 8H9.017C9.56928 8 10.017 8.44772 10.017 9V11"></path>
                         </svg>
-                        <p className="text-slate-300 text-lg leading-relaxed italic whitespace-pre-wrap">
+                        <p className="text-slate-300 text-lg leading-relaxed italic whitespace-pre-wrap break-words">
                             &quot;{endorsement.description.replace(/\\n/g, '\n').replace(/<br\s*\/?>/gi, '\n')}&quot;
                         </p>
                     </div>
