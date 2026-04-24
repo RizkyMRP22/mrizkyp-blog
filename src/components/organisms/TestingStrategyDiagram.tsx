@@ -47,8 +47,8 @@ export default function TestingStrategyDiagram({ data }: TestingStrategyDiagramP
                                     md:py-6 md:px-4 md:-ml-4 md:first:ml-0
                                     transition-all duration-300 ease-in-out md:hover:scale-105 active:scale-95
                                     ${desktopClipPath}
-                                    ${isActive 
-                                        ? 'md:bg-gradient-to-r md:from-primary md:to-secondary md:text-white md:shadow-xl md:shadow-primary/20 md:scale-[1.05] md:z-20' 
+                                    ${isActive
+                                        ? 'md:bg-gradient-to-r md:from-primary md:to-secondary md:text-white md:shadow-xl md:shadow-primary/20 md:scale-[1.05] md:z-20'
                                         : 'md:bg-card md:border-none md:text-slate-300 md:hover:bg-white/10 md:hover:text-white md:z-10'}
                                     md:min-h-[100px]
                                 `}
@@ -57,13 +57,13 @@ export default function TestingStrategyDiagram({ data }: TestingStrategyDiagramP
                                 }}
                             >
                                 {/* ---- MOBILE VIEW ENHANCEMENTS ---- */}
-                                
+
                                 {/* Timeline Node Indicator */}
                                 <div className={`
                                     md:hidden flex-none w-10 h-10 rounded-full flex items-center justify-center shrink-0 z-10 mr-4 font-bold text-sm
                                     transition-all duration-300 ring-[#0B1120] ring-4
-                                    ${isActive 
-                                        ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/20 scale-110' 
+                                    ${isActive
+                                        ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/20 scale-110'
                                         : 'bg-card text-slate-400 group-hover:bg-white/10 group-hover:text-white group-hover:scale-105'}
                                 `}>
                                     {index + 1}
@@ -81,7 +81,7 @@ export default function TestingStrategyDiagram({ data }: TestingStrategyDiagramP
                                         {phase.title}
                                     </span>
                                     {isActive && (
-                                        <div 
+                                        <div
                                             className="text-xs text-primary/90 mt-1 flex items-center gap-1.5 cursor-pointer hover:text-primary active:scale-95 transition-transform w-fit"
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -120,7 +120,7 @@ export default function TestingStrategyDiagram({ data }: TestingStrategyDiagramP
                             <div className="w-10 h-10 shrink-0 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xl">
                                 {activePhaseIndex + 1}
                             </div>
-                            <h3 className="text-2xl font-bold text-white">{activePhase.title} Details</h3>
+                            <h3 className="text-2xl font-bold text-white">{activePhase.subTitle}</h3>
                         </div>
 
                         <ul className="space-y-4">
