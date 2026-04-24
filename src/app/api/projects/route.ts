@@ -9,7 +9,7 @@ export interface ProjectsItem {
     description: string;
     tags: string[];
     category: string;
-    image: string;
+    image: string | string[];
     githubUrl: string;
     webUrl: string;
     mobileUrl: string;

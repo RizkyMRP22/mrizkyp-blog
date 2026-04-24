@@ -6,6 +6,7 @@ import { getDb } from '@/lib/mongodb';
 export interface TestingStrategiesItems {
     id: string;
     title: string;
+    subTitle: string;
     tasks: string[];
     tools: string[];
 }
@@ -18,7 +19,7 @@ async function _getTestingPhases(): Promise<TestingStrategiesData> {
 
     try {
         const db = await getDb();
-        const phases = await db.collection<TestingStrategiesItems>('testing-strategies').find({}, { projection: { _id: 0 } }).toArray();
+        const phases = await db.collection<TestingStrategiesItems>('testing-strategies').find({}, { projection: { _id: 0 } }).sort({ id: 1 }).toArray();
         return { phases };
     } catch (error) {
         console.error('Error fetching testing strategies from MongoDB:', error);

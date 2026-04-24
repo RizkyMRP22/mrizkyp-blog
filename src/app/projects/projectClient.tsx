@@ -1,6 +1,7 @@
 'use client';
 import { useState, useMemo } from 'react';
 import ProjectCard from '@/components/molecules/ProjectCard';
+import ProjectImageModal from '@/components/organisms/ProjectImageModal';
 import { ProjectsItem } from '@/app/api/projects/route';
 
 interface ProjectClientProps {
@@ -9,8 +10,17 @@ interface ProjectClientProps {
 
 export default function ProjectClient({ projects }: ProjectClientProps) {
     const [activeCategory, setActiveCategory] = useState('All');
+    const [selectedProject, setSelectedProject] = useState<{ images: string[], title: string } | null>(null);
 
     const safeProjects = projects || [];
+    const baseURL = process.env.NEXT_PUBLIC_BLOB_STORAGE_URL || '';
+
+    // Helper to process images with baseURL
+    const processImages = (image: string | string[] | undefined): string[] => {
+        if (!image) return [];
+        const imageArray = Array.isArray(image) ? image : [image];
+        return imageArray.map(img => img.startsWith('/') ? `${baseURL}${img}` : img);
+    };
     
     // Extract unique categories safely
     const categories = useMemo(() => {
@@ -28,6 +38,11 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
                 || (Array.isArray(p.category) ? p.category.includes(activeCategory) : p.category === activeCategory);
         });
     }, [safeProjects, activeCategory]);
+
+    const handleImageClick = (project: ProjectsItem) => {
+        const images = processImages(project.image);
+        setSelectedProject({ images, title: project.title });
+    };
 
     return (
         <div className="flex flex-col space-y-12">
@@ -61,7 +76,8 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
                             description={project.description}
                             tags={project.tags}
                             category={project.category}
-                            image={project.image}
+                            image={processImages(project.image)}
+                            onImageClick={() => handleImageClick(project)}
                             highlights={project.highlights}
                             githubUrl={project.githubUrl}
                             webUrl={project.webUrl}
@@ -75,6 +91,15 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
                 <div className="text-center text-slate-400 py-12">
                     No projects found for this category.
                 </div>
+            )}
+
+            {/* Project Image Modal */}
+            {selectedProject && (
+                <ProjectImageModal
+                    images={selectedProject.images}
+                    title={selectedProject.title}
+                    onClose={() => setSelectedProject(null)}
+                />
             )}
         </div>
     );
