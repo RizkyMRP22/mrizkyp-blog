@@ -14,6 +14,7 @@ interface ProjectImageModalProps {
 export default function ProjectImageModal({ images, title, onClose, initialIndex = 0 }: ProjectImageModalProps) {
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [imgError, setImgError] = useState(false);
 
     const handleNext = useCallback(() => {
         setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -22,6 +23,12 @@ export default function ProjectImageModal({ images, title, onClose, initialIndex
     const handlePrev = useCallback(() => {
         setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
     }, [images.length]);
+
+    // Reset states when current index changes
+    useEffect(() => {
+        setIsLoaded(false);
+        setImgError(false);
+    }, [currentIndex]);
 
     // Keyboard navigation
     useEffect(() => {
@@ -86,19 +93,33 @@ export default function ProjectImageModal({ images, title, onClose, initialIndex
 
                 {/* Image Container */}
                 <div className="relative w-full h-full max-w-6xl flex items-center justify-center animate-fade-in overflow-hidden">
-                    <div className={`relative w-full h-full transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-                        <Image
-                            src={images[currentIndex]}
-                            alt={`${title} - Image ${currentIndex + 1}`}
-                            fill
-                            className="object-contain"
-                            priority
-                            onLoad={() => setIsLoaded(true)}
-                        />
-                    </div>
-                    {!isLoaded && (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+                    {images[currentIndex] && !imgError ? (
+                        <>
+                            <div className={`relative w-full h-full transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+                                <Image
+                                    src={images[currentIndex]}
+                                    alt={`${title} - Image ${currentIndex + 1}`}
+                                    fill
+                                    className="object-contain"
+                                    priority
+                                    onLoad={() => setIsLoaded(true)}
+                                    onError={() => setImgError(true)}
+                                />
+                            </div>
+                            {!isLoaded && (
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-surface/50 to-surface-light flex flex-col items-center justify-center animate-scale-in rounded-2xl border border-white/5 shadow-2xl">
+                            <svg className="w-24 h-24 text-white/5 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span className="text-white/20 text-lg font-semibold uppercase tracking-[0.3em] px-8 text-center max-w-lg">
+                                {title}
+                            </span>
                         </div>
                     )}
                 </div>
@@ -124,7 +145,6 @@ export default function ProjectImageModal({ images, title, onClose, initialIndex
                             key={idx}
                             onClick={() => {
                                 if (currentIndex !== idx) {
-                                    setIsLoaded(false);
                                     setCurrentIndex(idx);
                                 }
                             }}
