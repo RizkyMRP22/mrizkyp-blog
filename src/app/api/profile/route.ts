@@ -32,15 +32,33 @@ export interface ProfileItem {
     openFor: string[];
 }
 
-async function _getProfiles(): Promise<ProfileItem> {
+import { getProjects } from '@/app/api/projects/route';
 
+async function _getProfiles(): Promise<ProfileItem> {
     try {
         const db = await getDb();
         const profile = await db.collection<ProfileItem>('profiles').findOne({}, { projection: { _id: 0 } });
         if (!profile) {
             throw new Error('Profile document not found in MongoDB');
         }
-        return profile;
+
+        // Calculate dynamic stats
+        const startDate = new Date('2018-12-01');
+        const currentDate = new Date();
+        const yearsExperience = Math.floor((currentDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 365.25));
+
+        // Get project count
+        const projectsData = await getProjects();
+        const projectsCompleted = projectsData.projects.length;
+
+        return {
+            ...profile,
+            stats: {
+                ...profile.stats,
+                yearsExperience,
+                projectsCompleted
+            }
+        };
     } catch (error) {
         console.error('Error fetching profile from MongoDB:', error);
         throw error;
