@@ -121,7 +121,7 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
                         {filtered.map((project, idx) => (
                             <div
                                 key={project.id}
-                                className="snap-start shrink-0 w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.33rem)] animate-fade-in-up flex"
+                                className="snap-start shrink-0 w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.67rem)] animate-fade-in-up flex items-stretch"
                                 style={{ animationDelay: `${idx * 100}ms` }}
                             >
                                 <ProjectCard
