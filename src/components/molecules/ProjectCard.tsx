@@ -22,7 +22,7 @@ export default function ProjectCard({ title, description, tags, highlights, imag
     const [imgError, setImgError] = useState(false);
 
     return (
-        <Card className="!p-0 flex flex-col h-full overflow-hidden group border border-white/5 bg-surface/40 backdrop-blur-sm hover:border-primary/30 transition-all duration-500">
+        <Card className="!p-0 flex flex-col w-full h-full overflow-hidden group border border-white/5 bg-surface/40 backdrop-blur-sm hover:border-primary/30 transition-all duration-500">
             {/* Image Header or Fallback */}
             <div 
                 className={`relative h-48 sm:h-56 w-full shrink-0 overflow-hidden bg-black/20 ${onImageClick ? 'cursor-pointer' : ''}`}
@@ -112,7 +112,7 @@ export default function ProjectCard({ title, description, tags, highlights, imag
             </div>
 
             {/* Card Footer (Links) */}
-            <div className="flex flex-wrap gap-4 px-6 sm:px-8 py-5 border-t border-white/5 bg-black/40 items-center justify-between mt-auto">
+            <div className="flex flex-wrap gap-4 px-6 sm:px-8 py-5 border-t border-white/5 bg-black/40 items-center justify-between min-h-[72px] mt-auto">
                 <div className="flex gap-5">
                     {githubUrl && githubUrl !== '#' && githubUrl !== '' && (
                         <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-1.5" onClick={() => sendGAEvent('event', 'click_outbound', { link_url: githubUrl, link_type: 'github', item_name: title })}>
