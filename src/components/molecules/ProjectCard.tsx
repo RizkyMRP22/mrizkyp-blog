@@ -24,14 +24,14 @@ export default function ProjectCard({ title, description, tags, highlights, imag
     return (
         <Card className="!p-0 flex flex-col w-full h-full overflow-hidden group border border-white/5 bg-surface/40 backdrop-blur-sm hover:border-primary/30 transition-all duration-500">
             {/* Image Header or Fallback */}
-            <div 
+            <div
                 className={`relative h-48 sm:h-56 w-full shrink-0 overflow-hidden bg-black/20 ${onImageClick ? 'cursor-pointer' : ''}`}
                 onClick={() => onImageClick?.()}
             >
                 {image && !imgError ? (
                     <>
                         <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent z-10 pointer-events-none" />
-                        <Image 
+                        <Image
                             src={Array.isArray(image) ? image[0] : image}
                             alt={`Project: ${title}`}
                             fill
@@ -69,7 +69,7 @@ export default function ProjectCard({ title, description, tags, highlights, imag
                         </span>
                     </div>
                 )}
-                
+
                 {category && (
                     <div className="absolute top-4 right-4 z-20 flex gap-1.5 flex-wrap justify-end max-w-[70%]">
                         {Array.isArray(category) ? (
@@ -83,18 +83,28 @@ export default function ProjectCard({ title, description, tags, highlights, imag
 
             {/* Card Body */}
             <div className="flex flex-col flex-1 p-6 sm:p-8">
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 group-hover:text-primary-light transition-colors duration-300 line-clamp-2">{title}</h3>
-                <p className="text-slate-400 text-sm mb-6 leading-relaxed flex-1 line-clamp-3 sm:line-clamp-4">{description}</p>
+                {/* Title Section */}
+                <div className="h-[64px] sm:h-[80px] mb-4">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-primary-light transition-colors duration-300 line-clamp-2">{title}</h3>
+                </div>
+
+                {/* Description Section */}
+                <div className="h-[80px] sm:h-[100px] mb-8">
+                    <p className="text-slate-400 text-sm leading-relaxed line-clamp-3 sm:line-clamp-4">{description}</p>
+                </div>
 
                 {/* Highlights */}
                 {highlights && highlights.length > 0 && (
-                    <div className="mb-6 p-4 rounded-xl bg-white/5 border border-white/5 z-10 transition-colors group-hover:bg-white/10">
-                        <h4 className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-3">Key Highlights</h4>
-                        <div className="space-y-2">
+                    <div className="mb-6 p-5 rounded-2xl bg-white/[0.03] border border-white/5 z-10 transition-all duration-300 group-hover:bg-white/[0.06] group-hover:border-primary/20 flex flex-col">
+                        <div className="flex items-center gap-2 mb-4">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(var(--color-primary),0.6)]" />
+                            <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Key Highlights</h4>
+                        </div>
+                        <div className="space-y-3">
                             {highlights.map((h, i) => (
-                                <div key={i} className="flex items-start gap-2.5 text-sm">
-                                    <span className="text-primary text-[10px] mt-1 shrink-0">✦</span>
-                                    <span className="text-slate-300 leading-snug">{h}</span>
+                                <div key={i} className="flex items-start gap-3 text-sm group/item">
+                                    <div className="mt-1.5 w-1 h-1 rounded-full bg-primary/40 group-hover/item:bg-primary transition-colors shrink-0" />
+                                    <span className="text-slate-400 group-hover:text-slate-300 transition-colors leading-relaxed">{h}</span>
                                 </div>
                             ))}
                         </div>
@@ -103,7 +113,7 @@ export default function ProjectCard({ title, description, tags, highlights, imag
 
                 {/* Tags */}
                 {tags && tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-auto">
+                    <div className="flex flex-wrap gap-2 mt-6">
                         {tags.map((tag) => (
                             <Badge key={tag} label={tag} variant="info" />
                         ))}
