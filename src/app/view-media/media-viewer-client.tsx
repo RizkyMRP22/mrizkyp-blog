@@ -84,7 +84,7 @@ function MediaViewerContent() {
                             {mediaData.title || 'Media Viewer'}
                         </h1>
                         <p className="text-white/60 text-xs sm:text-sm font-medium">
-                            Viewing {mediaData.type === 'video' ? 'Video Demo' : 'Visual Gallery'}
+                            Viewing {mediaData.type === 'video' ? 'Video Demo' : mediaData.type === 'pdf' || mediaData.type === 'document' ? 'Document Preview' : 'Visual Gallery'}
                         </p>
                     </div>
                     <button 
@@ -109,7 +109,14 @@ function MediaViewerContent() {
                 )}
                 
                 <div className={`relative w-full h-full max-w-6xl flex items-center justify-center transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-                    {mediaData.type === 'video' ? (
+                    {mediaData.type === 'pdf' || mediaData.type === 'document' ? (
+                        <iframe
+                            src={isGoogleDrive ? processedUrl : `${processedUrl}#toolbar=0`}
+                            className="w-full h-full border-0 rounded-xl shadow-2xl bg-surface/50 backdrop-blur-sm"
+                            title={mediaData.title || 'Document Viewer'}
+                            onLoad={() => setIsLoaded(true)}
+                        />
+                    ) : mediaData.type === 'video' ? (
                         isDirectVideo ? (
                             <video
                                 src={mediaData.url}

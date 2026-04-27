@@ -39,6 +39,7 @@ export default function BlogClient({ posts }: BlogClientProps) {
                 {filtered.map((post) => (
                     <div key={post.id} className="animate-scale-in">
                         <BlogCard
+                            id={post.id}
                             title={post.title}
                             excerpt={post.excerpt}
                             category={post.category}

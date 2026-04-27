@@ -49,6 +49,22 @@ export async function getPosts() {
     return withCache('api:blog', _getPosts, 3600);
 }
 
+async function _getPostById(id: string): Promise<PostItem | null> {
+    try {
+        const db = await getDb();
+        const post = await db.collection<PostItem>('posts')
+            .findOne({ id }, { projection: { _id: 0 } });
+        return post;
+    } catch (error) {
+        console.error(`Error fetching post ${id} from MongoDB:`, error);
+        return null;
+    }
+}
+
+export async function getPostById(id: string) {
+    return withCache(`api:blog:${id}`, () => _getPostById(id), 3600);
+}
+
 export async function GET() {
     const data = await getPosts();
     return NextResponse.json(data);

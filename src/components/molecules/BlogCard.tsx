@@ -3,6 +3,7 @@ import Card from '@/components/atoms/Card';
 import Badge from '@/components/atoms/Badge';
 
 interface BlogCardProps {
+    id: string;
     title: string;
     excerpt: string;
     category: string | string[];
@@ -12,7 +13,7 @@ interface BlogCardProps {
     link?: string;
 }
 
-export default function BlogCard({ title, excerpt, category, date, readTime, tags, link }: BlogCardProps) {
+export default function BlogCard({ id, title, excerpt, category, date, readTime, tags, link }: BlogCardProps) {
     return (
         <Card className="flex flex-col h-full">
             <div className="flex flex-wrap items-center gap-3 mb-3">
@@ -34,13 +35,9 @@ export default function BlogCard({ title, excerpt, category, date, readTime, tag
                 </span>
             )}
 
-            {link ? (
-                <a href={link} target="_blank" rel="noopener noreferrer" className="block w-fit group">
-                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-primary-light transition-colors cursor-pointer">{title}</h3>
-                </a>
-            ) : (
-                <h3 className="text-lg font-bold text-white mb-2 transition-colors cursor-pointer">{title}</h3>
-            )}
+            <a href={`/blog/${id}`} target="_blank" rel="noopener noreferrer" className="block w-fit group">
+                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-primary-light transition-colors cursor-pointer">{title}</h3>
+            </a>
 
             <p className="text-sm text-muted leading-relaxed flex-1 mb-4">{excerpt}</p>
 
