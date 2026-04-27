@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { siteConfig } from '@/config/site';
 import BlogDetailClient from './BlogDetailClient';
+import BlogBackButton from './BlogBackButton';
 import PdfViewer from './PdfViewer';
 import Link from 'next/link';
 import BlogCard from '@/components/molecules/BlogCard';
@@ -60,6 +61,11 @@ export default async function BlogDetailPage({ params }: Props) {
                 </div>
 
                 <article className="relative z-20 max-w-7xl mx-auto px-4 pt-20 pb-24">
+                    {/* Top Back Button */}
+                    <div className="mb-12 animate-fade-in">
+                        <BlogBackButton variant="ghost" size="sm" />
+                    </div>
+
                     {/* Header Section */}
                     <header className="mb-16 animate-fade-in">
                         <div className="flex flex-wrap items-center gap-4 mb-6">
@@ -76,11 +82,11 @@ export default async function BlogDetailPage({ params }: Props) {
                             </span>
                         </div>
 
-                        <Heading level={1} gradient className="mb-8 leading-[1.2] tracking-tight">
+                        <Heading level={1} gradient className="text-3xl md:text-4xl lg:text-5xl mb-8 leading-[1.2] tracking-tight">
                             {post.title}
                         </Heading>
 
-                        <p className="text-xl md:text-2xl text-slate-200 leading-relaxed font-light mb-12 w-full border-l-4 border-primary pl-8 py-4 italic bg-white/5 backdrop-blur-sm rounded-r-3xl pr-10 shadow-inner group-hover:bg-white/10 transition-all duration-500">
+                        <p className="text-lg md:text-xl text-slate-200 leading-relaxed font-light mb-12 w-full border-l-4 border-primary pl-8 py-4 italic bg-white/5 backdrop-blur-sm rounded-r-3xl pr-10 shadow-inner group-hover:bg-white/10 transition-all duration-500">
                             {post.excerpt}
                         </p>
                     </header>
@@ -147,14 +153,7 @@ export default async function BlogDetailPage({ params }: Props) {
 
                 {/* Bottom Back Link */}
                 <div className="py-16 text-center">
-                    <Link href="/blog">
-                        <Button variant="ghost" className="gap-3 group">
-                            <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                            </svg>
-                            Back to Blog
-                        </Button>
-                    </Link>
+                    <BlogBackButton variant="ghost" className="mx-auto" />
                 </div>
             </div>
         </PageLayout>
