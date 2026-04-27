@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import EndorsementCard from '@/components/molecules/EndorsementCard';
 import EndorsementFormModal from './EndorsementFormModal';
 import EndorsementDetailModal from './EndorsementDetailModal';
@@ -13,6 +13,7 @@ export default function EndorsementList() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedEndorsement, setSelectedEndorsement] = useState<any | null>(null);
     const [fetchTrigger, setFetchTrigger] = useState(0);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // Pagination states
     const [currentPage, setCurrentPage] = useState(1);
@@ -48,6 +49,13 @@ export default function EndorsementList() {
         fetchEndorsements();
     }, [fetchTrigger]);
 
+    // Scroll to top of section when page changes
+    useEffect(() => {
+        if (currentPage > 1) {
+            containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, [currentPage]);
+
     const handleSuccess = () => {
         // Trigger a re-fetch of the endorsements list when a new one is successfully submitted
         setFetchTrigger(prev => prev + 1);
@@ -55,7 +63,7 @@ export default function EndorsementList() {
     };
 
     return (
-        <div className="w-full">
+        <div className="w-full" ref={containerRef}>
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                 <div>
                     <h2 className="text-2xl font-semibold mb-1 text-foreground">What They Say</h2>
