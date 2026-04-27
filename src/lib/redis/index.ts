@@ -39,3 +39,18 @@ export async function withCache<T>(
 
   return data;
 }
+
+/**
+ * Invalidate a cache key.
+ */
+export async function invalidateCache(key: string) {
+  const fullKey = `${REDIS_PREFIX}:${key}`;
+  try {
+    const redis = await getRedisClient();
+    if (redis.isReady) {
+      await redis.del(fullKey);
+    }
+  } catch (err) {
+    console.error(`Redis del error for key ${fullKey}:`, err);
+  }
+}
