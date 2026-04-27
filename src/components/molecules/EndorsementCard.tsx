@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '@/components/atoms/Card';
+import ReadMore from '@/components/atoms/ReadMore';
 
 interface EndorsementCardProps {
     endorsement: {
@@ -36,7 +37,6 @@ export default function EndorsementCard({ endorsement, onReadMore }: Endorsement
     const hash = endorsement.fullName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const colorClass = colors[hash % colors.length];
 
-    const isLongDescription = endorsement.description.length > 160;
 
     return (
         <Card className="h-full flex flex-col min-h-[300px] group/card transition-all duration-500" hover onClick={onReadMore}>
@@ -53,16 +53,12 @@ export default function EndorsementCard({ endorsement, onReadMore }: Endorsement
                     <p className="text-muted text-sm italic mb-4 leading-relaxed line-clamp-4 group-hover/card:text-slate-200 transition-colors whitespace-pre-wrap">
                         &quot;{endorsement.description.replace(/\\n/g, '\n').replace(/<br\s*\/?>/gi, '\n')}&quot;
                     </p>
-                    {isLongDescription && (
-                        <div className="mt-auto mb-4">
-                            <span className="text-primary text-xs font-bold flex items-center gap-1 group-hover/card:translate-x-1 transition-transform">
-                                Read More
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="m9 18 6-6-6-6"/>
-                                </svg>
-                            </span>
-                        </div>
-                    )}
+                    <ReadMore 
+                        text={endorsement.description} 
+                        limit={160} 
+                        hoverGroupName="card"
+                        className="mb-4"
+                    />
                 </div>
             </div>
             

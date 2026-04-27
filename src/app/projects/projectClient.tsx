@@ -2,6 +2,8 @@
 import { useState, useMemo, useEffect } from 'react';
 import ProjectCard from '@/components/molecules/ProjectCard';
 import ProjectImageModal from '@/components/organisms/ProjectImageModal';
+import DetailModal from '@/components/organisms/DetailModal';
+import Badge from '@/components/atoms/Badge';
 import { ProjectsItem } from '@/app/api/projects/route';
 
 interface ProjectClientProps {
@@ -12,6 +14,7 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
     const [currentPage, setCurrentPage] = useState(1);
     const [scrollProgress, setScrollProgress] = useState(0);
     const [selectedProject, setSelectedProject] = useState<{ images: string[], title: string } | null>(null);
+    const [selectedProjectDetail, setSelectedProjectDetail] = useState<ProjectsItem | null>(null);
     const [isMobile, setIsMobile] = useState(false);
     const scrollRef = useMemo(() => ({ current: null as HTMLDivElement | null }), []);
 
@@ -39,11 +42,11 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
 
         const itemWidth = container.offsetWidth;
         const newPage = Math.round(scrollPosition / (itemWidth * (isMobile ? 1 : 1))) + 1;
-        
-        const adjustedPage = isMobile 
+
+        const adjustedPage = isMobile
             ? Math.min(Math.max(1, newPage), filtered.length)
             : Math.min(Math.max(1, Math.round(scrollPosition / itemWidth) + 1), totalPages);
-            
+
         if (adjustedPage !== currentPage) {
             setCurrentPage(adjustedPage);
         }
@@ -131,6 +134,7 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
                                     category={project.category}
                                     image={processImages(project.image)}
                                     onImageClick={() => handleImageClick(project)}
+                                    onReadMore={() => setSelectedProjectDetail(project)}
                                     highlights={project.highlights}
                                     githubUrl={project.githubUrl}
                                     webUrl={project.webUrl}
@@ -157,17 +161,17 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
                                     </div>
                                     <span className="hidden sm:inline">Prev</span>
                                 </button>
-                                
+
                                 {/* Center Position Indicators - Progress Bar Style */}
                                 <div className="flex flex-col items-center gap-5 flex-1 max-w-[240px] sm:max-w-xs">
                                     {/* Progress Track */}
                                     <div className="relative w-full h-1 bg-white/5 rounded-full overflow-hidden border border-white/5">
-                                        <div 
+                                        <div
                                             className="absolute top-0 left-0 h-full bg-primary transition-all duration-300 ease-out shadow-[0_0_10px_rgba(var(--color-primary),0.5)]"
                                             style={{ width: `${scrollProgress}%` }}
                                         />
                                     </div>
-                                    
+
                                     <div className="flex items-center gap-3 text-[10px] font-black text-slate-500 uppercase tracking-[0.4em]">
                                         <span className="text-slate-600">{isMobile ? 'PROJECT' : 'PAGE'}</span>
                                         <div className="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-lg border border-white/5">
@@ -205,6 +209,55 @@ export default function ProjectClient({ projects }: ProjectClientProps) {
                     images={selectedProject.images}
                     title={selectedProject.title}
                     onClose={() => setSelectedProject(null)}
+                />
+            )}
+
+            {/* Project Detail Modal */}
+            {selectedProjectDetail && (
+                <DetailModal
+                    isOpen={!!selectedProjectDetail}
+                    onClose={() => setSelectedProjectDetail(null)}
+                    title={selectedProjectDetail.title}
+                    subtitle={Array.isArray(selectedProjectDetail.category) ? selectedProjectDetail.category.join(', ') : selectedProjectDetail.category}
+                    headerIcon={
+                        <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                    }
+                    content={
+                        <div className="space-y-6">
+                            <p className="text-slate-300 leading-relaxed">
+                                {selectedProjectDetail.description}
+                            </p>
+
+                            {selectedProjectDetail.highlights && selectedProjectDetail.highlights.length > 0 && (
+                                <div className="space-y-3">
+                                    <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest">Key Highlights</h4>
+                                    <ul className="space-y-2">
+                                        {selectedProjectDetail.highlights.map((h, i) => (
+                                            <li key={i} className="flex items-start gap-3 text-sm text-slate-400">
+                                                <div className="mt-1.5 w-1 h-1 rounded-full bg-primary shrink-0" />
+                                                {h}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {selectedProjectDetail.tags && selectedProjectDetail.tags.length > 0 && (
+                                <div className="space-y-3">
+                                    <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest">Technologies</h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {selectedProjectDetail.tags.map((tag) => (
+                                            <Badge key={tag} label={tag} variant="info" />
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    }
                 />
             )}
         </div>

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Card from '@/components/atoms/Card';
 import Badge from '@/components/atoms/Badge';
 import TruncatedTitle from '@/components/atoms/TruncatedTitle';
+import ReadMore from '@/components/atoms/ReadMore';
 import { sendGAEvent } from '@next/third-parties/google';
 
 interface ProjectCardProps {
@@ -13,13 +14,14 @@ interface ProjectCardProps {
     highlights: string[];
     image?: string | string[];
     onImageClick?: () => void;
+    onReadMore?: () => void;
     category?: string | string[];
     githubUrl?: string;
     webUrl?: string;
     mobileUrl?: string;
 }
 
-export default function ProjectCard({ title, description, tags, highlights, image, onImageClick, category, githubUrl, webUrl, mobileUrl }: ProjectCardProps) {
+export default function ProjectCard({ title, description, tags, highlights, image, onImageClick, onReadMore, category, githubUrl, webUrl, mobileUrl }: ProjectCardProps) {
     const [imgError, setImgError] = useState(false);
 
     return (
@@ -94,8 +96,9 @@ export default function ProjectCard({ title, description, tags, highlights, imag
                 </div>
 
                 {/* Description Section */}
-                <div className="h-[80px] sm:h-[100px] mb-8">
-                    <p className="text-slate-400 text-sm leading-relaxed line-clamp-3 sm:line-clamp-4">{description}</p>
+                <div className="h-[80px] sm:h-[100px] mb-8 flex flex-col">
+                    <p className="text-slate-400 text-sm leading-relaxed line-clamp-2 sm:line-clamp-3">{description}</p>
+                    <ReadMore text={description} limit={120} className="mt-2" onClick={onReadMore} />
                 </div>
 
                 {/* Highlights */}
