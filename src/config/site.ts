@@ -26,8 +26,8 @@ export const siteConfig = {
       description: "Learn about M. Rizky Pratama - QA Engineer with 5+ years of experience in test automation and quality assurance.",
     },
     blog: {
-      title: "Blog",
-      description: "Insights, tutorials, and best practices in QA and Test Automation.",
+      title: "Brain Dump",
+      description: "Tech insights, case studies, and lessons from my real work and things I just had to try",
     },
     caseStudies: {
       title: "QA Case Studies",
@@ -52,6 +52,14 @@ export const siteConfig = {
     endorsements: {
       title: "Endorsements",
       description: "Recommendations and feedback from colleagues, friends, and connections.",
+    },
+    projects: {
+      title: "Projects",
+      description: "QA projects and test strategies I've built",
+    },
+    skills: {
+      title: "Skills & Expertise",
+      description: "A comprehensive overview of my technical capabilities and toolset.",
     },
   },
 };

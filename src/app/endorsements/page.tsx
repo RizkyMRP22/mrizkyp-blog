@@ -20,8 +20,8 @@ export default function EndorsementsPage() {
                     {/* Header Section */}
                     <div className="flex flex-col gap-4 animate-fade-in-up">
                         <SectionTitle
-                            title="Endorsements"
-                            subtitle="Feedback and recommendations from people I've had the pleasure of working with."
+                            title={`${siteConfig.pages.endorsements.title}`}
+                            subtitle={`${siteConfig.pages.endorsements.description}`}
                         />
                     </div>
 

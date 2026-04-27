@@ -27,8 +27,8 @@ export default async function ExperiencePage() {
             >
                 {/* Page Header */}
                 <SectionTitle
-                    title="Experience"
-                    subtitle="A chronological record of my professional journey in quality assurance — organizations I've served, contributions I've made, and impact I've delivered."
+                    title={`${siteConfig.pages.experience.title}`}
+                    subtitle={`${siteConfig.pages.experience.description}`}
                 />
 
                 {/* Timeline */}

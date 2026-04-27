@@ -21,7 +21,7 @@ export default async function AboutPage() {
     return (
         <PageLayout>
             <section data-testid="section-about" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 animate-fade-in-up">
-                <SectionTitle title="About Me" subtitle="Get to know the person behind the quality" />
+                <SectionTitle title={`${siteConfig.pages.about.title}`} subtitle={`${siteConfig.pages.about.description}`} />
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start mt-8 lg:mt-12">
                     {/* Left Column: Sticky Profile Card */}
@@ -86,8 +86,8 @@ export default async function AboutPage() {
                                     </TrackingLink> */}
                                 </div>
 
-                                { /* Social Links */ }
-                                <AboutSocialLinks 
+                                { /* Social Links */}
+                                <AboutSocialLinks
                                     github={profileData.github}
                                     linkedin={profileData.linkedin}
                                     email={profileData.email}

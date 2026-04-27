@@ -23,7 +23,7 @@ export default async function BlogPage() {
                 <div className="absolute top-40 -left-40 w-96 h-96 bg-secondary/10 rounded-full blur-[100px] pointer-events-none" />
 
                 <section data-testid="section-blog" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 z-10">
-                    <SectionTitle title="Blog" subtitle="Sharing insights, tutorials, and best practices in QA" />
+                    <SectionTitle title={`${siteConfig.pages.blog.title}`} subtitle={`${siteConfig.pages.blog.description}`} />
                     <BlogClient posts={blogData?.posts || []} />
                 </section>
             </div>

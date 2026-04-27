@@ -18,8 +18,8 @@ export default async function TestingStrategyPage() {
         <PageLayout>
             <section data-testid="section-testing-strategy" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-20 min-h-screen">
                 <SectionTitle
-                    title="My Testing Strategy"
-                    subtitle="An end-to-end interactive journey of how I ensure quality from requirements to release."
+                    title={`${siteConfig.pages.testingStrategy.title}`}
+                    subtitle={`${siteConfig.pages.testingStrategy.description}`}
                 />
 
                 <div className="mt-8 md:mt-12">
