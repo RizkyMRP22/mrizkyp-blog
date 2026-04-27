@@ -2,6 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 interface NavLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     href: string;
@@ -17,15 +18,19 @@ export default function NavLink({ href, label, onClick, ...props }: NavLinkProps
         <Link
             href={href}
             onClick={onClick}
-            className={`px-3 py-1.5 text-sm font-medium transition-colors duration-200 rounded-full
-        ${isActive
-                    ? 'text-primary-light bg-primary/10'
-                    : 'text-slate-400 hover:text-white hover:bg-white/5'
-                }
-      `}
+            className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 rounded-full outline-none
+                ${isActive ? 'text-white' : 'text-slate-400 hover:text-white'}
+            `}
             {...props}
         >
-            {label}
+            {isActive && (
+                <motion.div
+                    layoutId="nav-pill"
+                    className="absolute inset-0 bg-primary/20 border border-primary/30 rounded-full z-[-1]"
+                    transition={{ type: 'spring', bounce: 0.25, duration: 0.5 }}
+                />
+            )}
+            <span className="relative z-10">{label}</span>
         </Link>
     );
 }
