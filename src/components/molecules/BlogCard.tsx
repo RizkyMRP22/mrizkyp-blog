@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '@/components/atoms/Card';
 import Badge from '@/components/atoms/Badge';
+import TruncatedTitle from '@/components/atoms/TruncatedTitle';
 
 interface BlogCardProps {
     id: string;
@@ -43,9 +44,11 @@ export default function BlogCard({ id, title, excerpt, category, date, readTime,
 
             {/* Content: Title & Excerpt */}
             <div className="flex-1 flex flex-col pointer-events-none relative z-20">
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary-light transition-colors line-clamp-2 leading-snug">
-                    {title}
-                </h3>
+                <TruncatedTitle 
+                    title={title} 
+                    as="h3"
+                    className="text-xl font-bold text-white mb-3 group-hover:text-primary-light transition-colors line-clamp-2 leading-snug"
+                />
                 <p className="text-sm text-muted leading-relaxed flex-1 line-clamp-3 mb-6">
                     {excerpt}
                 </p>

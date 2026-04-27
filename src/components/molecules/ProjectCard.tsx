@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Card from '@/components/atoms/Card';
 import Badge from '@/components/atoms/Badge';
+import TruncatedTitle from '@/components/atoms/TruncatedTitle';
 import { sendGAEvent } from '@next/third-parties/google';
 
 interface ProjectCardProps {
@@ -85,7 +86,11 @@ export default function ProjectCard({ title, description, tags, highlights, imag
             <div className="flex flex-col flex-1 p-6 sm:p-8">
                 {/* Title Section */}
                 <div className="h-[64px] sm:h-[80px] mb-4">
-                    <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-primary-light transition-colors duration-300 line-clamp-2">{title}</h3>
+                    <TruncatedTitle 
+                        title={title} 
+                        as="h3"
+                        className="text-xl sm:text-2xl font-bold text-white group-hover:text-primary-light transition-colors duration-300 line-clamp-2"
+                    />
                 </div>
 
                 {/* Description Section */}
