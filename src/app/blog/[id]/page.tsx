@@ -53,12 +53,11 @@ export default async function BlogDetailPage({ params }: Props) {
             {/* BlogDetailClient handles interactive elements like progress bar and floating actions */}
             <BlogDetailClient title={post.title} pdfUrl={post.link} />
 
-            <div className="relative">
-                {/* Cinematic Hero Background */}
-                <div className="absolute top-0 left-0 w-full h-[60vh] overflow-hidden pointer-events-none">
-                    <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background to-background z-10" />
-                    <div className="absolute -top-[20%] -left-[10%] w-[120%] h-[120%] bg-primary/5 blur-[120px] rounded-full animate-pulse-glow" />
-                </div>
+            <div className="relative overflow-hidden">
+                {/* Decorative orbs */}
+                <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-[100px] animate-float" />
+                <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/15 rounded-full blur-[120px] animate-float delay-300" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px] pointer-events-none" />
 
                 <article className="relative z-20 max-w-7xl mx-auto px-4 pt-20 pb-24">
                     {/* Top Back Button */}

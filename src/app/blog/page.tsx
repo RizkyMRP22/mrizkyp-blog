@@ -17,10 +17,10 @@ export default async function BlogPage() {
     return (
         <PageLayout>
             <div className="relative w-full overflow-hidden">
-                {/* Background Glow Decorations */}
-                <div className="absolute top-0 inset-x-0 h-64 bg-gradient-to-b from-primary/10 to-transparent pointer-events-none" />
-                <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
-                <div className="absolute top-40 -left-40 w-96 h-96 bg-secondary/10 rounded-full blur-[100px] pointer-events-none" />
+                {/* Decorative orbs */}
+                <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-[100px] animate-float" />
+                <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/15 rounded-full blur-[120px] animate-float delay-300" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px] pointer-events-none" />
 
                 <section data-testid="section-blog" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 z-10">
                     <SectionTitle title={`${siteConfig.pages.blog.title}`} subtitle={`${siteConfig.pages.blog.description}`} />
