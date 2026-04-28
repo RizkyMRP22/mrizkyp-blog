@@ -90,16 +90,30 @@ export async function POST(request: NextRequest) {
             access: 'public',
         });
 
-        const now = new Date();
-        const dateStr = now.toISOString().split('T')[0]; // YYYY-MM-DD
-        const timeStampStr = now.toISOString().replace(/[-:T]/g, '').slice(0, 12); // YYYYMMDDHHmm
+        const clientCreatedAt = formData.get('createdAt') as string;
+        const clientDate = formData.get('date') as string;
 
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const createdAt = `${year}-${month}-${day}: ${hours}:${minutes}`;
+        let dateStr: string;
+        let timeStampStr: string;
+        let createdAt: string;
+
+        if (clientCreatedAt) {
+            createdAt = clientCreatedAt;
+            dateStr = clientDate || clientCreatedAt.split(':')[0].trim();
+            // Derive timeStampStr from createdAt "YYYY-MM-DD: HH:mm" -> "YYYYMMDDHHmm"
+            timeStampStr = createdAt.replace(/[-: ]/g, '').slice(0, 12);
+        } else {
+            const now = new Date();
+            dateStr = now.toISOString().split('T')[0]; // YYYY-MM-DD
+            timeStampStr = now.toISOString().replace(/[-:T]/g, '').slice(0, 12); // YYYYMMDDHHmm
+
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            createdAt = `${year}-${month}-${day}: ${hours}:${minutes}`;
+        }
 
         const id = `idBlog-${timeStampStr}`;
 
