@@ -17,24 +17,29 @@ export async function withCache<T>(
   
   try {
     redis = await getRedisClient();
-    if (redis.isReady) {
+    if (redis && (redis.isReady || redis.isOpen)) {
       const cached = await redis.get(fullKey);
       if (cached) {
+        console.log(`[Redis] Cache HIT for key: ${fullKey}`);
         return JSON.parse(cached) as T;
       }
+      console.log(`[Redis] Cache MISS for key: ${fullKey}`);
+    } else {
+      console.warn(`[Redis] Client not ready for key: ${fullKey} (isReady: ${redis?.isReady}, isOpen: ${redis?.isOpen})`);
     }
   } catch (err) {
-    console.error(`Redis get error for key ${fullKey}:`, err);
+    console.error(`[Redis] get error for key ${fullKey}:`, err);
   }
 
   const data = await fetcher();
 
   try {
-    if (redis && redis.isReady) {
+    if (redis && (redis.isReady || redis.isOpen)) {
       await redis.setEx(fullKey, ttl, JSON.stringify(data));
+      console.log(`[Redis] Cache SET successful for key: ${fullKey}`);
     }
   } catch (err) {
-    console.error(`Redis set error for key ${fullKey}:`, err);
+    console.error(`[Redis] set error for key ${fullKey}:`, err);
   }
 
   return data;
