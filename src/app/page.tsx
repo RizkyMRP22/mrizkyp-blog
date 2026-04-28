@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import PageLayout from '@/components/templates/PageLayout';
 import HeroSection from '@/components/organisms/HeroSection';
 import Link from 'next/link';

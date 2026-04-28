@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import PageLayout from '@/components/templates/PageLayout';
 import SectionTitle from '@/components/atoms/SectionTitle';
 import ProjectClient from './projectClient';
