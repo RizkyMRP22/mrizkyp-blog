@@ -19,4 +19,4 @@ const getRedisFlag = () => {
 
 export const REDIS_PREFIX = getRedisFlag();
 
-console.log(`[Redis] Using prefix: ${REDIS_PREFIX}`);
+console.log(`[Redis] Using prefix: ${REDIS_PREFIX} (VERCEL_ENV: ${process.env.VERCEL_ENV}, NODE_ENV: ${process.env.NODE_ENV})`);
