@@ -11,8 +11,8 @@ const getRedisFlag = () => {
 
   // Detect environment
   const isProduction =
-    process.env.VERCEL_ENV === 'production' ||
-    (!process.env.VERCEL_ENV && process.env.NODE_ENV === 'production');
+    process.env.VERCEL_ENV === 'production' &&
+    process.env.NODE_ENV === 'production';
 
   return isProduction ? 'redis-master' : 'redis-preview';
 };
