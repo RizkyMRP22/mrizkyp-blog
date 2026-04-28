@@ -42,7 +42,7 @@ export default function ProjectShowcaseTab({ data }: ProjectShowcaseTabProps) {
                 return (
                     <div
                         key={item.id}
-                        className="group flex flex-col h-full bg-white dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-700/50 shadow-lg shadow-gray-200/40 dark:shadow-none hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/10 transition-all duration-500 will-change-transform"
+                        className="group flex flex-col h-full bg-gray-900/40 backdrop-blur-md rounded-3xl overflow-hidden border border-white/10 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 will-change-transform"
                     >
                         <div className="relative w-full aspect-video bg-gray-100 dark:bg-gray-900 overflow-hidden">
                             {item.type === 'video' ? (
@@ -76,13 +76,13 @@ export default function ProjectShowcaseTab({ data }: ProjectShowcaseTabProps) {
                             </div>
                         </div>
 
-                        <div className="flex flex-col flex-grow p-6 md:p-8 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-800/50">
+                        <div className="flex flex-col flex-grow p-6 md:p-8 bg-gray-900/20">
                             <div className="flex items-start justify-between gap-4 mb-3">
-                                <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">
+                                <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-indigo-400 transition-colors duration-300">
                                     {item.title}
                                 </h3>
                             </div>
-                            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                            <p className="text-gray-400 leading-relaxed">
                                 {item.description}
                             </p>
 

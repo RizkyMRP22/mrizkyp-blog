@@ -106,7 +106,7 @@ export default function TestIdReferenceTab() {
                     filteredIds.map((item, index) => (
                         <div
                             key={index}
-                            className="bg-white dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 p-4 md:p-5 rounded-2xl hover:shadow-md hover:border-blue-500/30 dark:hover:border-blue-500/20 transition-all duration-300"
+                            className="bg-gray-900/40 backdrop-blur-md border border-white/10 p-4 md:p-5 rounded-2xl hover:border-blue-500/40 transition-all duration-300"
                         >
                             {/* Header: code badge (truncated) + type badge */}
                             <div className="flex items-center justify-between gap-2 mb-3">
@@ -122,32 +122,32 @@ export default function TestIdReferenceTab() {
                             </p>
 
                             {/* Description */}
-                            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                            <p className="text-sm text-gray-300 leading-relaxed">
                                 {item.description}
                             </p>
                         </div>
                     ))
                 ) : (
-                    <div className="col-span-1 lg:col-span-2 py-10 text-center bg-gray-50 dark:bg-gray-800/30 rounded-2xl border border-dashed border-gray-200 dark:border-gray-700">
-                        <svg className="mx-auto h-10 w-10 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="col-span-1 lg:col-span-2 py-10 text-center bg-gray-900/20 rounded-2xl border border-dashed border-white/10">
+                        <svg className="mx-auto h-10 w-10 text-gray-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <p className="text-base font-medium text-gray-900 dark:text-gray-100">No test IDs found</p>
-                        <p className="text-sm mt-1 text-gray-500 dark:text-gray-400">No results matching &ldquo;{searchTerm}&rdquo;</p>
+                        <p className="text-base font-medium text-white">No test IDs found</p>
+                        <p className="text-sm mt-1 text-gray-400">No results matching &ldquo;{searchTerm}&rdquo;</p>
                     </div>
                 )}
             </div>
 
             {/* ── Info banner ─────────────────────────────────────────────── */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 rounded-2xl p-4 flex items-start gap-3">
-                <svg className="shrink-0 mt-0.5 h-4 w-4 text-blue-600 dark:text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+            <div className="bg-blue-950/40 backdrop-blur-md border border-blue-500/20 rounded-2xl p-4 flex items-start gap-3">
+                <svg className="shrink-0 mt-0.5 h-4 w-4 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                 </svg>
                 <div className="min-w-0">
-                    <h4 className="text-sm font-bold text-blue-900 dark:text-blue-100 mb-1">Automation Best Practices</h4>
-                    <p className="text-xs md:text-sm text-blue-800 dark:text-blue-200 leading-relaxed">
+                    <h4 className="text-sm font-bold text-blue-100 mb-1">Automation Best Practices</h4>
+                    <p className="text-xs md:text-sm text-blue-200 leading-relaxed">
                         For resilient E2E UI automation (Playwright, Cypress, Selenium), always prefer
-                        <code className="bg-white/50 dark:bg-black/20 px-1 py-0.5 rounded text-xs mx-1">data-testid</code>
+                        <code className="bg-blue-900/40 px-1 py-0.5 rounded text-xs mx-1 border border-blue-500/20">data-testid</code>
                         over volatile CSS classes or text content. Tap any ID badge above to copy the full selector to your clipboard.
                     </p>
                 </div>
