@@ -34,7 +34,24 @@ export default function PdfViewer({ pdfUrl, title }: PdfViewerProps) {
         return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
     }, []);
 
+    const [isLoaded, setIsLoaded] = useState(false);
+    
+    // Process Google Drive URL if needed for better preview compatibility
+    const isGoogleDrive = pdfUrl?.includes('drive.google.com');
+    const processedUrl = isGoogleDrive && pdfUrl?.includes('/view') 
+        ? pdfUrl.replace('/view', '/preview') 
+        : pdfUrl;
+
     const isInvalidPdf = !pdfUrl || pdfUrl.trim() === '' || pdfUrl === '#' || pdfUrl.includes('placeholder');
+
+    // Fallback: If iframe doesn't fire onLoad (common with PDFs), show it after a timeout
+    React.useEffect(() => {
+        setIsLoaded(false); // Reset when URL changes
+        const timer = setTimeout(() => {
+            setIsLoaded(true);
+        }, 3000); // 3 seconds fallback
+        return () => clearTimeout(timer);
+    }, [processedUrl]);
 
     return (
         <div className="group relative mb-20 animate-slide-in-bottom" ref={containerRef}>
@@ -43,16 +60,16 @@ export default function PdfViewer({ pdfUrl, title }: PdfViewerProps) {
                 <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 pointer-events-none"></div>
             )}
             
-            <div className={`relative bg-surface/80 backdrop-blur-md border border-card-border overflow-hidden shadow-2xl transition-all duration-500 ${isFullscreen ? 'w-full h-full rounded-0' : (isInvalidPdf ? 'rounded-2xl h-[25vh]' : 'rounded-3xl h-[50vh] md:h-[75vh]')}`}>
-                {/* Controls Overlay */}
+            <div className={`relative bg-surface/80 backdrop-blur-md border border-card-border overflow-hidden shadow-2xl transition-all duration-500 ${isFullscreen ? 'w-full h-full rounded-0' : (isInvalidPdf ? 'rounded-2xl h-[25vh]' : 'rounded-3xl h-[60vh] md:h-[75vh]')}`}>
+                {/* Controls Overlay - Visible on mobile by default, hover on desktop */}
                 {!isInvalidPdf && (
-                    <div className="absolute top-4 right-4 z-30 flex gap-2 transition-all opacity-0 group-hover:opacity-100 focus-within:opacity-100">
-                        {/* New Tab Button (Essential for Mobile) */}
+                    <div className="absolute top-4 right-4 z-30 flex gap-2 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100 focus-within:opacity-100">
+                        {/* New Tab Button */}
                         <a 
                             href={`/view-media?url=${encodeURIComponent(pdfUrl)}&title=${encodeURIComponent(title)}&type=pdf`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-3 bg-surface/50 hover:bg-primary/80 text-slate-300 hover:text-white rounded-xl backdrop-blur-md border border-white/10 hover:border-primary/50 transition-all duration-300 flex items-center gap-2 text-xs font-medium shadow-lg hover:-translate-y-0.5"
+                            className="p-3 bg-surface/90 md:bg-surface/50 hover:bg-primary text-white md:text-slate-300 md:hover:text-white rounded-xl backdrop-blur-md border border-white/20 md:border-white/10 hover:border-primary/50 transition-all duration-300 flex items-center gap-2 text-xs font-medium shadow-lg hover:-translate-y-0.5"
                             title="Open in New Tab"
                         >
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -64,7 +81,7 @@ export default function PdfViewer({ pdfUrl, title }: PdfViewerProps) {
                         {/* Fullscreen Button */}
                         <button 
                             onClick={toggleFullscreen}
-                            className="p-3 bg-surface/50 hover:bg-primary/80 text-slate-300 hover:text-white rounded-xl backdrop-blur-md border border-white/10 hover:border-primary/50 transition-all duration-300 shadow-lg hover:-translate-y-0.5"
+                            className="p-3 bg-surface/90 md:bg-surface/50 hover:bg-primary text-white md:text-slate-300 md:hover:text-white rounded-xl backdrop-blur-md border border-white/20 md:border-white/10 hover:border-primary/50 transition-all duration-300 shadow-lg hover:-translate-y-0.5"
                             title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
                         >
                             {isFullscreen ? (
@@ -101,14 +118,36 @@ export default function PdfViewer({ pdfUrl, title }: PdfViewerProps) {
                 ) : (
                     <div className="w-full h-full relative">
                         {/* Loading State for iframe */}
-                        <div className="absolute inset-0 flex items-center justify-center bg-surface animate-pulse -z-10">
-                            <span className="text-slate-500 text-sm">Loading document...</span>
-                        </div>
+                        {!isLoaded && (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-surface animate-pulse z-10">
+                                <div className="w-10 h-10 border-4 border-primary/30 border-t-primary rounded-full animate-spin mb-4" />
+                                <span className="text-slate-500 text-sm font-medium">Loading document...</span>
+                            </div>
+                        )}
                         <iframe
-                            src={`${pdfUrl}#toolbar=0`}
-                            className="w-full h-full border-none"
+                            src={isGoogleDrive ? processedUrl : `${processedUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+                            className={`w-full h-full border-none transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-10'}`}
                             title={title}
+                            onLoad={() => setIsLoaded(true)}
                         />
+                        
+                        {/* Mobile Optimized Overlay - Suggest opening in new tab for better reading */}
+                        {!isFullscreen && (
+                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 md:hidden w-[90%]">
+                                <a 
+                                    href={`/view-media?url=${encodeURIComponent(pdfUrl)}&title=${encodeURIComponent(title)}&type=pdf`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-primary text-white rounded-2xl font-bold shadow-2xl shadow-primary/40 active:scale-95 transition-all border border-white/20"
+                                >
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    View Full Document
+                                </a>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
