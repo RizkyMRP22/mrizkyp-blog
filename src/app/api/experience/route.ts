@@ -25,7 +25,7 @@ async function _getExperiences(): Promise<ExperienceData> {
 
     try {
         const db = await getDb();
-        const experience = await db.collection<ExperienceItem>('experiences').find({}, { projection: { _id: 0 } }).sort({ id: 1 }).toArray();
+        const experience = await db.collection<ExperienceItem>('experiences').find({}, { projection: { _id: 0 } }).toArray();
         return { experience };
     } catch (error) {
         console.error('Error fetching experiences from MongoDB:', error);
