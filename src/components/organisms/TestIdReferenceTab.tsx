@@ -22,10 +22,10 @@ const TEST_IDS = [
 ];
 
 const TYPE_STYLES: Record<string, string> = {
-    Link: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300 border-indigo-200 dark:border-indigo-700/40',
-    Button: 'bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300 border-rose-200 dark:border-rose-700/40',
-    Section: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 border-emerald-200 dark:border-emerald-700/40',
-    Input: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300 border-amber-200 dark:border-amber-700/40',
+    Link: 'bg-indigo-900/40 text-indigo-300 border-indigo-700/40',
+    Button: 'bg-rose-900/40 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300 border-rose-200 dark:border-rose-700/40',
+    Section: 'bg-emerald-900/40 text-emerald-300 border-emerald-700/40',
+    Input: 'bg-amber-900/40 text-amber-300 border-amber-700/40',
 };
 
 function CopyBadge({ value }: { value: string }) {
@@ -44,7 +44,7 @@ function CopyBadge({ value }: { value: string }) {
             title={`Copy selector: [data-testid="${value}"]`}
             className="group/copy flex items-center gap-1.5 min-w-0 text-left"
         >
-            <code className="block text-xs font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-2 py-1 rounded-md border border-blue-100 dark:border-blue-800/30 group-hover/copy:bg-blue-100 dark:group-hover/copy:bg-blue-900/40 transition-colors truncate max-w-[190px] sm:max-w-[280px]">
+            <code className="block text-xs font-mono font-bold text-blue-400 bg-blue-900/20 px-2 py-1 rounded-md border border-blue-800/30 group-hover/copy:bg-blue-900/40 transition-colors truncate max-w-[190px] sm:max-w-[280px]">
                 {value}
             </code>
             <span className={`shrink-0 transition-all duration-300 ${copied ? 'text-emerald-500' : 'text-gray-300 dark:text-gray-600 group-hover/copy:text-blue-400'}`}>
@@ -73,21 +73,21 @@ export default function TestIdReferenceTab() {
     return (
         <div className="space-y-5">
             {/* ── Search bar ────────────────────────────────────────────────
-            <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-2xl px-3 py-2.5">
-                <svg className="shrink-0 h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+            <div className="flex items-center gap-3 bg-gray-900/40 backdrop-blur-md border border-white/10 rounded-2xl px-3 py-2.5">
+                <svg className="shrink-0 h-4 w-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
                 </svg>
                 <input
                     type="text"
                     placeholder="Search by ID, component, or description…"
-                    className="flex-1 bg-transparent text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none"
+                    className="flex-1 bg-transparent text-sm text-white placeholder-gray-500 focus:outline-none"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 {searchTerm && (
                     <button
                         onClick={() => setSearchTerm('')}
-                        className="shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                        className="shrink-0 text-gray-500 hover:text-gray-300 transition-colors"
                         aria-label="Clear search"
                     >
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -95,7 +95,7 @@ export default function TestIdReferenceTab() {
                         </svg>
                     </button>
                 )}
-                <span className="shrink-0 text-xs font-medium text-gray-400 dark:text-gray-500 tabular-nums">
+                <span className="shrink-0 text-xs font-medium text-gray-500 tabular-nums">
                     {filteredIds.length}/{TEST_IDS.length}
                 </span>
             </div> */}

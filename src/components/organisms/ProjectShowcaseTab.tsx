@@ -44,7 +44,7 @@ export default function ProjectShowcaseTab({ data }: ProjectShowcaseTabProps) {
                         key={item.id}
                         className="group flex flex-col h-full bg-gray-900/40 backdrop-blur-md rounded-3xl overflow-hidden border border-white/10 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 will-change-transform"
                     >
-                        <div className="relative w-full aspect-video bg-gray-100 dark:bg-gray-900 overflow-hidden">
+                        <div className="relative w-full aspect-video bg-gray-950 overflow-hidden">
                             {item.type === 'video' ? (
                                 <iframe
                                     src={fullUrl}
@@ -91,7 +91,7 @@ export default function ProjectShowcaseTab({ data }: ProjectShowcaseTabProps) {
                                     href={`/view-media?url=${encodeURIComponent(fullUrl.replace('/preview', '/view'))}&title=${encodeURIComponent(item.title)}&type=${item.type}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 group/link"
+                                    className="inline-flex items-center text-sm font-bold text-indigo-400 hover:text-indigo-300 group/link"
                                 >
                                     Open Source Media
                                     <svg className="w-4 h-4 ml-1.5 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
