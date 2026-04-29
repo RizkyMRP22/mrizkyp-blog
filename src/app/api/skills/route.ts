@@ -4,11 +4,12 @@ import { withCache } from '@/lib/redis';
 import { getDb } from '@/lib/mongodb';
 
 export interface SkillItem {
+    order: number;
     name: string;
     icon: string;
     skills: {
         name: string;
-        level: number;
+        level: 'expert' | 'proficient' | 'familiar';
     }[];
 }
 
@@ -20,7 +21,7 @@ async function _getSkills(): Promise<SkillData> {
 
     try {
         const db = await getDb();
-        const skillCategories = await db.collection<SkillItem>('skills').find({}, { projection: { _id: 0 } }).toArray();
+        const skillCategories = await db.collection<SkillItem>('skills').find({}, { projection: { _id: 0 }, }).sort({ order: 1 }).toArray();
         return { skillCategories };
     } catch (error) {
         console.error('Error fetching skills from MongoDB:', error);

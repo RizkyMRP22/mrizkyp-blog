@@ -4,7 +4,7 @@ export const navItems = [
     { href: '/experience', label: 'Experience', comingSoon: process.env.NEXT_PUBLIC_ENABLE_EXPERIENCE !== 'true' },
     { href: '/skills', label: 'Skills', comingSoon: process.env.NEXT_PUBLIC_ENABLE_SKILLS !== 'true' },
     { href: '/projects', label: 'Projects', comingSoon: process.env.NEXT_PUBLIC_ENABLE_PROJECTS !== 'true' },
-    { href: '/case-studies', label: 'Case Studies', comingSoon: process.env.NEXT_PUBLIC_ENABLE_CASE_STUDIES !== 'true' },
+    // { href: '/case-studies', label: 'Case Studies', comingSoon: process.env.NEXT_PUBLIC_ENABLE_CASE_STUDIES !== 'true' },
     { href: '/testing-strategy', label: 'Testing Strategy', comingSoon: process.env.NEXT_PUBLIC_ENABLE_TESTING_STRATEGY !== 'true' },
     { href: '/test-artifacts', label: 'Test Artifacts', comingSoon: process.env.NEXT_PUBLIC_ENABLE_TEST_ARTIFACTS !== 'true' },
     { href: '/blog', label: 'Brain Dump', comingSoon: process.env.NEXT_PUBLIC_ENABLE_BLOG !== 'true' },
