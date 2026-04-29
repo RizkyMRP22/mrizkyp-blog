@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Button from '@/components/atoms/Button';
 
 interface EndorsementDetailModalProps {
@@ -16,7 +17,25 @@ interface EndorsementDetailModalProps {
 }
 
 export default function EndorsementDetailModal({ endorsement, onClose }: EndorsementDetailModalProps) {
-    if (!endorsement) return null;
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    // Lock body scroll when modal is open
+    useEffect(() => {
+        if (endorsement) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [endorsement]);
+
+    if (!endorsement || !mounted) return null;
 
     // Generate Initials
     const initials = endorsement.fullName
@@ -26,7 +45,7 @@ export default function EndorsementDetailModal({ endorsement, onClose }: Endorse
         .join('')
         .toUpperCase();
 
-    // Vibrant background colors based on initials sum
+    // Vibrant background colors based on name hash
     const colors = [
         'from-purple-500/20 to-indigo-500/20 border-purple-500/30 text-purple-400',
         'from-emerald-500/20 to-teal-500/20 border-emerald-500/30 text-emerald-400',
@@ -34,19 +53,16 @@ export default function EndorsementDetailModal({ endorsement, onClose }: Endorse
         'from-rose-500/20 to-pink-500/20 border-rose-500/30 text-rose-400',
         'from-amber-500/20 to-orange-500/20 border-amber-500/30 text-amber-400'
     ];
-    
     const hash = endorsement.fullName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const colorClass = colors[hash % colors.length];
 
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-6 overflow-y-auto">
-            <div
-                className="bg-surface border border-card-border rounded-2xl w-full max-w-2xl shadow-2xl relative my-auto animate-fade-in-up overflow-hidden"
-            >
+    return createPortal(
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-6">
+            <div className="relative w-full max-w-2xl max-h-[90dvh] overflow-y-auto overscroll-contain rounded-2xl bg-surface border border-card-border shadow-2xl animate-fade-in-up">
                 {/* Close Button */}
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 p-2 text-muted hover:text-white bg-white/5 rounded-full hover:bg-white/10 transition-colors z-10"
+                    className="absolute top-4 right-4 z-10 p-2 text-muted hover:text-white bg-white/5 rounded-full hover:bg-white/10 transition-colors"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -63,9 +79,9 @@ export default function EndorsementDetailModal({ endorsement, onClose }: Endorse
                             <h2 className="text-2xl font-bold text-white flex flex-wrap items-center gap-3 break-words">
                                 {endorsement.fullName}
                                 {endorsement.linkedinUrl && (
-                                    <a 
-                                        href={endorsement.linkedinUrl.startsWith('http') ? endorsement.linkedinUrl : `https://${endorsement.linkedinUrl}`} 
-                                        target="_blank" 
+                                    <a
+                                        href={endorsement.linkedinUrl.startsWith('http') ? endorsement.linkedinUrl : `https://${endorsement.linkedinUrl}`}
+                                        target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-primary hover:text-primary-light transition-colors"
                                     >
@@ -104,6 +120,7 @@ export default function EndorsementDetailModal({ endorsement, onClose }: Endorse
                     </div>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 }
