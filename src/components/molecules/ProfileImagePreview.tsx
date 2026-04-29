@@ -1,8 +1,37 @@
 'use client';
 
 import Image from 'next/image';
+import { siteConfig } from '@/config/site';
+import Tooltip from '@/components/atoms/Tooltip';
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+
+const STATUS_MAP = {
+    available: {
+        color: 'bg-green-500',
+        pingColor: 'bg-green-400',
+        label: 'Actively Seeking Opportunities',
+        showPing: true,
+    },
+    freelance_only: {
+        color: 'bg-blue-500',
+        pingColor: 'bg-blue-400',
+        label: 'Open for Freelance/Consulting',
+        showPing: true,
+    },
+    exploring: {
+        color: 'bg-amber-500',
+        pingColor: 'bg-amber-400',
+        label: 'Exploring New Possibilities',
+        showPing: true,
+    },
+    unavailable: {
+        color: 'bg-slate-500',
+        pingColor: 'bg-slate-400',
+        label: 'Currently Not Seeking Opportunities',
+        showPing: false,
+    },
+} as const;
 
 interface ProfileImagePreviewProps {
     src: string;
@@ -122,6 +151,9 @@ export default function ProfileImagePreview({ src, alt }: ProfileImagePreviewPro
         };
     }, [isOpen]);
 
+    const status = siteConfig.contact.availabilityStatus;
+    const currentStatus = STATUS_MAP[status];
+
     return (
         <>
             <div 
@@ -184,12 +216,16 @@ export default function ProfileImagePreview({ src, alt }: ProfileImagePreviewPro
                     </div>
                 </div>
 
-                {/* Status Dot ("Available / Online") */}
-                <div className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 lg:bottom-3 lg:right-3 z-20" title="Actively Seeking Opportunities">
-                    <div className="relative flex h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-full w-full bg-green-500 border-2 border-slate-900 shadow-lg"></span>
-                    </div>
+                {/* Status Dot */}
+                <div className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 lg:bottom-3 lg:right-3 z-20">
+                    <Tooltip content={currentStatus.label} position="top">
+                        <div className="relative flex h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 cursor-help">
+                            {currentStatus.showPing && (
+                                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${currentStatus.pingColor} opacity-75`}></span>
+                            )}
+                            <span className={`relative inline-flex rounded-full h-full w-full ${currentStatus.color} border-2 border-slate-900 shadow-lg`}></span>
+                        </div>
+                    </Tooltip>
                 </div>
             </div>
 
