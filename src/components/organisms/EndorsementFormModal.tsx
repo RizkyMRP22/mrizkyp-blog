@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import Script from 'next/script';
 import Button from '@/components/atoms/Button';
 import { Input, Textarea, Select } from '@/components/atoms/Input';
@@ -44,6 +45,11 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
     const [error, setError] = useState<string | null>(null);
     const [isSuccess, setIsSuccess] = useState(false);
     const [isPreview, setIsPreview] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     // Form inputs state
     const [formData, setFormData] = useState({
@@ -55,9 +61,10 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
         rating: ''
     });
 
-    // Reset form states when modal opens
+    // Lock body scroll and reset form when modal opens
     useEffect(() => {
         if (isOpen) {
+            document.body.style.overflow = 'hidden';
             setFormData({
                 fullName: '',
                 role: '',
@@ -70,7 +77,12 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
             setIsSuccess(false);
             setIsPreview(false);
             setTurnstileToken('');
+        } else {
+            document.body.style.overflow = '';
         }
+        return () => {
+            document.body.style.overflow = '';
+        };
     }, [isOpen]);
 
     const turnstileRef = useRef<HTMLDivElement>(null);
@@ -83,7 +95,6 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
             const ts = window.turnstile;
             if (ts && turnstileRef.current) {
                 try {
-                    // Try to reset the container, then render explicitly
                     turnstileRef.current.innerHTML = '';
                     setTurnstileToken('');
                     ts.render(turnstileRef.current, {
@@ -113,7 +124,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
         };
     }, [isPreview]);
 
-    if (!isOpen) return null;
+    if (!isOpen || !mounted) return null;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -152,7 +163,6 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                 throw new Error(data.error || 'Failed to submit endorsement');
             }
 
-            // Show success state instead of closing immediately
             setIsSuccess(true);
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : 'An unexpected error occurred. Please try again.');
@@ -166,17 +176,18 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
         onClose();
     };
 
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-6 overflow-y-auto pt-[10vh]">
+    return createPortal(
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-6">
             <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" />
-            <div
-                className="bg-surface border border-card-border rounded-2xl w-full max-w-2xl shadow-2xl relative my-auto animate-fade-in-up"
-            >
+
+            {/* Modal Card */}
+            <div className="relative w-full max-w-2xl max-h-[90dvh] overflow-y-auto overscroll-contain rounded-2xl bg-surface border border-card-border shadow-2xl animate-fade-in-up">
+
                 {/* Close Button */}
                 {!isSuccess && (
                     <button
                         onClick={onClose}
-                        className="absolute top-4 right-4 p-2 text-muted hover:text-white bg-white/5 rounded-full hover:bg-white/10 transition-colors"
+                        className="absolute top-4 right-4 z-10 p-2 text-muted hover:text-white bg-white/5 rounded-full hover:bg-white/10 transition-colors"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -185,7 +196,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                     </button>
                 )}
 
-                <div className="p-6 sm:p-8">
+                <div className="p-5 sm:p-6">
                     {isSuccess ? (
                         <div className="text-center py-8">
                             <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/20">
@@ -253,17 +264,17 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                         </>
                     ) : (
                         <>
-                            <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary mb-2">Write an Endorsement</h2>
-                            <p className="text-muted text-sm mb-6">Share your experience working or creating with me. Your words mean a lot!</p>
+                            <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary mb-1">Write an Endorsement</h2>
+                            <p className="text-muted text-sm mb-4">Share your experience working or creating with me. Your words mean a lot!</p>
 
                             {error && (
-                                <div className="mb-6 p-4 bg-danger/10 border border-danger/30 rounded-xl text-danger text-sm">
+                                <div className="mb-4 p-4 bg-danger/10 border border-danger/30 rounded-xl text-danger text-sm">
                                     {error}
                                 </div>
                             )}
 
-                            <form onSubmit={handlePreview} className="space-y-4">
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <form onSubmit={handlePreview} className="space-y-3">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                     <Input
                                         label="Full Name *"
                                         name="fullName"
@@ -284,7 +295,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                                     />
                                 </div>
 
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                     <Select
                                         label="Relationship *"
                                         name="relation"
@@ -304,22 +315,20 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                                     />
                                 </div>
 
-                                <div className="grid grid-cols-1 gap-4">
-                                    <Select
-                                        label="Performance Rating / Satisfaction (Optional)"
-                                        name="rating"
-                                        options={Array.from({ length: 21 }, (_, i) => (100 - i * 5).toString())}
-                                        placeholder="No rating / Skip"
-                                        value={formData.rating}
-                                        onChange={handleChange}
-                                    />
-                                </div>
+                                <Select
+                                    label="Performance Rating / Satisfaction (Optional)"
+                                    name="rating"
+                                    options={Array.from({ length: 21 }, (_, i) => (100 - i * 5).toString())}
+                                    placeholder="No rating / Skip"
+                                    value={formData.rating}
+                                    onChange={handleChange}
+                                />
 
                                 <Textarea
                                     label="Your Endorsement *"
                                     name="description"
                                     placeholder="What was it like working together?"
-                                    rows={4}
+                                    rows={3}
                                     value={formData.description}
                                     onChange={handleChange}
                                     required
@@ -339,6 +348,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                     )}
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 }
