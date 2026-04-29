@@ -7,13 +7,10 @@ import { siteConfig } from '@/config/site';
 import BlogDetailClient from './BlogDetailClient';
 import BlogBackButton from './BlogBackButton';
 import PdfViewer from './PdfViewer';
-import Link from 'next/link';
-import BlogCard from '@/components/molecules/BlogCard';
 import Heading from '@/components/atoms/Heading';
-import Button from '@/components/atoms/Button';
 
 interface Props {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -21,9 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const post = await getPostById(id);
 
     if (!post) {
-        return {
-            title: 'Post Not Found',
-        };
+        return { title: 'Post Not Found' };
     }
 
     return {
@@ -34,19 +29,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogDetailPage({ params }: Props) {
     const { id } = await params;
-    const [post, { posts: allPosts }] = await Promise.all([
-        getPostById(id),
-        getPosts()
-    ]);
+    const post = await getPostById(id);
 
     if (!post) {
         notFound();
     }
-
-    // Filter related posts (same category or just latest)
-    const relatedPosts = allPosts
-        .filter(p => p.id !== id)
-        .slice(0, 3);
 
     return (
         <PageLayout>

@@ -1,12 +1,12 @@
 export const dynamic = 'force-dynamic';
 import PageLayout from '@/components/templates/PageLayout';
 import HeroSection from '@/components/organisms/HeroSection';
-import Link from 'next/link';
-// import quickLinks from '@/data/quicklinks.json';
 import { getProfiles } from '@/app/api/profile/route';
 import { getQuickLinks } from '@/app/api/quicklinks/route';
 import TrackingLink from '@/components/atoms/TrackingLink';
+import SectionTitle from '@/components/atoms/SectionTitle';
 import { navItems } from '@/config/navigation';
+import { siteConfig } from '@/config/site';
 
 export default async function HomePage() {
   const profileData = await getProfiles();
@@ -15,13 +15,13 @@ export default async function HomePage() {
   return (
     <PageLayout>
       <HeroSection profileData={profileData} />
+
       {/* Quick Links Section */}
       <section data-testid="section-home-quicklinks" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">Explore My Work</h2>
-          <p className="text-muted text-lg">Discover My QA expertise through strategy, projects, case studies, and interactive demos</p>
-          <div className="mt-4 mx-auto w-24 h-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-full" />
-        </div>
+        <SectionTitle
+          title="Explore My Work"
+          subtitle={siteConfig.description}
+        />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {quickLinksData.quickLink.map((link) => {

@@ -5,7 +5,7 @@ import { getDb } from '@/lib/mongodb';
 import { put } from '@vercel/blob';
 
 export interface PostItem {
-    id: string; // Changed from number to string for blogId-YYYYMMDDHHmm
+    id: string;
     title: string;
     excerpt: string;
     category: string;
@@ -16,22 +16,13 @@ export interface PostItem {
     createdAt: string;
 }
 
-export interface postsData {
+export interface PostsData {
     posts: PostItem[];
 }
 
-function slugify(text: string) {
-    return text
-        .toString()
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, '-')     // Replace spaces with -
-        .replace(/[^\w-]+/g, '')  // Remove all non-word chars
-        .replace(/--+/g, '-');    // Replace multiple - with single -
-}
 
-async function _getPosts(): Promise<postsData> {
 
+async function _getPosts(): Promise<PostsData> {
     try {
         const db = await getDb();
         const posts = await db.collection<PostItem>('posts')
@@ -70,7 +61,23 @@ export async function GET() {
     return NextResponse.json(data);
 }
 
+/**
+ * POST /api/blog
+ * Protected by BLOG_ADMIN_SECRET (Authorization: Bearer <token>).
+ * If the env var is not set the route is effectively open — set it in production.
+ */
 export async function POST(request: NextRequest) {
+    // ── Auth guard ────────────────────────────────────────────────────────────
+    const adminSecret = process.env.BLOG_ADMIN_SECRET;
+    if (adminSecret) {
+        const authHeader = request.headers.get('authorization');
+        if (!authHeader || authHeader !== `Bearer ${adminSecret}`) {
+            return NextResponse.json({ code: 401, message: 'Unauthorized' }, { status: 401 });
+        }
+    } else {
+        console.warn('[Blog API] BLOG_ADMIN_SECRET is not set. POST endpoint is unprotected.');
+    }
+
     try {
         const formData = await request.formData();
         const title = formData.get('title') as string;
@@ -94,16 +101,12 @@ export async function POST(request: NextRequest) {
         const dateStr = now.toISOString().split('T')[0]; // YYYY-MM-DD
         const timeStampStr = now.toISOString().replace(/[-:T]/g, '').slice(0, 12); // YYYYMMDDHHmm
 
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const createdAt = `${year}-${month}-${day}: ${hours}:${minutes}`;
+        // Store as ISO string so it's universally parseable
+        const createdAt = now.toISOString();
 
         const id = `idBlog-${timeStampStr}`;
 
-        // Estimate read time (approx 200 words per minute)
+        // Estimate read time based on excerpt (~200 wpm); actual content is a PDF
         const wordCount = excerpt.split(/\s+/).length;
         const readTime = `${Math.max(1, Math.ceil(wordCount / 200))} min`;
 
@@ -122,7 +125,7 @@ export async function POST(request: NextRequest) {
         const db = await getDb();
         await db.collection('posts').insertOne({ ...newPost });
 
-        // Invalidate cache
+        // Invalidate the list cache so the new post appears immediately
         await invalidateCache('api:blog');
 
         return NextResponse.json(newPost, { status: 201 });

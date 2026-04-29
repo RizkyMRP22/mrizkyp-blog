@@ -18,7 +18,14 @@ export async function fetcher<T>(endpoint: string): Promise<T> {
         headers: getHeaders(),
     });
     if (!res.ok) {
-        throw new Error(`API error: ${res.status}`);
+        let detail = '';
+        try {
+            const body = await res.json();
+            detail = body?.error ?? body?.message ?? '';
+        } catch {
+            // non-JSON body — ignore
+        }
+        throw new Error(`API error ${res.status}${detail ? `: ${detail}` : ''}`);
     }
     return res.json();
 }
@@ -30,7 +37,14 @@ export async function postData<T>(endpoint: string, data: Record<string, unknown
         body: JSON.stringify(data),
     });
     if (!res.ok) {
-        throw new Error(`API error: ${res.status}`);
+        let detail = '';
+        try {
+            const body = await res.json();
+            detail = body?.error ?? body?.message ?? '';
+        } catch {
+            // non-JSON body — ignore
+        }
+        throw new Error(`API error ${res.status}${detail ? `: ${detail}` : ''}`);
     }
     return res.json();
 }

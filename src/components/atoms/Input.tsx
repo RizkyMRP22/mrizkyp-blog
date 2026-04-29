@@ -36,10 +36,15 @@ export function Textarea({ label, error, className = '', ...props }: TextareaPro
     );
 }
 
+interface SelectOption {
+    value: string;
+    label: string;
+}
+
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
     label?: string;
     error?: string;
-    options: { value: string; label: string }[] | string[];
+    options: SelectOption[] | string[];
     placeholder?: string;
 }
 
@@ -58,9 +63,8 @@ export function Select({ label, error, options, placeholder, className = '', ...
                         </option>
                     )}
                     {options.map((opt, i) => {
-                        const isString = typeof opt === 'string';
-                        const val = isString ? opt : (opt as any).value;
-                        const lab = isString ? opt : (opt as any).label;
+                        const val = typeof opt === 'string' ? opt : opt.value;
+                        const lab = typeof opt === 'string' ? opt : opt.label;
                         return (
                             <option key={i} value={val} className="bg-surface text-foreground py-2">
                                 {lab}

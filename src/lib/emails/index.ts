@@ -2,6 +2,19 @@ import { sendNotificationEmail } from '@/lib/resend';
 import { LeadItem } from '@/app/api/leads/route';
 import { EndorsementItem } from '@/app/api/endorsements/route';
 
+// ── HTML escape ────────────────────────────────────────────────────────────────
+// Escapes user-supplied strings before interpolation into HTML email bodies,
+// preventing HTML injection / XSS in the recipient's email client.
+function htmlEscape(value: string | number | undefined | null): string {
+    if (value === undefined || value === null) return '';
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 // Modern, clean inline email styles for high readability
 const styles = {
     wrapper: `font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6; padding: 40px 20px;`,
@@ -30,44 +43,44 @@ export const EmailService = {
                     <div style="${styles.body}">
                         <div style="${styles.row}">
                             <span style="${styles.label}">Name</span>
-                            <span style="${styles.value}">${lead.fullName}</span>
+                            <span style="${styles.value}">${htmlEscape(lead.fullName)}</span>
                         </div>
                         <div style="${styles.row}">
                             <span style="${styles.label}">Email</span>
-                            <span style="${styles.value}"><a href="mailto:${lead.email}" style="${styles.link}">${lead.email}</a></span>
+                            <span style="${styles.value}"><a href="mailto:${htmlEscape(lead.email)}" style="${styles.link}">${htmlEscape(lead.email)}</a></span>
                         </div>
                         ${lead.company ? `
                         <div style="${styles.row}">
                             <span style="${styles.label}">Company</span>
-                            <span style="${styles.value}">${lead.company}</span>
+                            <span style="${styles.value}">${htmlEscape(lead.company)}</span>
                         </div>` : ''}
                         ${lead.role ? `
                         <div style="${styles.row}">
-                            <span style="${styles.label}">Role & Opportunity</span>
-                            <span style="${styles.value}">${lead.role} &mdash; <strong style="color: #3b82f6;">${lead.opportunityType}</strong></span>
+                            <span style="${styles.label}">Role &amp; Opportunity</span>
+                            <span style="${styles.value}">${htmlEscape(lead.role)} &mdash; <strong style="color: #3b82f6;">${htmlEscape(lead.opportunityType)}</strong></span>
                         </div>` : `
                         <div style="${styles.row}">
                             <span style="${styles.label}">Opportunity Type</span>
-                            <span style="${styles.value}"><strong style="color: #3b82f6;">${lead.opportunityType}</strong></span>
+                            <span style="${styles.value}"><strong style="color: #3b82f6;">${htmlEscape(lead.opportunityType)}</strong></span>
                         </div>`}
                         ${lead.timeline ? `
                         <div style="${styles.row}">
                             <span style="${styles.label}">Timeline</span>
-                            <span style="${styles.value}">${lead.timeline}</span>
+                            <span style="${styles.value}">${htmlEscape(lead.timeline)}</span>
                         </div>` : ''}
                         ${lead.linkedinUrl ? `
                         <div style="${styles.row}">
                             <span style="${styles.label}">LinkedIn</span>
-                            <span style="${styles.value}"><a href="${lead.linkedinUrl}" style="${styles.link}">View Profile &rarr;</a></span>
+                            <span style="${styles.value}"><a href="${htmlEscape(lead.linkedinUrl)}" style="${styles.link}">View Profile &rarr;</a></span>
                         </div>` : ''}
-                        
+
                         <div style="${styles.row}">
                             <span style="${styles.label}">Subject</span>
-                            <span style="${styles.value}"><strong>${lead.subject}</strong></span>
+                            <span style="${styles.value}"><strong>${htmlEscape(lead.subject)}</strong></span>
                         </div>
-                        
+
                         <div style="${styles.label}; margin-top: 30px;">Message</div>
-                        <div style="${styles.messageBox}">${lead.message}</div>
+                        <div style="${styles.messageBox}">${htmlEscape(lead.message)}</div>
                     </div>
                     <div style="${styles.footer}">
                         Submitted via your Portfolio Contact Form &bull; ${new Date(lead.submittedAt || Date.now()).toLocaleDateString()}
@@ -79,7 +92,7 @@ export const EmailService = {
     },
 
     async sendNewEndorsement(endorsement: EndorsementItem, endorsementId: string) {
-        const appUrl = process.env.APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+        const appUrl = process.env.APP_URL || 'http://localhost:3000';
         const approveUrl = `${appUrl}/api/endorsements/approve?id=${endorsementId}`;
 
         const subject = `New Endorsement Pending: ${endorsement.fullName}`;
@@ -92,26 +105,26 @@ export const EmailService = {
                     <div style="${styles.body}">
                         <div style="${styles.row}">
                             <span style="${styles.label}">Name</span>
-                            <span style="${styles.value}">${endorsement.fullName}</span>
+                            <span style="${styles.value}">${htmlEscape(endorsement.fullName)}</span>
                         </div>
                         <div style="${styles.row}">
-                            <span style="${styles.label}">Role & Relation</span>
-                            <span style="${styles.value}">${endorsement.role} (${endorsement.relation})</span>
+                            <span style="${styles.label}">Role &amp; Relation</span>
+                            <span style="${styles.value}">${htmlEscape(endorsement.role)} (${htmlEscape(endorsement.relation)})</span>
                         </div>
                         ${endorsement.rating !== undefined ? `
                         <div style="${styles.row}">
                             <span style="${styles.label}">Rating</span>
-                            <span style="${styles.value}"><span style="color: #10b981; font-weight: bold;">${endorsement.rating}</span> / 100</span>
+                            <span style="${styles.value}"><span style="color: #10b981; font-weight: bold;">${htmlEscape(endorsement.rating)}</span> / 100</span>
                         </div>` : ''}
                         ${endorsement.linkedinUrl ? `
                         <div style="${styles.row}">
                             <span style="${styles.label}">LinkedIn</span>
-                            <span style="${styles.value}"><a href="${endorsement.linkedinUrl}" style="${styles.link}">View Profile &rarr;</a></span>
+                            <span style="${styles.value}"><a href="${htmlEscape(endorsement.linkedinUrl)}" style="${styles.link}">View Profile &rarr;</a></span>
                         </div>` : ''}
-                        
+
                         <div style="${styles.label}; margin-top: 30px;">Endorsement Message</div>
-                        <div style="${styles.messageBox}">${endorsement.description}</div>
-                        
+                        <div style="${styles.messageBox}">${htmlEscape(endorsement.description)}</div>
+
                         <div style="text-align: center;">
                             <a href="${approveUrl}" style="${styles.button}">Approve Endorsement &rarr;</a>
                         </div>
@@ -129,7 +142,6 @@ export const EmailService = {
 
 /**
  * Generates the HTML for the success page shown after clicking the email approval link.
- * While not an email itself, keeping the HTML template here centralizes UI strings.
  */
 export function generateApproveSuccessHtml(appUrl: string) {
     return `
@@ -187,7 +199,7 @@ export function generateAlreadyApprovedHtml(appUrl: string) {
                 <div class="icon">ℹ️</div>
                 <h1>Already Approved</h1>
                 <p>This endorsement was already approved previously and is live on your website.</p>
-                <a href="${appUrl}/endorsements"  class="btn">Return to Website</a>
+                <a href="${appUrl}/endorsements" class="btn">Return to Website</a>
             </div>
         </body>
         </html>

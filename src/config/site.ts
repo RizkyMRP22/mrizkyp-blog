@@ -14,7 +14,6 @@ export const siteConfig = {
     "Case Studies",
     "Testing Expertise",
     "Mohammad Rizky Pratama",
-    "QA Engineer",
   ],
   contact: {
     // Current availability status. Options: "available", "freelance_only", "unavailable", "exploring"

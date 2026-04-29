@@ -32,11 +32,15 @@ export default function EndorsementCard({ endorsement, onReadMore }: Endorsement
         'from-rose-500/20 to-pink-500/20 border-rose-500/30 text-rose-400',
         'from-amber-500/20 to-orange-500/20 border-amber-500/30 text-amber-400'
     ];
-    
-    // Simple hash function for consistent color per name
+
+    // Simple hash for consistent color per name
     const hash = endorsement.fullName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const colorClass = colors[hash % colors.length];
 
+    // Normalise line breaks stored as escaped sequences or HTML entities
+    const description = endorsement.description
+        .replace(/\\n/g, '\n')
+        .replace(/<br\s*\/?>/gi, '\n');
 
     return (
         <Card className="h-full flex flex-col min-h-[300px] group/card transition-all duration-500" hover onClick={onReadMore}>
@@ -51,17 +55,17 @@ export default function EndorsementCard({ endorsement, onReadMore }: Endorsement
                 )}
                 <div className="relative flex-1">
                     <p className="text-muted text-sm italic mb-4 leading-relaxed line-clamp-4 group-hover/card:text-slate-200 transition-colors whitespace-pre-wrap">
-                        &quot;{endorsement.description.replace(/\\n/g, '\n').replace(/<br\s*\/?>/gi, '\n')}&quot;
+                        &quot;{description}&quot;
                     </p>
-                    <ReadMore 
-                        text={endorsement.description} 
-                        limit={160} 
+                    <ReadMore
+                        text={endorsement.description}
+                        limit={160}
                         hoverGroupName="card"
                         className="mb-4"
                     />
                 </div>
             </div>
-            
+
             <div className="flex items-center gap-4 mt-auto pt-6 border-t border-card-border/50">
                 <div className={`w-12 h-12 shrink-0 rounded-full flex items-center justify-center font-bold text-lg bg-gradient-to-br border ${colorClass}`}>
                     {initials}
@@ -70,9 +74,9 @@ export default function EndorsementCard({ endorsement, onReadMore }: Endorsement
                     <h4 className="font-semibold text-foreground text-sm flex items-center gap-2">
                         {endorsement.fullName}
                         {endorsement.linkedinUrl && (
-                            <a 
-                                href={endorsement.linkedinUrl.startsWith('http') ? endorsement.linkedinUrl : `https://${endorsement.linkedinUrl}`} 
-                                target="_blank" 
+                            <a
+                                href={endorsement.linkedinUrl.startsWith('http') ? endorsement.linkedinUrl : `https://${endorsement.linkedinUrl}`}
+                                target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-primary hover:text-primary-light transition-colors"
                                 title="LinkedIn Profile"

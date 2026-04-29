@@ -70,7 +70,7 @@ export default function ContactForm() {
     const [status, setStatus] = useState<FormStatus>('idle');
     const [serverMessage, setServerMessage] = useState('');
     const [errors, setErrors] = useState<Partial<FormState>>({});
-    const [showBudget, setShowBudget] = useState(false);
+    const [showTimeline, setShowTimeline] = useState(false);
     const [turnstileToken, setTurnstileToken] = useState('');
 
     useEffect(() => {
@@ -130,7 +130,7 @@ export default function ContactForm() {
         }
         // Show budget/timeline only for freelance or project types
         if (name === 'opportunityType') {
-            setShowBudget(value === 'freelance' || value === 'collaboration');
+            setShowTimeline(value === 'freelance' || value === 'collaboration');
         }
     }
 
@@ -177,15 +177,15 @@ export default function ContactForm() {
                 setServerMessage(data.message);
                 formRef.current?.reset();
                 setForm({ fullName: '', email: '', company: '', role: '', subject: '', opportunityType: '', message: '', timeline: '', linkedinUrl: '' });
-                setShowBudget(false);
+                setShowTimeline(false);
                 setTurnstileToken('');
             } else {
                 setStatus('error');
                 setServerMessage(data.error || 'Something went wrong. Please try again.');
             }
-        } catch {
+        } catch (err: unknown) {
             setStatus('error');
-            setServerMessage('Network error. Please check your connection and try again.');
+            setServerMessage(err instanceof Error ? err.message : 'Network error. Please check your connection and try again.');
         }
     }
 
@@ -325,8 +325,8 @@ export default function ContactForm() {
                 {errors.opportunityType && <p id="err-opportunityType" role="alert" className="mt-1.5 text-xs text-danger">{errors.opportunityType}</p>}
             </div>
 
-            {/* Row 4 — Budget + Timeline (conditional) */}
-            {showBudget && (
+            {/* Row 4 — Timeline (conditional) */}
+            {showTimeline && (
                 <div>
                     <label htmlFor="cf-timeline" className={labelBase}>Expected Timeline</label>
                     <select

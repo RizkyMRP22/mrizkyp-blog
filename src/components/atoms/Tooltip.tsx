@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 
 interface TooltipProps {
     children: React.ReactNode;
@@ -10,7 +10,6 @@ interface TooltipProps {
 
 export default function Tooltip({ children, content, className = '', position = 'top' }: TooltipProps) {
     const [isVisible, setIsVisible] = useState(false);
-    const [coords, setCoords] = useState({ top: 0, left: 0 });
     const triggerRef = useRef<HTMLDivElement>(null);
 
     const positionClasses = {

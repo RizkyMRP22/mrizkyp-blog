@@ -6,6 +6,19 @@ import Button from '@/components/atoms/Button';
 import { Input, Textarea, Select } from '@/components/atoms/Input';
 import EndorsementCard from '@/components/molecules/EndorsementCard';
 
+// Cloudflare Turnstile is loaded via an external script; we type its global here
+// so we avoid `(window as any)` throughout this file.
+interface TurnstileAPI {
+    render: (container: HTMLElement, options: {
+        sitekey: string | undefined;
+        theme: string;
+        callback: (token: string) => void;
+    }) => void;
+}
+declare global {
+    interface Window { turnstile?: TurnstileAPI; }
+}
+
 const RELATIONSHIP_OPTIONS = [
     "Manager",
     "Direct Report",
@@ -67,7 +80,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
         let intervalId: NodeJS.Timeout;
 
         const attemptRender = () => {
-            const ts = (window as any).turnstile;
+            const ts = window.turnstile;
             if (ts && turnstileRef.current) {
                 try {
                     // Try to reset the container, then render explicitly
@@ -141,8 +154,8 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
 
             // Show success state instead of closing immediately
             setIsSuccess(true);
-        } catch (err: any) {
-            setError(err.message || 'An unexpected error occurred. Please try again.');
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : 'An unexpected error occurred. Please try again.');
         } finally {
             setIsSubmitting(false);
         }
@@ -291,7 +304,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                                     />
                                 </div>
 
-                                <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
+                                <div className="grid grid-cols-1 gap-4">
                                     <Select
                                         label="Performance Rating / Satisfaction (Optional)"
                                         name="rating"

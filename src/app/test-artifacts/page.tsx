@@ -50,8 +50,8 @@ export default async function TestArtifactsPage() {
                 {/* Hero Section */}
                 <section data-testid="section-test-artifacts" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8 z-10">
                     <SectionTitle
-                        title={`${siteConfig.pages.testArtifacts.title}`}
-                        subtitle={`${siteConfig.pages.testArtifacts.description}`}
+                        title={siteConfig.pages.testArtifacts.title}
+                        subtitle={siteConfig.pages.testArtifacts.description}
                         className="mb-0"
                     />
                 </section>

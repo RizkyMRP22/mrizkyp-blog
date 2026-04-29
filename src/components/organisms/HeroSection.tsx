@@ -32,7 +32,7 @@ export default function HeroSection({ profileData }: { profileData: ProfileItem 
         }, isDeleting ? 40 : 80);
 
         return () => clearTimeout(timeout);
-    }, [charIndex, isDeleting, titleIndex]);
+    }, [charIndex, isDeleting, titleIndex, titles]);
 
     return (
         <section data-testid="section-hero" className="min-h-screen flex items-center justify-center relative overflow-hidden">
