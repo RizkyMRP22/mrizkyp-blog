@@ -18,7 +18,7 @@ async function _getCertifications(): Promise<certificationData> {
 
     try {
         const db = await getDb();
-        const certifications = await db.collection<certificationItem>('certifications').find({}, { projection: { _id: 0 } }).toArray();
+        const certifications = await db.collection<certificationItem>('certifications').find({}, { projection: { _id: 0 } }).sort({ year: -1 }).toArray();
         return { certifications };
     } catch (error) {
         console.error('Error fetching certifications from MongoDB:', error);
