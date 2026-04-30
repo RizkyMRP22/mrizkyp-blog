@@ -26,6 +26,16 @@ const skeletonStyles = `
     0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
     40%            { transform: scale(1.0); opacity: 1;   }
   }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
   .sk-shimmer {
     background: linear-gradient(
       90deg,

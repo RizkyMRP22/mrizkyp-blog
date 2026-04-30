@@ -6,9 +6,7 @@ import Script from 'next/script';
 import Button from '@/components/atoms/Button';
 import { Input, Textarea, Select } from '@/components/atoms/Input';
 import EndorsementCard from '@/components/molecules/EndorsementCard';
-
-// Cloudflare Turnstile is loaded via an external script; we type its global here
-// so we avoid `(window as any)` throughout this file.
+import { useTurnstile } from '@/hooks/use-turnstile';
 interface TurnstileAPI {
     render: (container: HTMLElement, options: {
         sitekey: string | undefined;
@@ -86,43 +84,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
     }, [isOpen]);
 
     const turnstileRef = useRef<HTMLDivElement>(null);
-    const [turnstileToken, setTurnstileToken] = useState<string>('');
-
-    useEffect(() => {
-        let intervalId: NodeJS.Timeout;
-
-        const attemptRender = () => {
-            const ts = window.turnstile;
-            if (ts && turnstileRef.current) {
-                try {
-                    turnstileRef.current.innerHTML = '';
-                    setTurnstileToken('');
-                    ts.render(turnstileRef.current, {
-                        sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
-                        theme: 'dark',
-                        callback: function(token: string) {
-                            setTurnstileToken(token);
-                        }
-                    });
-                    if (intervalId) clearInterval(intervalId);
-                } catch (e) {
-                    console.error("Turnstile explicit render error:", e);
-                }
-            }
-        };
-
-        if (isPreview && process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
-            if ((window as any).turnstile) {
-                attemptRender();
-            } else {
-                intervalId = setInterval(attemptRender, 500);
-            }
-        }
-
-        return () => {
-            if (intervalId) clearInterval(intervalId);
-        };
-    }, [isPreview]);
+    const { token: turnstileToken, setToken: setTurnstileToken } = useTurnstile(turnstileRef, isPreview);
 
     if (!isOpen || !mounted) return null;
 

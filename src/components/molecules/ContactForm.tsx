@@ -1,7 +1,9 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import Script from 'next/script';
+import { useTurnstile } from '@/hooks/use-turnstile';
+import Button from '@/components/atoms/Button';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -71,43 +73,8 @@ export default function ContactForm() {
     const [serverMessage, setServerMessage] = useState('');
     const [errors, setErrors] = useState<Partial<FormState>>({});
     const [showTimeline, setShowTimeline] = useState(false);
-    const [turnstileToken, setTurnstileToken] = useState('');
 
-    useEffect(() => {
-        let intervalId: NodeJS.Timeout;
-
-        const attemptRender = () => {
-            const ts = (window as any).turnstile;
-            if (ts && turnstileRef.current) {
-                try {
-                    turnstileRef.current.innerHTML = '';
-                    setTurnstileToken('');
-                    ts.render(turnstileRef.current, {
-                        sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
-                        theme: 'dark',
-                        callback: function(token: string) {
-                            setTurnstileToken(token);
-                        }
-                    });
-                    if (intervalId) clearInterval(intervalId);
-                } catch (e) {
-                    console.error("Turnstile explicit render error:", e);
-                }
-            }
-        };
-
-        if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
-            if ((window as any).turnstile) {
-                attemptRender();
-            } else {
-                intervalId = setInterval(attemptRender, 500);
-            }
-        }
-
-        return () => {
-            if (intervalId) clearInterval(intervalId);
-        };
-    }, []);
+    const { token: turnstileToken, setToken: setTurnstileToken } = useTurnstile(turnstileRef, true);
 
     const [form, setForm] = useState<FormState>({
         fullName: '',
@@ -409,25 +376,25 @@ export default function ContactForm() {
                     <div ref={turnstileRef} className="cf-turnstile" data-theme="dark"></div>
                 </div>
             )}
-            <button
+            <Button
                 type="submit"
                 id="contact-form-submit"
-                disabled={status === 'submitting'}
                 data-testid="contact-form-submit"
-                className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-primary hover:bg-primary-dark disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/30 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-transparent"
+                disabled={status === 'submitting'}
+                className="w-full text-sm !px-6 !py-3.5"
             >
                 {status === 'submitting' ? (
                     <>
                         <SpinnerIcon />
-                        Sending…
+                        <span className="ml-2">Sending…</span>
                     </>
                 ) : (
                     <>
                         <SendIcon />
-                        Send Message
+                        <span className="ml-2">Send Message</span>
                     </>
                 )}
-            </button>
+            </Button>
 
             <p className="text-center text-xs text-slate-600">
                 Your data is stored securely and never shared with third parties.

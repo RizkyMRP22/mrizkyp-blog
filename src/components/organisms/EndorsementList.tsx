@@ -5,13 +5,17 @@ import EndorsementCard from '@/components/molecules/EndorsementCard';
 import EndorsementFormModal from './EndorsementFormModal';
 import EndorsementDetailModal from './EndorsementDetailModal';
 import Button from '@/components/atoms/Button';
+import { SkeletonCard, SkeletonStyles } from '@/components/atoms/PageSkeleton';
+import type { Endorsement } from '@/types/endorsement';
+import type { ApiResponse } from '@/types/api';
+import { fetcher } from '@/lib/api';
 
 export default function EndorsementList() {
-    const [endorsements, setEndorsements] = useState<any[]>([]);
+    const [endorsements, setEndorsements] = useState<Endorsement[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedEndorsement, setSelectedEndorsement] = useState<any | null>(null);
+    const [selectedEndorsement, setSelectedEndorsement] = useState<Endorsement | null>(null);
     const [fetchTrigger, setFetchTrigger] = useState(0);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -29,10 +33,9 @@ export default function EndorsementList() {
         const fetchEndorsements = async () => {
             setIsLoading(true);
             try {
-                const res = await fetch('/api/endorsements');
-                const data = await res.json();
+                const data = await fetcher<ApiResponse<Endorsement[]>>('/endorsements');
 
-                if (data.success) {
+                if (data.success && data.data) {
                     setEndorsements(data.data);
                     setCurrentPage(1);
                 } else {
@@ -84,22 +87,14 @@ export default function EndorsementList() {
             )}
 
             {isLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[1, 2, 3, 4, 5, 6].map(i => (
-                        <div key={i} className="animate-pulse bg-surface border border-card-border rounded-2xl p-6 h-[300px] flex flex-col">
-                            <div className="h-4 bg-white/10 rounded w-3/4 mb-4"></div>
-                            <div className="h-4 bg-white/10 rounded w-full mb-4"></div>
-                            <div className="h-4 bg-white/10 rounded w-5/6 mb-8"></div>
-                            <div className="flex items-center gap-4 mt-auto">
-                                <div className="w-12 h-12 bg-white/10 rounded-full"></div>
-                                <div className="flex-1">
-                                    <div className="h-4 bg-white/10 rounded w-1/2 mb-2"></div>
-                                    <div className="h-3 bg-white/10 rounded w-1/3"></div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <>
+                    <SkeletonStyles />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {Array.from({ length: 6 }).map((_, i) => (
+                            <SkeletonCard key={i} delay={i * 80} />
+                        ))}
+                    </div>
+                </>
             ) : endorsements.length === 0 ? (
                 <div className="text-center p-12 border border-dashed border-card-border rounded-3xl bg-surface/30">
                     <h3 className="text-xl font-medium text-muted mb-2">No endorsements yet</h3>

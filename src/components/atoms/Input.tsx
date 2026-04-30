@@ -5,15 +5,17 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     error?: string;
 }
 
-export function Input({ label, error, className = '', ...props }: InputProps) {
+export function Input({ label, id, error, className = '', ...props }: InputProps) {
+    const inputId = id ?? props.name;
     return (
         <div className="flex flex-col gap-1.5">
-            {label && <label className="text-sm font-medium text-slate-300">{label}</label>}
+            {label && <label htmlFor={inputId} className="text-sm font-medium text-slate-300">{label}</label>}
             <input
+                id={inputId}
                 className={`w-full px-4 py-3 rounded-xl bg-surface/60 border border-card-border text-foreground placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300 ${error ? 'border-danger/50 ring-1 ring-danger/30' : ''} ${className}`}
                 {...props}
             />
-            {error && <span className="text-xs text-red-400">{error}</span>}
+            {error && <span id={`${inputId}-error`} role="alert" className="text-xs text-red-400">{error}</span>}
         </div>
     );
 }
@@ -23,15 +25,17 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
     error?: string;
 }
 
-export function Textarea({ label, error, className = '', ...props }: TextareaProps) {
+export function Textarea({ label, id, error, className = '', ...props }: TextareaProps) {
+    const textareaId = id ?? props.name;
     return (
         <div className="flex flex-col gap-1.5">
-            {label && <label className="text-sm font-medium text-slate-300">{label}</label>}
+            {label && <label htmlFor={textareaId} className="text-sm font-medium text-slate-300">{label}</label>}
             <textarea
+                id={textareaId}
                 className={`w-full px-4 py-3 rounded-xl bg-surface/60 border border-card-border text-foreground placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300 resize-none ${error ? 'border-danger/50 ring-1 ring-danger/30' : ''} ${className}`}
                 {...props}
             />
-            {error && <span className="text-xs text-red-400">{error}</span>}
+            {error && <span id={`${textareaId}-error`} role="alert" className="text-xs text-red-400">{error}</span>}
         </div>
     );
 }
@@ -48,12 +52,14 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
     placeholder?: string;
 }
 
-export function Select({ label, error, options, placeholder, className = '', ...props }: SelectProps) {
+export function Select({ label, id, error, options, placeholder, className = '', ...props }: SelectProps) {
+    const selectId = id ?? props.name;
     return (
         <div className="flex flex-col gap-1.5">
-            {label && <label className="text-sm font-medium text-slate-300">{label}</label>}
+            {label && <label htmlFor={selectId} className="text-sm font-medium text-slate-300">{label}</label>}
             <div className="relative">
                 <select
+                    id={selectId}
                     className={`w-full px-4 py-3 rounded-xl bg-surface/60 border border-card-border text-foreground appearance-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300 ${error ? 'border-danger/50 ring-1 ring-danger/30' : ''} ${className}`}
                     {...props}
                 >
@@ -62,11 +68,11 @@ export function Select({ label, error, options, placeholder, className = '', ...
                             {placeholder}
                         </option>
                     )}
-                    {options.map((opt, i) => {
+                    {options.map((opt) => {
                         const val = typeof opt === 'string' ? opt : opt.value;
                         const lab = typeof opt === 'string' ? opt : opt.label;
                         return (
-                            <option key={i} value={val} className="bg-surface text-foreground py-2">
+                            <option key={val} value={val} className="bg-surface text-foreground py-2">
                                 {lab}
                             </option>
                         );
@@ -78,7 +84,7 @@ export function Select({ label, error, options, placeholder, className = '', ...
                     </svg>
                 </div>
             </div>
-            {error && <span className="text-xs text-red-400">{error}</span>}
+            {error && <span id={`${selectId}-error`} role="alert" className="text-xs text-red-400">{error}</span>}
         </div>
     );
 }
