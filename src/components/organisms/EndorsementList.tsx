@@ -113,9 +113,9 @@ export default function EndorsementList() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {currentEndorsements.map((endorsement) => (
                             <div key={endorsement._id}>
-                                <EndorsementCard 
-                                    endorsement={endorsement} 
-                                    onReadMore={() => setSelectedEndorsement(endorsement)} 
+                                <EndorsementCard
+                                    endorsement={endorsement}
+                                    onReadMore={() => setSelectedEndorsement(endorsement)}
                                 />
                             </div>
                         ))}
@@ -163,7 +163,7 @@ export default function EndorsementList() {
                 onSuccess={handleSuccess}
             />
 
-            <EndorsementDetailModal 
+            <EndorsementDetailModal
                 endorsement={selectedEndorsement}
                 onClose={() => setSelectedEndorsement(null)}
             />
