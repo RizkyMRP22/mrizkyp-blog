@@ -38,9 +38,17 @@ export default function PdfViewer({ pdfUrl, title }: PdfViewerProps) {
     
     // Process Google Drive URL if needed for better preview compatibility
     const isGoogleDrive = pdfUrl?.includes('drive.google.com');
-    const processedUrl = isGoogleDrive && pdfUrl?.includes('/view') 
-        ? pdfUrl.replace('/view', '/preview') 
-        : pdfUrl;
+    const cleanUrl = pdfUrl ? pdfUrl.split('?')[0].toLowerCase() : '';
+    const isDirectPdf = !isGoogleDrive && cleanUrl.endsWith('.pdf');
+
+    let processedUrl = pdfUrl;
+    if (isGoogleDrive && pdfUrl?.includes('/view')) {
+        processedUrl = pdfUrl.replace('/view', '/preview');
+    } else if (isDirectPdf) {
+        // Android browsers lack native PDF rendering in iframes. 
+        // We route raw .pdf links through Google Docs Viewer to ensure mobile compatibility.
+        processedUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`;
+    }
 
     const isInvalidPdf = !pdfUrl || pdfUrl.trim() === '' || pdfUrl === '#' || pdfUrl.includes('placeholder');
 
@@ -125,7 +133,7 @@ export default function PdfViewer({ pdfUrl, title }: PdfViewerProps) {
                             </div>
                         )}
                         <iframe
-                            src={isGoogleDrive ? processedUrl : `${processedUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+                            src={isGoogleDrive || isDirectPdf ? processedUrl : `${processedUrl}#toolbar=0&navpanes=0&scrollbar=0`}
                             className={`w-full h-full border-none transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-10'}`}
                             title={title}
                             onLoad={() => setIsLoaded(true)}

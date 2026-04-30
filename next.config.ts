@@ -63,7 +63,7 @@ const securityHeaders = [
       "img-src 'self' data: blob: https:",
       "media-src 'self' blob: https: " + blobStorageUrl,
       "connect-src 'self' https://challenges.cloudflare.com",
-      `frame-src https://drive.google.com https://www.youtube.com https://www.loom.com ${blobStorageUrl} https://challenges.cloudflare.com`,
+      `frame-src https://drive.google.com https://docs.google.com https://www.youtube.com https://www.loom.com ${blobStorageUrl} https://challenges.cloudflare.com`,
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
