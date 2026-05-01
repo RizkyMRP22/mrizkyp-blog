@@ -112,9 +112,11 @@ export default async function AboutPage() {
                                 </div>
                                 About Me
                             </h4>
-                            <p className="text-slate-300 leading-relaxed text-[1.05rem] mb-10 relative z-10">
-                                {profileData.bio}
-                            </p>
+                            <div className="text-slate-300 leading-relaxed text-[1.05rem] mb-10 relative z-10 space-y-4 text-justify">
+                                {profileData.bio.split('\n').map((paragraph, index) => (
+                                    paragraph.trim() ? <p key={index}>{paragraph}</p> : null
+                                ))}
+                            </div>
 
                             {profileData.philosophy && (
                                 <div className="bg-slate-800/80 rounded-2xl p-5 sm:p-8 border border-white/5 relative z-10 shadow-inner mt-4">
