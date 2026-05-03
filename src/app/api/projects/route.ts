@@ -24,7 +24,7 @@ async function _getProjects(): Promise<ProjectsData> {
 
     try {
         const db = await getDb();
-        const projects = await db.collection<ProjectsItem>('projects').find({}, { projection: { _id: 0 } }).toArray();
+        const projects = await db.collection<ProjectsItem>('projects').find({}, { projection: { _id: 0 } }).sort({ id: 1 }).toArray();
         return { projects };
     } catch (error) {
         console.error('Error fetching projects from MongoDB:', error);
