@@ -77,7 +77,7 @@ export default function HeroSection({ profileData }: { profileData: ProfileItem 
                 </div>
 
                 {/* Stats */}
-                <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 animate-fade-in delay-500">
+                {/* <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 animate-fade-in delay-500">
                     {[
                         { value: `${profileData.stats.yearsExperience}+`, label: 'Years Experience' },
                         { value: `${profileData.stats.projectsCompleted}+`, label: 'Projects' },
@@ -89,7 +89,7 @@ export default function HeroSection({ profileData }: { profileData: ProfileItem 
                             <div className="text-sm text-muted mt-1">{stat.label}</div>
                         </div>
                     ))}
-                </div>
+                </div> */}
 
                 {/* Scroll indicator */}
                 <div className="mt-16 animate-bounce">
