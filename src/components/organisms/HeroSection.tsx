@@ -43,7 +43,7 @@ export default function HeroSection({ profileData }: { profileData: ProfileItem 
 
             <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
                 <div className="animate-fade-in">
-                    <p className="text-secondary font-semibold tracking-wider uppercase text-sm mb-4">Welcome to My Blog</p>
+                    <p className="text-secondary font-semibold tracking-wider uppercase text-sm mb-4">Welcome to My Portfolio</p>
                     <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
                         {profileData.name}
                     </h1>
