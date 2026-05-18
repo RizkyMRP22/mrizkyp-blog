@@ -162,8 +162,8 @@ export const EmailService = {
                             Hi <strong>${htmlEscape(endorsement.fullName)}</strong>,
                         </p>
                         <p style="font-size: 16px; line-height: 1.6; color: #374151;">
-                            Thank you so much for taking the time to write an endorsement!
-                            It has been reviewed, approved, and is now <strong>publicly visible</strong> on the website.
+                            Thanks a lot for taking the time to write an endorsement!
+                            It’s been reviewed, approved, and is now live on the website.
                         </p>
 
                         <div style="${styles.messageBox}">&ldquo;${htmlEscape(endorsement.description)}&rdquo;</div>
