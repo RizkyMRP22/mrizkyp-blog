@@ -44,6 +44,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
     const [isSuccess, setIsSuccess] = useState(false);
     const [isPreview, setIsPreview] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [wantEmailNotification, setWantEmailNotification] = useState(false);
 
     useEffect(() => {
         setMounted(true);
@@ -52,6 +53,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
     // Form inputs state
     const [formData, setFormData] = useState({
         fullName: '',
+        email: '',
         role: '',
         relation: '',
         linkedinUrl: '',
@@ -65,6 +67,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
             document.body.style.overflow = 'hidden';
             setFormData({
                 fullName: '',
+                email: '',
                 role: '',
                 relation: '',
                 linkedinUrl: '',
@@ -74,6 +77,7 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
             setError(null);
             setIsSuccess(false);
             setIsPreview(false);
+            setWantEmailNotification(false);
             setTurnstileToken('');
         } else {
             document.body.style.overflow = '';
@@ -200,6 +204,46 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                                 />
                             </div>
 
+                            {/* Email notification opt-in */}
+                            <div className="mb-6 p-4 rounded-xl border border-card-border/60 bg-white/[0.02]">
+                                <label className="flex items-center gap-3 cursor-pointer select-none">
+                                    <div className="relative flex-shrink-0">
+                                        <input
+                                            id="want-email-notification"
+                                            type="checkbox"
+                                            className="sr-only peer"
+                                            checked={wantEmailNotification}
+                                            onChange={(e) => {
+                                                setWantEmailNotification(e.target.checked);
+                                                if (!e.target.checked) {
+                                                    setFormData(prev => ({ ...prev, email: '' }));
+                                                }
+                                            }}
+                                        />
+                                        <div className="w-10 h-6 bg-white/10 rounded-full peer-checked:bg-primary transition-colors duration-200 border border-white/10 peer-checked:border-primary/50"></div>
+                                        <div className="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200 peer-checked:translate-x-4"></div>
+                                    </div>
+                                    <div>
+                                        <span className="text-sm font-medium text-white">Notify me when approved</span>
+                                        <p className="text-xs text-muted mt-0.5">Receive an email when your endorsement goes live on the website.</p>
+                                    </div>
+                                </label>
+
+                                {wantEmailNotification && (
+                                    <div className="mt-3">
+                                        <Input
+                                            label="Email Address *"
+                                            name="email"
+                                            type="email"
+                                            placeholder="john@example.com"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
                             {/* CAPTCHA Widget */}
                             {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
                                 <div className="flex justify-center w-full mb-6 relative z-10">
@@ -246,6 +290,9 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                                         required
                                         minLength={2}
                                     />
+                                </div>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                     <Input
                                         label="Role/Title *"
                                         name="role"
@@ -255,9 +302,6 @@ export default function EndorsementFormModal({ isOpen, onClose, onSuccess }: End
                                         required
                                         minLength={2}
                                     />
-                                </div>
-
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                     <Select
                                         label="Relationship *"
                                         name="relation"

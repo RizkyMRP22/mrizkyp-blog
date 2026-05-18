@@ -1,4 +1,4 @@
-import { sendNotificationEmail } from '@/lib/resend';
+import { sendNotificationEmail, sendEmailToAddress } from '@/lib/resend';
 import { LeadItem } from '@/app/api/leads/route';
 import { EndorsementItem } from '@/app/api/endorsements/route';
 
@@ -130,13 +130,58 @@ export const EmailService = {
                         </div>
                     </div>
                     <div style="${styles.footer}">
-                        This endorsement requires your manual approval to display.<br/>
+        This endorsement requires your manual approval to display.<br/>
                         Submitted &bull; ${new Date(endorsement.createdAt || Date.now()).toLocaleDateString()}
                     </div>
                 </div>
             </div>
         `;
         return sendNotificationEmail(subject, html);
+    },
+
+    async sendEndorsementApprovedNotification(endorsement: EndorsementItem) {
+        if (!endorsement.email) return null;
+
+        const appUrl = process.env.APP_URL || 'http://localhost:3000';
+        const endorsementsUrl = `${appUrl}/endorsements`;
+
+        const subject = `Your Endorsement is Now Live on mrizkyp.my.id`;
+        const html = `
+            <div style="${styles.wrapper}">
+                <!-- Preheader (hidden preview text in inbox) -->
+                <div style="display:none;max-height:0;overflow:hidden;font-size:1px;color:#f9fafb;">
+                    Your endorsement has been approved and is now live! Click to see it on the website.
+                    &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+                </div>
+                <div style="${styles.card}">
+                    <div style="${styles.header}">
+                        <h1 style="${styles.headerTitle}">Endorsement Approved!</h1>
+                    </div>
+                    <div style="${styles.body}">
+                        <p style="font-size: 16px; line-height: 1.6; color: #374151; margin-top: 0;">
+                            Hi <strong>${htmlEscape(endorsement.fullName)}</strong>,
+                        </p>
+                        <p style="font-size: 16px; line-height: 1.6; color: #374151;">
+                            Thank you so much for taking the time to write an endorsement!
+                            It has been reviewed, approved, and is now <strong>publicly visible</strong> on the website.
+                        </p>
+
+                        <div style="${styles.messageBox}">&ldquo;${htmlEscape(endorsement.description)}&rdquo;</div>
+
+                        <div style="text-align: center;">
+                            <a href="${endorsementsUrl}" style="${styles.button}">View it on the website &rarr;</a>
+                        </div>
+                    </div>
+                    <div style="${styles.footer}">
+                        You received this email because you submitted an endorsement on
+                        <a href="${appUrl}" style="color: #3b82f6; text-decoration: none;">mrizkyp.my.id</a>
+                        and opted in to receive approval notifications.<br/>
+                        &copy; ${new Date().getFullYear()} MRizkyP Portfolio &bull; mrizkyp.my.id
+                    </div>
+                </div>
+            </div>
+        `;
+        return sendEmailToAddress(endorsement.email, subject, html);
     }
 };
 

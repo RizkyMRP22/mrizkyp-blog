@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { generateApproveSuccessHtml, generateAlreadyApprovedHtml } from '@/lib/emails';
+import { generateApproveSuccessHtml, generateAlreadyApprovedHtml, EmailService } from '@/lib/emails';
+import { EndorsementItem } from '@/app/api/endorsements/route';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,6 +41,10 @@ export async function GET(req: NextRequest) {
             { $set: { isApprove: true } }
         );
 
+        // Send a notification email to the friend who submitted the endorsement
+        if (endorsement.email) {
+            await EmailService.sendEndorsementApprovedNotification(endorsement as unknown as EndorsementItem);
+        }
 
         // Return a beautifully styled HTML response for the user
         const html = generateApproveSuccessHtml(appUrl);

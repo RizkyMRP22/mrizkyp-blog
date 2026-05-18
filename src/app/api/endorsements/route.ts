@@ -8,6 +8,7 @@ import { verifyTurnstileToken } from '@/lib/turnstile';
 
 export interface EndorsementItem {
     fullName: string;
+    email?: string;
     role: string;
     relation: string;
     description: string;
@@ -38,7 +39,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { fullName, role, relation, description, linkedinUrl, rating, turnstileToken } = body;
+        const { fullName, email, role, relation, description, linkedinUrl, rating, turnstileToken } = body;
 
         // ── Turnstile CAPTCHA Verification ────────────────────────────
         const turnstileVerification = await verifyTurnstileToken(turnstileToken);
@@ -49,6 +50,9 @@ export async function POST(req: NextRequest) {
         // Validation
         if (!fullName || typeof fullName !== 'string' || fullName.trim().length < 2) {
             return NextResponse.json({ success: false, error: 'Full name is required (min 2 characters).' }, { status: 400 });
+        }
+        if (email && (typeof email !== 'string' || !/^\S+@\S+\.\S+$/.test(email))) {
+            return NextResponse.json({ success: false, error: 'Please provide a valid email address.' }, { status: 400 });
         }
         if (!role || typeof role !== 'string' || role.trim().length < 2) {
             return NextResponse.json({ success: false, error: 'Role is required.' }, { status: 400 });
@@ -72,6 +76,7 @@ export async function POST(req: NextRequest) {
 
         const endorsement: EndorsementItem = {
             fullName: fullName.trim(),
+            email: email ? email.trim() : undefined,
             role: role.trim(),
             relation: relation.trim(),
             description: description.trim(),
