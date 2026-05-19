@@ -13,12 +13,27 @@ const inter = Inter({
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.titleSuffix}`,
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
+  alternates: {
+    canonical: "./",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico?v=1`,
     shortcut: `${process.env.NEXT_PUBLIC_BLOB_STORAGE_URL}/images/favicon.ico?v=1`,
@@ -27,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: siteConfig.name,
     description: siteConfig.description,
-    url: "https://mrizkyp.vercel.app",
+    url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
     siteName: siteConfig.name,
     images: [
       {

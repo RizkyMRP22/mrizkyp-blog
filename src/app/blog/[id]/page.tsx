@@ -21,9 +21,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         return { title: 'Post Not Found' };
     }
 
+    const postUrl = `/blog/${post.id}`;
+
     return {
         title: `${post.title} | ${siteConfig.name}`,
         description: post.excerpt,
+        alternates: {
+            canonical: postUrl,
+        },
+        openGraph: {
+            title: post.title,
+            description: post.excerpt,
+            url: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}${postUrl}`,
+            type: 'article',
+            publishedTime: post.createdAt || post.date,
+            authors: [siteConfig.name],
+            tags: post.tags,
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: post.title,
+            description: post.excerpt,
+        },
     };
 }
 
