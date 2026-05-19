@@ -12,8 +12,13 @@ const inter = Inter({
 
 import { siteConfig } from "@/config/site";
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+const safeAppUrl = appUrl.startsWith("http://") || appUrl.startsWith("https://")
+  ? appUrl
+  : `https://${appUrl}`;
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
+  metadataBase: new URL(safeAppUrl),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.titleSuffix}`,
@@ -42,7 +47,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: siteConfig.name,
     description: siteConfig.description,
-    url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+    url: safeAppUrl,
     siteName: siteConfig.name,
     images: [
       {

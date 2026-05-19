@@ -2,7 +2,10 @@ import { MetadataRoute } from "next";
 import { getPosts } from "@/app/api/blog/route";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const baseUrl = appUrl.startsWith("http://") || appUrl.startsWith("https://")
+    ? appUrl
+    : `https://${appUrl}`;
 
   // Static routes
   const staticRoutes: MetadataRoute.Sitemap = [

@@ -22,6 +22,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     const postUrl = `/blog/${post.id}`;
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+    const safeAppUrl = appUrl.startsWith("http://") || appUrl.startsWith("https://")
+        ? appUrl
+        : `https://${appUrl}`;
 
     return {
         title: `${post.title} | ${siteConfig.name}`,
@@ -32,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         openGraph: {
             title: post.title,
             description: post.excerpt,
-            url: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}${postUrl}`,
+            url: `${safeAppUrl}${postUrl}`,
             type: 'article',
             publishedTime: post.createdAt || post.date,
             authors: [siteConfig.name],
