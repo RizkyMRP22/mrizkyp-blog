@@ -163,7 +163,7 @@ export default function ResumePreviewContent() {
 
     if (submitted) {
         if (loading) {
-            return <LoadingSpinner text="Fetching resume details from DB..." />;
+            return <LoadingSpinner text="Please wait... The resume is being generated" />;
         }
 
         if (errorMsg) {
