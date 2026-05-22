@@ -1,7 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import Script from 'next/script';
+import { useTurnstile } from '@/hooks/use-turnstile';
 
 function isValidEmail(email: string) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -23,6 +25,9 @@ export default function ResumeDownloadModal({ isOpen, onClose }: Props) {
     const [loading, setLoading] = useState(false);
     const [fetchError, setFetchError] = useState('');
     const [isVisible, setIsVisible] = useState(false);
+
+    const turnstileRef = useRef<HTMLDivElement | null>(null);
+    const { token: turnstileToken, setToken: setTurnstileToken } = useTurnstile(turnstileRef, isOpen);
 
     // Mount on client side
     useEffect(() => {
@@ -51,6 +56,7 @@ export default function ResumeDownloadModal({ isOpen, onClose }: Props) {
                 setErrors({});
                 setLoading(false);
                 setFetchError('');
+                setTurnstileToken('');
             }, 350);
             return () => clearTimeout(t);
         }
@@ -71,7 +77,16 @@ export default function ResumeDownloadModal({ isOpen, onClose }: Props) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!validate()) return;
-        
+
+        const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+        const fallbackInput = turnstileRef.current?.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement;
+        const currentToken = turnstileToken || (fallbackInput ? fallbackInput.value : '');
+
+        if (siteKey && !currentToken) {
+            setFetchError('Please complete the safety verification to proceed.');
+            return;
+        }
+
         setLoading(true);
         setFetchError('');
 
@@ -146,7 +161,7 @@ export default function ResumeDownloadModal({ isOpen, onClose }: Props) {
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-bold text-white">Download Resume</h3>
-                                        <p className="text-slate-400 text-sm">Please introduce yourself first</p>
+                                        <p className="text-slate-400 text-sm">I’d love to know who’s viewing my resume.</p>
                                     </div>
                                 </div>
 
@@ -155,7 +170,7 @@ export default function ResumeDownloadModal({ isOpen, onClose }: Props) {
                                     <svg className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    <p className="text-xs text-slate-400">Your info will only be used for watermarking the PDF and tracking who downloaded it. No spam, ever.</p>
+                                    <p className="text-xs text-slate-400">Your information is only used to personalize the PDF and track downloads. No spam — ever.</p>
                                 </div>
 
                                 {/* Fields */}
@@ -207,6 +222,14 @@ export default function ResumeDownloadModal({ isOpen, onClose }: Props) {
                                     </div>
                                 </div>
 
+                                {/* Turnstile widget */}
+                                <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" />
+                                {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                                    <div className="flex justify-center w-full mt-2 mb-4">
+                                        <div ref={turnstileRef} className="cf-turnstile" data-theme="dark" />
+                                    </div>
+                                )}
+
                                 {fetchError && (
                                     <p className="text-red-400 text-xs mb-4 flex items-center gap-1">
                                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -248,12 +271,12 @@ export default function ResumeDownloadModal({ isOpen, onClose }: Props) {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                <h3 className="text-xl font-bold text-white mb-2">Preview Opened!</h3>
+                                <h3 className="text-xl font-bold text-white mb-2">All Set!</h3>
                                 <p className="text-slate-400 text-sm mb-1">
-                                    Your interactive PDF preview has been opened in a new tab.
+                                    The resume preview is open in a new tab.
                                 </p>
                                 <p className="text-slate-500 text-xs mb-8">
-                                    You can download the watermarked PDF directly from the viewer. Thank you, <span className="text-slate-300 font-medium">{fullName}</span>!
+                                    Feel free to explore and download the resume in PDF. Thank you, <span className="text-slate-300 font-medium">{fullName}</span>!
                                 </p>
                                 <button
                                     onClick={onClose}
