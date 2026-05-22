@@ -27,14 +27,14 @@ export default function ResumePreviewContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    const [fullName, setFullName] = useState(searchParams.get('name') || '');
-    const [email, setEmail] = useState(searchParams.get('email') || '');
-    const [submitted, setSubmitted] = useState(!!(searchParams.get('name') && searchParams.get('email')));
+    const [fullName, setFullName] = useState('');
+    const [email, setEmail] = useState('');
+    const [submitted, setSubmitted] = useState(false);
+    const [verifying, setVerifying] = useState(false);
 
     const [resumeData, setResumeData] = useState<ResumeData | null>(null);
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState<{ fullName?: string; email?: string }>({});
-    const [logSaved, setLogSaved] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
     const [downloading, setDownloading] = useState(false);
 
@@ -54,31 +54,39 @@ export default function ResumePreviewContent() {
         }
     };
 
-    const logDownload = async (name: string, mail: string) => {
-        if (logSaved) return;
+    const verifyToken = async (token: string) => {
+        setVerifying(true);
+        setErrorMsg('');
         try {
-            await fetch('/api/resume-download', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ fullName: name.trim(), email: mail.trim().toLowerCase() }),
-            });
-            setLogSaved(true);
-        } catch (err) {
-            console.error('Failed to log preview:', err);
+            const res = await fetch(`/api/resume-download/verify?token=${encodeURIComponent(token)}`);
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error || 'This preview link has expired or is invalid.');
+            }
+            const data = await res.json();
+            setFullName(data.name);
+            setEmail(data.email);
+            setSubmitted(true);
+            await fetchResumeData();
+        } catch (err: any) {
+            console.error('Verification failed:', err);
+            setErrorMsg(err.message || 'Failed to verify preview link.');
+            setSubmitted(false);
+        } finally {
+            setVerifying(false);
         }
     };
 
-    // Load data and log access when parameters are available
+    // Load and verify token when search parameters change
     useEffect(() => {
-        const queryName = searchParams.get('name');
-        const queryEmail = searchParams.get('email');
-
-        if (queryName && queryEmail && isValidEmail(queryEmail)) {
-            setFullName(queryName);
-            setEmail(queryEmail);
-            setSubmitted(true);
-            fetchResumeData();
-            logDownload(queryName, queryEmail);
+        const token = searchParams.get('token');
+        if (token) {
+            verifyToken(token);
+        } else {
+            // Reset state if no token is present (e.g. visiting /resume/preview directly)
+            setSubmitted(false);
+            setFullName('');
+            setEmail('');
         }
     }, [searchParams]);
 
@@ -114,13 +122,37 @@ export default function ResumePreviewContent() {
         }
 
         setErrors({});
-        setSubmitted(true);
+        setVerifying(true);
+        setErrorMsg('');
 
-        // Update URL query parameters cleanly without reload
-        const params = new URLSearchParams();
-        params.set('name', fullName.trim());
-        params.set('email', email.trim().toLowerCase());
-        router.push(`?${params.toString()}`);
+        try {
+            const res = await fetch('/api/resume-download', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    fullName: fullName.trim(),
+                    email: email.trim().toLowerCase(),
+                }),
+            });
+
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error || 'Failed to register preview access.');
+            }
+
+            const data = await res.json();
+            const token = data.token;
+
+            // Route to self with token to trigger verification and load
+            const params = new URLSearchParams();
+            params.set('token', token);
+            router.push(`?${params.toString()}`);
+        } catch (err: any) {
+            console.error('Failed to log or get preview token:', err);
+            setErrorMsg(err.message || 'Could not verify preview access. Please try again.');
+        } finally {
+            setVerifying(false);
+        }
     };
 
     const handleDownload = async () => {
@@ -161,28 +193,41 @@ export default function ResumePreviewContent() {
         }
     };
 
+    if (verifying) {
+        return <LoadingSpinner text="Verifying preview link..." />;
+    }
+
+    if (errorMsg) {
+        const isVerificationError = !submitted;
+        return (
+            <div className="flex flex-col items-center justify-center min-h-screen bg-slate-950 text-slate-300 p-6 text-center">
+                <div className="p-4 rounded-full bg-red-950/40 border border-red-500/30 text-red-400 mb-4">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+                <p className="text-lg font-semibold text-white mb-2">{errorMsg}</p>
+                <button
+                    onClick={() => {
+                        if (isVerificationError) {
+                            setErrorMsg('');
+                            setSubmitted(false);
+                            router.push('/resume/preview');
+                        } else {
+                            fetchResumeData();
+                        }
+                    }}
+                    className="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-light text-white font-bold transition-all cursor-pointer"
+                >
+                    {isVerificationError ? 'Generate New Preview' : 'Retry Fetch'}
+                </button>
+            </div>
+        );
+    }
+
     if (submitted) {
         if (loading) {
             return <LoadingSpinner text="Please wait... The resume is being generated" />;
-        }
-
-        if (errorMsg) {
-            return (
-                <div className="flex flex-col items-center justify-center min-h-screen bg-slate-950 text-slate-300 p-6 text-center">
-                    <div className="p-4 rounded-full bg-red-950/40 border border-red-500/30 text-red-400 mb-4">
-                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                    </div>
-                    <p className="text-lg font-semibold text-white mb-2">{errorMsg}</p>
-                    <button
-                        onClick={fetchResumeData}
-                        className="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-light text-white font-bold transition-all"
-                    >
-                        Retry Fetch
-                    </button>
-                </div>
-            );
         }
 
         const now = new Date();
@@ -280,9 +325,9 @@ export default function ResumePreviewContent() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                 </svg>
                             </div>
-                            <h2 className="text-2xl font-bold text-white mb-2">Resume Premium Preview</h2>
+                            <h2 className="text-2xl font-bold text-white mb-2">Resume Preview</h2>
                             <p className="text-slate-400 text-sm">
-                                Enter your name and email to view Mohammad Rizky Pratama&apos;s ATS-optimized PDF resume in real time.
+                                I’d love to know who’s viewing my resume.
                             </p>
                         </div>
 
@@ -341,7 +386,7 @@ export default function ResumePreviewContent() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                 </svg>
-                                Generate Interactive Preview
+                                Preview & Download Resume
                             </button>
                         </form>
                     </div>

@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { encryptToken } from '@/lib/token';
 
 export interface ResumeDownloadItem {
     fullName: string;
@@ -46,8 +47,16 @@ export async function POST(req: NextRequest) {
         const db = await getDb();
         const result = await db.collection('resume_downloads').insertOne(download);
 
+        // ── Generate Temp signed token ────────────────────────────────
+        const exp = Date.now() + 5 * 60 * 1000; // 5 minutes expiration
+        const token = encryptToken({
+            name: fullName.trim(),
+            email: email.trim().toLowerCase(),
+            exp
+        });
+
         return NextResponse.json(
-            { success: true, id: result.insertedId },
+            { success: true, id: result.insertedId, token },
             { status: 201 }
         );
 

@@ -91,8 +91,8 @@ export default function ResumeDownloadModal({ isOpen, onClose }: Props) {
         setFetchError('');
 
         try {
-            // 1. Log the downloader/viewer to MongoDB
-            await fetch('/api/resume-download', {
+            // 1. Log the downloader/viewer to MongoDB and obtain token
+            const res = await fetch('/api/resume-download', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -101,15 +101,23 @@ export default function ResumeDownloadModal({ isOpen, onClose }: Props) {
                 }),
             });
 
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error || 'Failed to initialize preview link.');
+            }
+
+            const data = await res.json();
+            const token = data.token;
+
             // 2. Auto-open premium full-page preview/download page in new window/tab
-            const previewUrl = `/resume/preview?name=${encodeURIComponent(fullName.trim())}&email=${encodeURIComponent(email.trim().toLowerCase())}`;
+            const previewUrl = `/resume/preview?token=${encodeURIComponent(token)}`;
             window.open(previewUrl, '_blank');
 
             // 3. Set Step to success 'done' immediately
             setStep('done');
-        } catch (err) {
+        } catch (err: any) {
             console.error('Failed to log or open preview:', err);
-            setFetchError('Could not launch preview page. Please try again.');
+            setFetchError(err.message || 'Could not launch preview page. Please try again.');
         } finally {
             setLoading(false);
         }
