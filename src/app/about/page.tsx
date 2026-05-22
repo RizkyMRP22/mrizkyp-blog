@@ -9,6 +9,7 @@ import { getCertifications } from '../api/certifications/route';
 import TrackingLink from '@/components/atoms/TrackingLink';
 import ProfileImagePreview from '@/components/molecules/ProfileImagePreview';
 import AboutSocialLinks from '@/components/molecules/AboutSocialLinks';
+import ResumeDownloadButton from '@/components/atoms/ResumeDownloadButton';
 import { siteConfig } from '@/config/site';
 export const metadata: Metadata = {
     title: siteConfig.pages.about.title,
@@ -61,38 +62,17 @@ export default async function AboutPage() {
                                     </div>
                                 )}
 
-                                {/* Action Buttons */}
-                                <div className="flex flex-col gap-3 mt-6">
-                                    {/* {profileData.resumeUrl && (
-                                        <TrackingLink 
-                                            href={profileData.resumeUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-primary to-primary-light hover:from-primary-light hover:to-primary text-white font-bold tracking-wide transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 group"
-                                            eventName="click_outbound"
-                                            eventParams={{ link_url: profileData.resumeUrl, link_type: 'resume' }}
-                                        >
-                                            <svg className="w-5 h-5 group-hover:animate-bounce-subtle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                            Download Resume
-                                        </TrackingLink>
-                                    )} */}
-                                    {/* <TrackingLink
-                                        href={`mailto:${profileData.email}`}
-                                        className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-primary to-primary-light hover:from-primary-light hover:to-primary text-white font-bold tracking-wide transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 group"
-                                        eventName="generate_lead"
-                                        eventParams={{ value: 'email_click' }}
-                                    >
-                                        <svg className="w-5 h-5 group-hover:-translate-y-1 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                                        Send an Email
-                                    </TrackingLink> */}
-                                </div>
-
                                 { /* Social Links */}
                                 <AboutSocialLinks
                                     github={profileData.github}
                                     linkedin={profileData.linkedin}
                                     email={profileData.email}
                                 />
+
+                                {/* Action Buttons */}
+                                <div className="flex justify-center gap-4 mt-8 pt-6 border-t border-slate-700/50">
+                                    <ResumeDownloadButton />
+                                </div>
                             </div>
                         </Card>
                     </div>

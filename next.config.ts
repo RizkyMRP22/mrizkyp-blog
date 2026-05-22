@@ -63,7 +63,7 @@ const securityHeaders = [
       "img-src 'self' data: blob: https:",
       "media-src 'self' blob: https: " + blobStorageUrl,
       "connect-src 'self' https://challenges.cloudflare.com",
-      `frame-src https://drive.google.com https://docs.google.com https://www.youtube.com https://www.loom.com ${blobStorageUrl} https://challenges.cloudflare.com`,
+      `frame-src blob: https://drive.google.com https://docs.google.com https://www.youtube.com https://www.loom.com ${blobStorageUrl} https://challenges.cloudflare.com`,
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
@@ -74,6 +74,7 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
+  transpilePackages: ["@react-pdf/renderer"],
   images: {
     remotePatterns: [
       {
