@@ -250,24 +250,24 @@ const s = StyleSheet.create({
     },
 
     // ── Diagonal Page Watermark ───────────────────────────────────────────────
-    pageWatermarkWrapper: {
-        position: 'absolute',
-        top: 0,
-        left: -200,
-        right: -200,
-        bottom: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    pageWatermarkText: {
-        fontFamily: 'Helvetica-Bold',
-        color: '#9ca3af',
-        opacity: 0.12,
-        transform: 'rotate(-45deg)',
-        textAlign: 'center',
-        lineHeight: 1.1,
-    },
+    // pageWatermarkWrapper: {
+    //     position: 'absolute',
+    //     top: 0,
+    //     left: -200,
+    //     right: -200,
+    //     bottom: 0,
+    //     display: 'flex',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    // },
+    // pageWatermarkText: {
+    //     fontFamily: 'Helvetica-Bold',
+    //     color: '#9ca3af',
+    //     opacity: 0.12,
+    //     transform: 'rotate(-45deg)',
+    //     textAlign: 'center',
+    //     lineHeight: 1.1,
+    // },
 
     // ── Footer ────────────────────────────────────────────────────────────────
     footer: {
@@ -380,7 +380,7 @@ export default function ResumeDocument({ data, downloaderName, downloaderEmail }
                         <Text style={s.contactSep}>|</Text>
                         <Text style={s.contactItem}>{profile.linkedin}</Text>
                         <Text style={s.contactSep}>|</Text>
-                        <Text style={s.contactItem}>{profile.github}</Text>
+                        <Text style={s.contactItem}>https://mrizkyp.my.id</Text>
                         <Text style={s.contactSep}>|</Text>
                         <Text style={s.contactItem}>{profile.location}</Text>
                     </View>
@@ -497,11 +497,11 @@ export default function ResumeDocument({ data, downloaderName, downloaderEmail }
                 )}
 
                 {/* ── Diagonal Page Watermark (every page) ──────────────── */}
-                <View style={s.pageWatermarkWrapper} fixed>
+                {/* <View style={s.pageWatermarkWrapper} fixed>
                     <Text style={[s.pageWatermarkText, { fontSize: watermarkFontSize, letterSpacing: watermarkLetterSpacing }]}>
                         {downloaderEmail}
                     </Text>
-                </View>
+                </View> */}
 
                 {/* ── Footer / Watermark ─────────────────────────────────── */}
                 <View style={s.footer} fixed>
