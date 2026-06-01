@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
             return new NextResponse('Endorsement not found', { status: 404 });
         }
 
-        const appUrl = process.env.APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+        const appUrl = process.env.APP_URL || 'http://localhost:3000';
 
         // Check if it's already approved to prevent redundant saves and show clear UI
         if (endorsement.isApprove) {
